@@ -1,0 +1,66 @@
+/* 全局设置 */
+:root {
+    --real-vh: 1vh;
+    /* 图片模态框 */
+    --modal-z-index: 9998;
+    --img-modal-bg: rgba(0,0,0,0.8);
+    --img-modal-close-button: rgba(0,0,0,0.5);
+}
+
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 100%;
+}
+/* -全局设置- */
+
+/* 页面布局相关设置 */
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+/* -页面布局相关设置- */
+
+/* 图片模态框 */
+#imgModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--img-modal-bg);
+    justify-content: center;
+    align-items: center;
+    z-index: var(--modal-z-index);
+}
+
+#modalImg {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 6px;
+}
+
+#closeImgModal {
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+    background: var(--img-modal-close-button);
+    color: white;
+    border: none;
+    width: 4vh;
+    height: auto;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: var(--modal-z-index);
+}
+/* -图片模态框- */

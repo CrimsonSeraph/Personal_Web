@@ -416,3 +416,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# other
+.wrangler/
+.vs/
+wrangler.jsonc
+Web.config
