@@ -417,8 +417,9 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# other
+# others
 .wrangler/
 .vs/
-wrangler.jsonc
-Web.config
+*.jsonc
+*.config
+*.sln
