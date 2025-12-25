@@ -22,10 +22,15 @@
 </head>
 
 <body>
-    <video id="bg_video" autoplay="autoplay" muted loop preload="auto">
-        <source src="./assets/video/bg.mp4" type="video/mp4" />
-        <p>无法加载背景视频</p>
-    </video>
+    <div class="video">
+        <video id="bg_video" autoplay="autoplay" muted loop preload="auto">
+            <source src="./assets/video/video_BG_1.mp4" type="video/mp4" />
+            <p>无法加载背景视频</p>
+        </video>
+        <video id="bg_video_other" autoplay="autoplay" muted loop preload="auto">
+            <p>无法预加载背景视频</p>
+        </video>
+    </div>
 
     <!-- 页面内容容器 -->
     <div class="wrapper">
@@ -93,13 +98,13 @@
         <!-- 中间容器 -->
         <div class="mid_part">
             <div class="mid_part_left">
-
+                <p id="left_botton">◀</p>
             </div>
 
             <div class="mid_part_mid"></div>
 
             <div class="mid_part_right">
-
+                <p id="right_botton">▶</p>
             </div>
         </div>
         <!-- /中间容器 -->
