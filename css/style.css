@@ -7,14 +7,21 @@
     --img-modal-close-button: rgba(0,0,0,0.5);
     /* ±³¾°ÑÕÉ« */
     --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --box-shadow-other: 0 4px 15px rgba(255, 255, 0, 0.2);
     --top-left-bg: linear-gradient(45deg, rgba(22, 34, 42, 0.90) 0%, rgba(58, 96, 115, 0.90) 50%, rgba(92, 151, 191, 0.90) 100%);
+    --top-left-bg-other: linear-gradient(45deg, rgba(22, 34, 42, 1) 0%, rgba(58, 96, 115, 1) 50%, rgba(92, 151, 191, 1) 100%);
     --normal-card-bg: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 30%, rgba(135, 206, 235, 0.70) 60%);
+    --normal-card-bg-other: linear-gradient(60deg, rgba(255, 192, 203, 0.80) 10%, rgba(255, 255, 255, 0.80) 30%, rgba(135, 206, 235, 0.80) 60%);
     /* ÎÄ±¾ÑÕÉ« */
     --text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.5);
     --text-normal: rgba(255, 255, 255, 1);
     --text-normal-other: rgba(0, 0, 139, 1);
     --text-emphasize: rgba(255, 215, 0, 1);
     --text-special: linear-gradient(150deg, rgba(255, 255, 0, 1) 0, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 0, 1) 100%);
+    /* ¶¯»­ÊôÐÔ */
+    --bg-transition: background 1s ease;
+    --transform-transition: transform 0.5s ease;
+    --shadow-transition: box-shadow 0.5s ease;
 }
 
 * {
@@ -41,7 +48,7 @@ div {
     unicode-bidi: isolate;
 }
 
-p {
+p, button {
     margin: 0;
     padding: 0;
     white-space: nowrap;
@@ -49,11 +56,11 @@ p {
     text-overflow: ellipsis;
 }
 
-.normal-card {
+.normal_card {
     position: relative;
 }
 
-    .normal-card::before {
+    .normal_card::before {
         content: '';
         position: absolute;
         top: 10%;
@@ -61,11 +68,19 @@ p {
         width: 80%;
         height: 80%;
         z-index: -1;
-        transform: skew(-20deg);
+        transform: skew(-20deg)scale(1);
         border-radius: 10px;
         background: var(--normal-card-bg);
         background-size: 200% 200%;
         box-shadow: var(--box-shadow);
+        transition: var(--bg-transition), var(--transform-transition), var(--shadow-transition);
+    }
+
+    .normal_card:hover::before {
+        background: transparent;
+        background: var(--normal-card-bg-other);
+        transform: skew(-20deg)scale(1.01);
+        box-shadow: var(--box-shadow-other);
     }
 /* -Ò³Ãæ²¼¾ÖÏà¹ØÉèÖÃ- */
 
@@ -105,7 +120,7 @@ p {
 /* -Í¼Æ¬Ä£Ì¬¿ò- */
 
 /* ±³¾°ÊÓÆµ */
-#bg-video {
+#bg_video {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -126,35 +141,35 @@ p {
     flex-direction: column;
 }
 
-.top-navigation {
+.top_navigation {
     width: 100%;
     position: relative;
     display: flex;
     flex: 0 0 15%;
 }
 
-.mid-top-navigation {
+.mid_top_navigation {
     width: 100%;
     position: relative;
     display: flex;
     flex: 0 0 25%;
 }
 
-.mid-part {
+.mid_part {
     width: 100%;
     position: relative;
     display: flex;
     flex: 0 0 20%;
 }
 
-.mid-bottom-navigation {
+.mid_bottom_navigation {
     width: 100%;
     position: relative;
     display: flex;
     flex: 0 0 25%;
 }
 
-.bottom-navigation {
+.bottom_navigation {
     width: 100%;
     position: relative;
     display: flex;
@@ -163,7 +178,7 @@ p {
 /* -Ò³ÃæÄÚÈÝÈÝÆ÷- */
 
 /* ¶¥À¸ ÈÝÆ÷ */
-.top-left {
+.top_left {
     padding: 1% 0 0 0;
     position: relative;
     flex: 0 0 20%;
@@ -171,7 +186,7 @@ p {
     align-items: center;
 }
 
-    .top-left::before {
+    .top_left::before {
         content: '';
         position: absolute;
         top: 15%;
@@ -179,14 +194,22 @@ p {
         width: 100%;
         height: 80%;
         z-index: -1;
-        transform: skew(-20deg);
+        transform: skew(-20deg)scale(1);
         border-radius: 10px;
         background: var(--top-left-bg);
         background-size: 200% 200%;
         box-shadow: var(--box-shadow);
+        transition: var(--bg-transition), var(--transform-transition), var(--shadow-transition);
     }
 
-.top-left-left {
+    .top_left:hover::before {
+        background: transparent;
+        background: var(--top-left-bg-other);
+        transform: skew(-20deg)scale(1.01);
+        box-shadow: var(--box-shadow-other);
+    }
+
+.top_left_left {
     flex: 0 0 30%;
     padding: 0 0 0 5%;
     display: flex;
@@ -194,109 +217,133 @@ p {
     align-items: center;
 }
 
-.top-left-left-top {
+.top_left_left_top {
     flex: 0 0 20%;
     transform: translateY(20%);
     margin: 0;
 }
 
-    .top-left-left-top p {
+    .top_left_left_top p {
         font-size: 2rem;
         color: var(--text-emphasize);
+        transform: scale(1);
+        transition: var(--transform-transition);
     }
 
-.top-left-left-bottom {
+        .top_left_left_top p:hover {
+            transform: scale(1.1);
+        }
+
+.top_left_left_bottom {
     flex: 1;
     transform: translateY(-20%);
     margin: 0;
 }
 
-    .top-left-left-bottom p {
+    .top_left_left_bottom p {
         font-size: 3rem;
         color: var(--text-normal);
+        transform: scale(1);
+        transition: var(--transform-transition);
     }
 
-.top-left-right {
+        .top_left_left_bottom p:hover {
+            transform: scale(1.1);
+        }
+
+.top_left_right {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-.top-left-right-top {
+.top_left_right_top {
     width: 70%;
 }
 
-    .top-left-right-top p {
+    .top_left_right_top p {
         font-size: 1.5rem;
         color: var(--text-normal);
+        transform: scale(1);
+        transition: var(--transform-transition);
     }
 
-.top-left-right-mid {
+        .top_left_right_top p:hover {
+            transform: scale(1.1);
+        }
+
+.top_left_right_mid {
     width: 70%;
     height: 6px;
     background-color: #f0f0f0;
     border-radius: 3px;
 }
 
-.top-left-right-bottom {
+.top_left_right_bottom {
     width: 70%;
 }
 
-    .top-left-right-bottom p {
+    .top_left_right_bottom p {
         display: inline-block;
         max-width: 100%;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         background: var(--text-special);
         filter: drop-shadow(var(--text-shadow));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         -webkit-text-fill-color: transparent;
+        transform: scale(1);
+        transition: var(--transform-transition);
     }
 
-.top-mid {
+        .top_left_right_bottom p:hover {
+            transform: scale(1.1);
+        }
+
+.top_mid {
     flex: 1;
 }
 
-.top-right {
+.top_right {
     position: relative;
     flex: 0 0 60%;
     display: flex;
     flex-direction: column;
 }
 
-.top-right-top {
+.top_right_top {
     position: relative;
     flex: 0 0 35%;
     display: flex;
     flex-direction: row;
 }
 
-.top-right-top-part {
+.top_right_top_part {
     flex: 1;
 }
 
-.top-right-top-special-part {
+.top_right_top_special_part {
     flex: 0 0 30%
 }
 
-.top-right-bottom {
+.top_right_bottom {
     flex: 1;
 }
 /* -¶¥À¸ ÈÝÆ÷- */
 
 /* ÖÐ¶¥À¸ ÈÝÆ÷ */
-.mid-top-left {
+.mid_top_left {
     position: relative;
     flex: 0 0 20%;
     background-color: rgba(255, 255, 0, 0.3);
 }
 
-.mid-top-mid {
+.mid_top_mid {
     flex: 1;
 }
 
-.mid-top-right {
+.mid_top_right {
     position: relative;
     flex: 0 0 15%;
     background-color: rgba(0, 255, 255, 0.3);
@@ -304,17 +351,17 @@ p {
 /* -ÖÐ¶¥À¸ ÈÝÆ÷- */
 
 /* ÖÐ¼äÀ¸ ÈÝÆ÷ */
-.mid-part-left {
+.mid_part_left {
     position: relative;
     flex: 0 0 10%;
     background-color: rgba(128, 0, 0, 0.3);
 }
 
-.mid-part-mid {
+.mid_part_mid {
     flex: 1;
 }
 
-.mid-part-right {
+.mid_part_right {
     position: relative;
     flex: 0 0 10%;
     background-color: rgba(0, 0, 128, 0.3);
@@ -322,17 +369,17 @@ p {
 /* -ÖÐ¼äÀ¸ ÈÝÆ÷- */
 
 /* ÖÐµ×À¸ ÈÝÆ÷ */
-.mid-bottom-left {
+.mid_bottom_left {
     position: relative;
     flex: 0 0 35%;
     background-color: rgba(128, 128, 0, 0.3);
 }
 
-.mid-bottom-mid {
+.mid_bottom_mid {
     flex: 1;
 }
 
-.mid-bottom-right {
+.mid_bottom_right {
     position: relative;
     flex: 0 0 25%;
     background-color: rgba(0, 128, 128, 0.3);
@@ -340,21 +387,21 @@ p {
 /* -ÖÐµ×À¸ ÈÝÆ÷- */
 
 /* µ×À¸ ÈÝÆ÷ */
-.bottom-left {
+.bottom_left {
     position: relative;
     flex: 0 0 75%;
     background-color: rgba(64, 64, 64, 0.3);
 }
 
-.bottom-right {
+.bottom_right {
     flex: 1;
     background-color: rgba(192, 192, 192, 0.3);
 }
 
-.bottom-bg {
+.bottom_bg {
     position: absolute;
-    width: 120%;
+    width: 110%;
     height: 50%;
-    transform: translateY(100%) translateX(-8%);
+    transform: translateY(100%) translateX(-5%);
 }
 /* -µ×À¸ ÈÝÆ÷- */

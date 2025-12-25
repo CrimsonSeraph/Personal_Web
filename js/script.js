@@ -1,12 +1,21 @@
-/* DOM后加载脚本 */
+/* ----------DOM后加载脚本---------- */
 document.addEventListener("DOMContentLoaded", () => {
     setRealViewportHeight();
+    addAllListener();
     setupImageModal();
 });
-/* -DOM后加载脚本- */
+/* ----------DOM后加载脚本---------- */
 
-/* 监听事件 */
-window.addEventListener('resize', setRealViewportHeight);   // 视窗尺寸变化时，重新设置真实视窗高度
+/* ----------监听事件---------- */
+function addAllListener() {
+    window.addEventListener('resize', setRealViewportHeight);           // 视窗尺寸变化时，重新设置真实视窗高度
+
+    let top_left_area = document.getElementById("top_left");
+    //页面跳转点击事件监听
+    top_left_area.addEventListener("click", function () {                    // 个人主页跳转
+        navigateToPage("personal_page");
+    })
+}
 
 // 点击图片弹出大图
 function setupImageModal() {
@@ -41,11 +50,28 @@ function setupImageModal() {
     })
 }
 
-/* -监听事件- */
+// 点击跳转路径
+const PagePath = {
+    //Page: "./page.html",
+    personal_page: "",
+};
 
-/* 设置真实视窗高度 */
+// 点击跳转事件
+function navigateToPage(key) {
+    if (key && PagePath[key]) {
+        //window.location.href = PagePath[key];
+        console.log("跳转成功" + key);
+        return true;
+    } else {
+        console.warn("PagePath 未定义或键不存在:", key);
+        return false;
+    }
+}
+/* ----------监听事件---------- */
+
+/* ----------设置真实视窗高度---------- */
 function setRealViewportHeight() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
-/* -设置真实视窗高度- */
+/* ----------设置真实视窗高度---------- */
