@@ -420,6 +420,5 @@ FodyWeavers.xsd
 # others
 .wrangler/
 .vs/
-*.jsonc
 *.config
 *.sln
