@@ -6,11 +6,16 @@
     <title>CrimsonSeraph</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png">
     <link rel="manifest" href="/assets/img/favicon/site.webmanifest">
-
+    <!-- /Favicon -->
+    <!-- 图标 -->
+    <script src="https://kit.fontawesome.com/900ca0a9f9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- /图标 -->
     <!-- 字体 -->
     <link href="https://fonts.googleapis.com/css?family=Saira:300,400,500,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300i,400,400i,600,600i,700&display=swap" rel="stylesheet">
@@ -22,6 +27,7 @@
 </head>
 
 <body>
+    <!-- 视频背景 -->
     <div class="video">
         <video id="bg_video" autoplay="autoplay" muted loop preload="auto">
             <source src="./assets/video/video_BG_1.mp4" type="video/mp4" />
@@ -31,7 +37,7 @@
             <p>无法预加载背景视频</p>
         </video>
     </div>
-
+    <!-- /视频背景 -->
     <!-- 页面内容容器 -->
     <div class="wrapper">
 
@@ -40,21 +46,21 @@
             <div class="top_left" id="top_left">
                 <div class="top_left_left">
                     <div class="top_left_left_top">
-                        <p>Lv.</p>
+                        <p class="no-select">Lv.</p>
                     </div>
                     <div class="top_left_left_bottom">
-                        <p>18</p>
+                        <p class="no-select">18</p>
                     </div>
                 </div>
                 <div class="top_left_right">
                     <div class="top_left_right_top">
-                        <p>CrimsonSeraph</p>
+                        <p class="no-select">CrimsonSeraph</p>
                     </div>
                     <div class="top_left_right_mid">
 
                     </div>
                     <div class="top_left_right_bottom special_text">
-                        <p>大一上学期</p>
+                        <p class="no-select">大一上学期</p>
                     </div>
                 </div>
             </div>
@@ -73,7 +79,13 @@
 
                     </div>
                     <div class="top_right_top_special_part normal_card">
-
+                        <div class="icon_bar">
+                            <i class="fa-brands fa-bilibili" id="bilibili_icon"></i>
+                            <div class="separate"></div>
+                            <i class="fa-brands fa-github" id="github_icon"></i>
+                            <div class="separate"></div>
+                            <i class="fa-brands fa-square-x-twitter" id="twitter_icon"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="top_right_bottom">
@@ -98,13 +110,13 @@
         <!-- 中间容器 -->
         <div class="mid_part">
             <div class="mid_part_left">
-                <p id="left_botton">◀</p>
+                <p class="no-select" id="left_botton">◀</p>
             </div>
 
             <div class="mid_part_mid"></div>
 
             <div class="mid_part_right">
-                <p id="right_botton">▶</p>
+                <p class="no-select" id="right_botton">▶</p>
             </div>
         </div>
         <!-- /中间容器 -->
@@ -136,6 +148,17 @@
         <!-- /底部容器 -->
     </div>
     <!-- 页面内容容器 -->
+    <!-- 跳转提示框 -->
+    <div class="confirm-overlay" id="confirmOverlay">
+            <div class="confirm-content">
+                <p>是否跳转到<span id="confirmSiteName">...</span>？</p>
+            </div>
+            <div class="confirm-buttons">
+                <button id="confirmCancel" class="btn-cancel">取消</button>
+                <button id="confirmOk" class="btn-ok">确定</button>
+            </div>
+    </div>
+    <!-- /提示框 -->
     <!-- /图片显示容器 -->
     <div id="imgModal">
         <button id="closeImgModal">X</button>
