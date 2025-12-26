@@ -3,7 +3,7 @@
  * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
 {
-	"name": "personalweb",
+	"name": "personaweb",
 	"main": "js/index.js",
 	"compatibility_date": "2025-12-01",
 	"observability": {
