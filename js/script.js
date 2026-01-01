@@ -2,7 +2,7 @@
 // 创建不同模块的调试函数
 const debugBG = createDebug('BG', false);                               // 背景相关调试
 const debugPageChange = createDebug('PageChange', false);               // 页面切换相关调试
-const debugUserInfo = createDebug('UserInfo', false);                   // 用户信息相关调试
+const debugUserInfo = createDebug('UserInfo', true);                   // 用户信息相关调试
 
 // 创建Debug信息
 function createDebug(namespace = 'default', enabled = false) {
@@ -69,13 +69,14 @@ createDebug.getStatus = () => {
 
 /* ----------DOM后加载脚本---------- */
 document.addEventListener("DOMContentLoaded", () => {
-    setRealViewportHeight();
-    initConfirmDialog()
-    initBGChangeSystem()
-    addAllListener();
-    updateCurrentTime();
-    displayUserInfo();
-    setupImageModal();
+    setRealViewportHeight();                                            // 设置真实视窗高度
+    initConfirmDialog()                                                 // 初始化确认对话框
+    initBGChangeSystem()                                                // 初始化背景切换系统
+    addAllListener();                                                   // 添加所有监听事件
+    updateCurrentTime();                                                // 初始化时间显示
+    setInterval(updateCurrentTime, 1000);                               // 设置每秒更新时间
+    displayUserInfo();                                                  // 获取并显示用户IP及国家
+    setupImageModal();                                                  // 设置图片模态框功能
     console.log(createDebug.getStatus());                               // 检查Debug状态
 });
 /* ----------DOM后加载脚本---------- */
@@ -166,14 +167,14 @@ function setupImageModal() {
             document.body.style.overflow = "hidden";                    // 禁止背景滚动
             modalImg.src = img.dataset.src || img.src;                  // 设置模态框图片的源
             modalImg.style.opacity = "0.5";                             // 设置初始透明度  
-            modalImg.alt = img.alt || "加载中";                        // 设置模态框图片的替代文本
+            modalImg.alt = img.alt || "加载中";                         // 设置模态框图片的替代文本
 
             modalImg.onload = () => {
                 modalImg.style.opacity = "1";                           // 图片加载完成设置透明度为1
             };
 
             modalImg.onerror = () => {
-                modalImg.alt = "图片加载失败";                        // 图片加载失败时设置替代文本
+                modalImg.alt = "图片加载失败";                          // 图片加载失败时设置替代文本
             }
         });
     });
@@ -498,7 +499,7 @@ async function changeBackground(direction = 'next') {
         debugBG(`准备切换到背景: ${nextKey}, URL: ${videoUrl}`);
         await loadVideoToElement(videoUrl, nextVideoElement);           // 预加载视频到备用视频元素
         debugBG('视频预加载成功');
-        
+
         await performFadeTransition();                                  // 执行淡入淡出切换
         swapVideoElements();                                            // 切换完成后，交换两个视频元素的角色
         currentBackgroundIndex = nextIndex;                             // 更新当前索引
@@ -515,7 +516,7 @@ async function changeBackground(direction = 'next') {
 
     } catch (error) {
         debugBG('背景切换失败:', error.message);
-        
+
         resetVideoElements();                                           // 切换失败，重置视频元素状态
 
         return {
@@ -642,7 +643,7 @@ function ensureVideoElements() {
     if (!nextVideoElement) {
         nextVideoElement = document.createElement('video');
         nextVideoElement.id = 'bg_video_other';
-        nextVideoElement.className = 'background-video';
+        nextVideoElement.className = 'background_video';
 
         copyVideoAttributes(currentVideoElement, nextVideoElement);     // 复制主视频元素的所有属性（除了id）
         currentVideoElement.parentNode.appendChild(nextVideoElement);   // 添加到同一层级
@@ -835,6 +836,9 @@ function setupKeyboardShortcuts() {
 /* ----------点击切换背景---------- */
 
 /* ----------获取用户IP及国家------------ */
+let ip = null;
+let country = null;
+
 const ipServices = [
     'https://api.ipify.org?format=json',
     'https://api.ip.sb/ip',
@@ -852,11 +856,11 @@ const geoApis = [
 // 显示用户信息
 async function displayUserInfo() {
     try {
-        const ip = await getUserIP();                                   // 获取IP
-        const country = ip ? await getCountryFromIP(ip) : null;         // 获取国家信息
+        ip = await getUserIP();                                   // 获取IP
+        country = ip ? await getCountryFromIP(ip) : null;         // 获取国家信息
 
-        const ipElement = document.getElementById('user-ip');           // 获取IP容器
-        const countryElement = document.getElementById('user-country'); // 获取国家容器
+        const ipElement = document.getElementById('user_ip');           // 获取IP容器
+        const countryElement = document.getElementById('user_country'); // 获取国家容器
 
         if (ipElement) ipElement.textContent = ip || '无法获取';
         if (countryElement) countryElement.textContent = country || '未知';
@@ -933,13 +937,11 @@ function updateCurrentTime() {
         hour12: false                                                   // 禁用12小时制
     });
 
-    const timeElement = document.getElementById('current-time');
+    const timeElement = document.getElementById('current_time');
     if (timeElement) {
         timeElement.textContent = timeString;
     }
 }
-
-setInterval(updateCurrentTime, 1000);                                   // 设置每秒更新时间
 /* ----------更新时间------------ */
 
 /* ----------设置真实视窗高度---------- */

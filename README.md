@@ -7,9 +7,9 @@ This is a personal website with multiple pages.
 
 ### 首要页面 / Main Landing Page
 
-- 首页页面如图所示：  
-- The homepage is shown as in the picture：  
-  ![图片](/ShowImage.png)
+- 首页页面如图所示(2026/1/2)：  
+- The homepage is shown as in the picture(2026/1/2)：  
+  ![图片](./ShowImage.png)
 
 - 其他页面均为内容页面  
   Other pages are content pages.
@@ -29,4 +29,4 @@ This is a personal website with multiple pages.
 - 请勿转载或盗用  
   Please do not reprint or use it without permission.  
 
-  ![图片](/assets/img/Logo-B-0.png)
+  ![图片](./assets/img/Logo-B-0.png)
