@@ -1,10 +1,82 @@
+/* ----------调试信息---------- */
+// 创建不同模块的调试函数
+const debugBG = createDebug('BG', false);                               // 背景相关调试
+const debugPageChange = createDebug('PageChange', false);               // 页面切换相关调试
+const debugUserInfo = createDebug('UserInfo', false);                   // 用户信息相关调试
+
+// 创建Debug信息
+function createDebug(namespace = 'default', enabled = false) {
+    // 存储所有命名空间的启用状态
+    const debuggers = createDebug.debuggers || {};
+    createDebug.debuggers = debuggers;
+
+    // 如果没有设置过，使用传入的enabled值
+    if (debuggers[namespace] === undefined) {
+        debuggers[namespace] = enabled;
+    }
+
+    // 创建调试函数
+    const debug = (...args) => {
+        if (debuggers[namespace]) {
+            const timestamp = new Date().toISOString();
+            console.log(`[${timestamp}] [${namespace}]`, ...args);
+        }
+    };
+
+    // 添加启用/禁用方法
+    debug.enable = () => {
+        debuggers[namespace] = true;
+        console.log(`[debug] ${namespace} enabled`);
+    };
+
+    debug.disable = () => {
+        debuggers[namespace] = false;
+        console.log(`[debug] ${namespace} disabled`);
+    };
+
+    debug.isEnabled = () => debuggers[namespace];
+
+    return debug;
+}
+
+// 全局启用/禁用所有调试
+createDebug.enableAll = () => {
+    Object.keys(createDebug.debuggers || {}).forEach(namespace => {
+        createDebug.debuggers[namespace] = true;
+    });
+    console.log('[debug] All debuggers enabled');
+};
+
+createDebug.disableAll = () => {
+    Object.keys(createDebug.debuggers || {}).forEach(namespace => {
+        createDebug.debuggers[namespace] = false;
+    });
+    console.log('[debug] All debuggers disabled');
+};
+
+// 设置特定命名空间的启用状态
+createDebug.set = (namespace, enabled) => {
+    if (!createDebug.debuggers) createDebug.debuggers = {};
+    createDebug.debuggers[namespace] = enabled;
+    console.log(`[debug] ${namespace} ${enabled ? 'enabled' : 'disabled'}`);
+};
+
+// 获取所有调试状态
+createDebug.getStatus = () => {
+    return { ...(createDebug.debuggers || {}) };
+};
+/* ----------调试信息---------- */
+
 /* ----------DOM后加载脚本---------- */
 document.addEventListener("DOMContentLoaded", () => {
     setRealViewportHeight();
     initConfirmDialog()
     initBGChangeSystem()
     addAllListener();
+    updateCurrentTime();
+    displayUserInfo();
     setupImageModal();
+    console.log(createDebug.getStatus());                               // 检查Debug状态
 });
 /* ----------DOM后加载脚本---------- */
 
@@ -37,13 +109,13 @@ const BGPath = {
 
 /* ----------监听事件---------- */
 function addAllListener() {
-    window.addEventListener('resize', setRealViewportHeight);       // 视窗尺寸变化时，重新设置真实视窗高度
+    window.addEventListener('resize', setRealViewportHeight);           // 视窗尺寸变化时，重新设置真实视窗高度
 
-    let top_left_area = document.getElementById("top_left");        // 获取页面跳转区域的父级元素
-    let iconBar = document.querySelector('.icon_bar');              // 获取图标栏元素
+    let top_left_area = document.getElementById("top_left");            // 获取页面跳转区域的父级元素
+    let iconBar = document.querySelector('.icon_bar');                  // 获取图标栏元素
 
     // 页面跳转点击事件监听
-    if (top_left_area) {                                            // 个人主页跳转(快速跳转)
+    if (top_left_area) {                                                // 个人主页跳转(快速跳转)
         top_left_area.addEventListener("click", function () {
             quickNavigateToPage("personal_page");
         })
@@ -59,18 +131,18 @@ function addAllListener() {
             }
 
             // 检查id并跳转
-            if (target && target.id === 'bilibili_icon') {          // 哔哩哔哩跳转
+            if (target && target.id === 'bilibili_icon') {              // 哔哩哔哩跳转
                 navigateToPage('bilibili');
-            } else if (target && target.id === 'github_icon') {     // GitHub跳转
+            } else if (target && target.id === 'github_icon') {         // GitHub跳转
                 navigateToPage('github');
-            } else if (target && target.id === 'twitter_icon') {    // Twitter跳转
+            } else if (target && target.id === 'twitter_icon') {        // Twitter跳转
                 navigateToPage('twitter');
             }
         });
     }
 
-    let left_botton = document.getElementById("left_botton");       // 获取左侧切换按键
-    let right_botton = document.getElementById("right_botton");     // 获取右侧切换按键
+    let left_botton = document.getElementById("left_botton");           // 获取左侧切换按键
+    let right_botton = document.getElementById("right_botton");         // 获取右侧切换按键
 
     // 背景切换
     left_botton.addEventListener('click', function () {
@@ -84,45 +156,45 @@ function addAllListener() {
 
 /* ----------点击弹出大图---------- */
 function setupImageModal() {
-    let imgModal = document.getElementById("imgModal");             // 获取模态框元素
-    let modalImg = document.getElementById("modalImg");             // 获取模态框中的图片元素
-    let buttonClose = document.getElementById("closeImgModal");     // 获取关闭按钮元素
+    let imgModal = document.getElementById("imgModal");                 // 获取模态框元素
+    let modalImg = document.getElementById("modalImg");                 // 获取模态框中的图片元素
+    let buttonClose = document.getElementById("closeImgModal");         // 获取关闭按钮元素
 
     document.querySelectorAll("img[src]").forEach(img => {
         img.addEventListener("click", () => {
-            imgModal.style.display = "flex";                        // 显示模态框
-            document.body.style.overflow = "hidden";                // 禁止背景滚动
-            modalImg.src = img.dataset.src || img.src;              // 设置模态框图片的源
-            modalImg.style.opacity = "0.5";                         // 设置初始透明度  
-            modalImg.alt = img.alt || "加载中";                     // 设置模态框图片的替代文本
+            imgModal.style.display = "flex";                            // 显示模态框
+            document.body.style.overflow = "hidden";                    // 禁止背景滚动
+            modalImg.src = img.dataset.src || img.src;                  // 设置模态框图片的源
+            modalImg.style.opacity = "0.5";                             // 设置初始透明度  
+            modalImg.alt = img.alt || "加载中";                        // 设置模态框图片的替代文本
 
             modalImg.onload = () => {
-                modalImg.style.opacity = "1";                       // 图片加载完成设置透明度为1
+                modalImg.style.opacity = "1";                           // 图片加载完成设置透明度为1
             };
 
             modalImg.onerror = () => {
-                modalImg.alt = "图片加载失败";                      // 图片加载失败时设置替代文本
+                modalImg.alt = "图片加载失败";                        // 图片加载失败时设置替代文本
             }
         });
     });
 
     buttonClose.addEventListener("click", () => {
-        imgModal.style.display = "none";                            // 隐藏模态框
-        document.body.style.overflow = "auto";                      // 恢复背景滚动
-        modalImg.src = "";                                          // 清空模态框图片的源
-        modalImg.style.opacity = "0";                               // 重置透明度
-        modalImg.alt = "";                                          // 清空模态框图片的替代文本
+        imgModal.style.display = "none";                                // 隐藏模态框
+        document.body.style.overflow = "auto";                          // 恢复背景滚动
+        modalImg.src = "";                                              // 清空模态框图片的源
+        modalImg.style.opacity = "0";                                   // 重置透明度
+        modalImg.alt = "";                                              // 清空模态框图片的替代文本
     })
 }
 /* ----------点击弹出大图---------- */
 
 /* ----------点击跳转页面---------- */
 // 跳转事件
-function navigateToPage(key, mode) {
+function navigateToPage(key) {
     if (key && PagePath[key]) {
         return showConfirmDialog(key);
     } else {
-        console.warn("PagePath 未定义或键不存在:", key);
+        debugPageChange("PagePath 未定义或键不存在:", key);
         return false;
     }
 }
@@ -134,7 +206,7 @@ function quickNavigateToPage(key) {
         console.log("快速跳转成功:", key);
         return true;
     } else {
-        console.warn("PagePath 未定义或键不存在:", key);
+        debugPageChange("PagePath 未定义或键不存在:", key);
         return false;
     }
 }
@@ -149,7 +221,7 @@ let pendingNavigation = {
 // 显示确认对话框
 function showConfirmDialog(key) {
     if (!key || !PagePath[key]) {
-        console.warn("无效的跳转键:", key);
+        debugPageChange("无效的跳转键:", key);
         return false;
     }
 
@@ -161,21 +233,16 @@ function showConfirmDialog(key) {
     };
 
     // 更新对话框内容
-    const siteNameElement = document.getElementById('confirmSiteName');
+    const siteNameElement = document.getElementById('confirmSiteName'); // 获取跳转目标名称
     if (siteNameElement) {
         siteNameElement.textContent = pendingNavigation.name;
     }
 
     // 显示对话框
-    const overlay = document.getElementById('confirmOverlay');
+    const overlay = document.getElementById('confirmOverlay');          // 获取确定对话页面
     if (overlay) {
         overlay.style.display = 'flex';
         overlay.style.opacity = '1';
-
-        // 聚焦到确定按钮
-        setTimeout(() => {
-            const okBtn = document.getElementById('confirmOk');
-        }, 100);
     }
 
     return true;
@@ -183,7 +250,7 @@ function showConfirmDialog(key) {
 
 // 隐藏确认对话框
 function hideConfirmDialog() {
-    const overlay = document.getElementById('confirmOverlay');
+    const overlay = document.getElementById('confirmOverlay');          // 获取确定对话页面
     if (overlay) {
         overlay.style.opacity = '0';
         setTimeout(() => {
@@ -198,115 +265,113 @@ function hideConfirmDialog() {
 // 确认跳转
 function confirmNavigation() {
     if (pendingNavigation.url) {
-        console.log(`确认跳转到: ${pendingNavigation.name}`);
+        debugPageChange(`确认跳转到: ${pendingNavigation.name}`);
 
-        window.open(pendingNavigation.url, '_blank');
-        hideConfirmDialog();
+        window.open(pendingNavigation.url, '_blank');                   // 新建窗口打开页面
+        hideConfirmDialog();                                            // 隐藏确定对话框
 
         return true;
     }
-    console.warn("没有待跳转的URL");
+    debugPageChange("没有待跳转的URL");
     return false;
 }
 
 // 取消跳转
 function cancelNavigation() {
-    console.log(`取消跳转到: ${pendingNavigation.name}`);
-    hideConfirmDialog();
+    debugPageChange(`取消跳转到: ${pendingNavigation.name}`);
+    hideConfirmDialog();                                                // 隐藏确定对话框
 
     return true;
 }
 
 // 初始化对话框事件
 function initConfirmDialog() {
-    const overlay = document.getElementById('confirmOverlay');
-    const okBtn = document.getElementById('confirmOk');
-    const cancelBtn = document.getElementById('confirmCancel');
+    const overlay = document.getElementById('confirmOverlay');          // 获取确定对话页面
+    const okBtn = document.getElementById('confirmOk');                 // 获取确定按键
+    const cancelBtn = document.getElementById('confirmCancel');         // 获取取消按键
 
     if (!overlay || !okBtn || !cancelBtn) {
-        console.error("确认对话框元素未找到");
+        debugPageChange("确认对话框元素未找到");
         return;
     }
 
     // 确定按钮点击事件
     okBtn.addEventListener('click', function (event) {
         event.preventDefault();
-        confirmNavigation();
+        confirmNavigation();                                            // 确定
     });
 
     // 取消按钮点击事件
     cancelBtn.addEventListener('click', function (event) {
         event.preventDefault();
-        cancelNavigation();
+        cancelNavigation();                                             // 取消
     });
 
     // 点击遮罩层关闭
     overlay.addEventListener('click', function (event) {
         if (event.target === overlay) {
-            cancelNavigation();
+            cancelNavigation();                                         // 取消
         }
     });
 
     // 键盘事件支持
     document.addEventListener('keydown', function (event) {
-        const overlay = document.getElementById('confirmOverlay');
+        const overlay = document.getElementById('confirmOverlay');      // 获取确定对话页面
         if (!overlay || overlay.style.display !== 'flex') return;
 
         // ESC键取消
         if (event.key === 'Escape') {
-            cancelNavigation();
+            cancelNavigation();                                         //取消
         }
         // Enter键确认
         else if (event.key === 'Enter') {
-            confirmNavigation();
+            confirmNavigation();                                        // 确定
         }
     });
-
-    console.log("确认对话框初始化完成");
+    debugPageChange("确认对话框初始化完成");
 }
 /* ----------点击跳转页面---------- */
 
 /* ----------点击切换背景---------- */
 function initBGChangeSystem() {
-    initBackgroundSystem();
-    //setupKeyboardShortcuts();
+    initBackgroundSystem();                                             // 初始化背景系统
+    //setupKeyboardShortcuts();                                         // 添加按键控制
 }
 
-let currentBackgroundIndex = 0;                                     // 当前背景索引
-let backgroundKeys = Object.keys(BGPath);                           // 背景键名数组
-let currentMode = 'sequential';                                     // 当前模式: 'sequential' 顺序, 'random' 随机
-let randomList = [];                                                // 随机列表
-let isChanging = false;                                             // 防止重复点击
-const LOAD_TIMEOUT = 10000;                                         // 加载超时时间
-let currentVideoElement = document.getElementById('bg_video');      // 当前显示的视频
-let nextVideoElement = document.getElementById('bg_video_other');   // 用于淡入的视频
-let isFading = false;                                               // 是否正在淡入淡出
-const FADE_DURATION = 1000;                                         // 淡入淡出动画时间
+let currentBackgroundIndex = 0;                                         // 当前背景索引
+let backgroundKeys = Object.keys(BGPath);                               // 背景键名数组
+let currentMode = 'sequential';                                         // 当前模式: 'sequential' 顺序, 'random' 随机
+let randomList = [];                                                    // 随机列表
+let isChanging = false;                                                 // 防止重复点击
+const LOAD_TIMEOUT = 10000;                                             // 加载超时时间
+let currentVideoElement = document.getElementById('bg_video');          // 当前显示的视频
+let nextVideoElement = document.getElementById('bg_video_other');       // 用于淡入的视频
+let isFading = false;                                                   // 是否正在淡入淡出
+const FADE_DURATION = 1000;                                             // 淡入淡出动画时间
 
 // 模式切换
 function toggleBackgroundMode(mode) {
-    const validModes = ['sequential', 'random'];
+    const validModes = ['sequential', 'random'];                        // 定义切换模式
 
     if (validModes.includes(mode)) {
         currentMode = mode;
-        console.log(`背景切换模式已切换为: ${mode === 'sequential' ? '顺序模式' : '随机模式'}`);
+        debugBG(`背景切换模式已切换为: ${mode === 'sequential' ? '顺序模式' : '随机模式'}`);
 
         // 如果切换到随机模式，生成新的随机列表
         if (mode === 'random') {
-            generateRandomList();
+            generateRandomList();                                       // 生成随机列表
         }
 
         return true;
     } else {
-        console.warn(`无效的模式: ${mode}，支持的模式有: ${validModes.join(', ')}`);
+        debugBG(`无效的模式: ${mode}，支持的模式有: ${validModes.join(', ')}`);
         return false;
     }
 }
 
 // 生成随机列表
 function generateRandomList() {
-    // 获取所有背景的键
-    const keys = Object.keys(BGPath);
+    const keys = Object.keys(BGPath);                                   // 获取所有背景的键
 
     // 如果只有一个或没有背景，直接返回
     if (keys.length <= 1) {
@@ -328,7 +393,7 @@ function generateRandomList() {
     }
 
     randomList = shuffled;
-    console.log('随机列表已生成:', randomList);
+    debugBG('随机列表已生成:', randomList);
 
     return randomList;
 }
@@ -371,21 +436,21 @@ function loadVideo(url) {
 async function changeBackground(direction = 'next') {
     // 防止重复点击
     if (isChanging || isFading) {
-        console.log('正在切换背景，请稍候...');
+        debugBG('正在切换背景，请稍候...');
         return false;
     }
 
     // 检查是否有背景
     if (backgroundKeys.length === 0) {
-        console.warn('BGPath中没有配置任何背景视频');
+        debugBG('BGPath中没有配置任何背景视频');
         return false;
     }
 
     isChanging = true;
-    console.log(`开始切换背景，方向: ${direction}，模式: ${currentMode}`);
+    debugBG(`开始切换背景，方向: ${direction}，模式: ${currentMode}`);
 
     try {
-        // 确定下一个背景的索引和键（与原函数相同）
+        // 确定下一个背景的索引和键
         let nextIndex, nextKey;
 
         if (currentMode === 'sequential') {
@@ -430,23 +495,15 @@ async function changeBackground(direction = 'next') {
             throw new Error(`找不到键 ${nextKey} 对应的视频路径`);
         }
 
-        console.log(`准备切换到背景: ${nextKey}, URL: ${videoUrl}`);
+        debugBG(`准备切换到背景: ${nextKey}, URL: ${videoUrl}`);
+        await loadVideoToElement(videoUrl, nextVideoElement);           // 预加载视频到备用视频元素
+        debugBG('视频预加载成功');
+        
+        await performFadeTransition();                                  // 执行淡入淡出切换
+        swapVideoElements();                                            // 切换完成后，交换两个视频元素的角色
+        currentBackgroundIndex = nextIndex;                             // 更新当前索引
 
-        // 预加载视频到备用视频元素
-        console.log('开始预加载视频到备用视频元素...');
-        await loadVideoToElement(videoUrl, nextVideoElement);
-        console.log('视频预加载成功');
-
-        // 执行淡入淡出切换
-        await performFadeTransition();
-
-        // 切换完成后，交换两个视频元素的角色
-        swapVideoElements();
-
-        // 更新当前索引
-        currentBackgroundIndex = nextIndex;
-
-        console.log(`背景已切换到: ${nextKey}`);
+        debugBG(`背景已切换到: ${nextKey}`);
 
         return {
             success: true,
@@ -457,10 +514,9 @@ async function changeBackground(direction = 'next') {
         };
 
     } catch (error) {
-        console.error('背景切换失败:', error.message);
-
-        // 切换失败，重置视频元素状态
-        resetVideoElements();
+        debugBG('背景切换失败:', error.message);
+        
+        resetVideoElements();                                           // 切换失败，重置视频元素状态
 
         return {
             success: false,
@@ -508,23 +564,20 @@ function performFadeTransition() {
     return new Promise((resolve) => {
         isFading = true;
 
-        console.log('开始淡入淡出动画...');
+        debugBG('开始淡入淡出动画...');
 
         // 备用视频开始播放
         nextVideoElement.play().catch(e => {
-            console.warn('备用视频播放失败:', e);
+            debugBG('备用视频播放失败:', e);
         });
 
-        // 主视频淡出
-        currentVideoElement.style.opacity = '0';
-
-        // 备用视频淡入
-        nextVideoElement.style.opacity = '1';
+        currentVideoElement.style.opacity = '0';                        // 主视频淡出
+        nextVideoElement.style.opacity = '1';                           // 备用视频淡入
 
         // 等待淡入淡出动画完成
         setTimeout(() => {
             isFading = false;
-            console.log('淡入淡出动画完成');
+            debugBG('淡入淡出动画完成');
             resolve();
         }, FADE_DURATION);
     });
@@ -549,7 +602,7 @@ function swapVideoElements() {
     currentVideoElement.style.opacity = '1';
     nextVideoElement.style.opacity = '0';
 
-    console.log('视频元素角色已交换');
+    debugBG('视频元素角色已交换');
 }
 
 // 重置视频元素状态
@@ -559,7 +612,7 @@ function resetVideoElements() {
     nextVideoElement.style.opacity = '0';
     isFading = false;
 
-    console.log('视频元素状态已重置');
+    debugBG('视频元素状态已重置');
 }
 
 // 获取当前背景信息
@@ -580,9 +633,8 @@ function getCurrentBackground() {
 
 // 确保视频元素存在
 function ensureVideoElements() {
-    // 主视频元素应该已经存在于HTML中
     if (!currentVideoElement) {
-        console.error('找不到主视频元素 bg_video');
+        debugBG('找不到主视频元素 bg_video');
         return false;
     }
 
@@ -592,13 +644,10 @@ function ensureVideoElements() {
         nextVideoElement.id = 'bg_video_other';
         nextVideoElement.className = 'background-video';
 
-        // 复制主视频元素的所有属性（除了id）
-        copyVideoAttributes(currentVideoElement, nextVideoElement);
+        copyVideoAttributes(currentVideoElement, nextVideoElement);     // 复制主视频元素的所有属性（除了id）
+        currentVideoElement.parentNode.appendChild(nextVideoElement);   // 添加到同一层级
 
-        // 添加到同一层级
-        currentVideoElement.parentNode.appendChild(nextVideoElement);
-
-        console.log('已创建备用视频元素');
+        debugBG('已创建备用视频元素');
     }
 
     return true;
@@ -631,7 +680,7 @@ function copyVideoAttributes(source, target) {
 // 初始化视频元素状态
 function initVideoElements() {
     if (currentVideoElement && nextVideoElement) {
-        // 主视频（当前显示）
+        // 主视频
         currentVideoElement.style.position = 'absolute';
         currentVideoElement.style.top = '0';
         currentVideoElement.style.left = '0';
@@ -655,28 +704,22 @@ function initVideoElements() {
     }
 }
 
-// 初始化函数
+// 初始化背景系统
 function initBackgroundSystem() {
-    // 更新背景键列表
-    backgroundKeys = Object.keys(BGPath);
+    backgroundKeys = Object.keys(BGPath);                               // 更新背景键列表
 
     // 初始化视频元素
     if (backgroundKeys.length > 0) {
-        // 确保两个视频元素存在
-        ensureVideoElements();
+        ensureVideoElements();                                          // 确保两个视频元素存在
+        initVideoElements();                                            // 初始化视频元素状态
+        generateRandomList();                                           // 初始化随机列表
 
-        // 初始化视频元素状态
-        initVideoElements();
-
-        // 初始化随机列表
-        generateRandomList();
-
-        console.log('背景系统初始化完成');
-        console.log(`总共有 ${backgroundKeys.length} 个背景`);
-        console.log(`当前模式: ${currentMode}`);
-        console.log(`当前背景: ${getCurrentBackground()?.key || '无'}`);
+        debugBG('背景系统初始化完成');
+        debugBG(`总共有 ${backgroundKeys.length} 个背景`);
+        debugBG(`当前模式: ${currentMode}`);
+        debugBG(`当前背景: ${getCurrentBackground()?.key || '无'}`);
     } else {
-        console.warn('背景系统初始化: BGPath中没有配置任何背景视频');
+        debugBG('背景系统初始化: BGPath中没有配置任何背景视频');
     }
 }
 
@@ -684,13 +727,13 @@ function initBackgroundSystem() {
 // 直接切换到指定索引的背景
 async function changeToBackgroundIndex(index) {
     if (index < 0 || index >= backgroundKeys.length) {
-        console.warn(`索引 ${index} 超出范围 (0-${backgroundKeys.length - 1})`);
+        debugBG(`索引 ${index} 超出范围 (0-${backgroundKeys.length - 1})`);
         return false;
     }
 
     // 如果要切换的就是当前背景，直接返回
     if (index === currentBackgroundIndex) {
-        console.log('已经是当前背景，无需切换');
+        debugBG('已经是当前背景，无需切换');
         return { success: true, key: backgroundKeys[index] };
     }
 
@@ -701,14 +744,11 @@ async function changeToBackgroundIndex(index) {
     currentMode = 'sequential';
     currentBackgroundIndex = index - 1;
 
-    // 调用切换函数
-    const result = await changeBackground('next');
+    const result = await changeBackground('next');                      // 调用切换函数
 
-    // 恢复原模式
-    currentMode = originalMode;
+    currentMode = originalMode;                                         // 恢复原模式
 
-    if (!result.success) {
-        // 如果失败，恢复原索引
+    if (!result.success) {                                              // 如果失败，恢复原索引
         currentBackgroundIndex = originalIndex;
     }
 
@@ -719,7 +759,7 @@ async function changeToBackgroundIndex(index) {
 async function changeToBackgroundKey(key) {
     const index = backgroundKeys.indexOf(key);
     if (index === -1) {
-        console.warn(`找不到键为 "${key}" 的背景`);
+        debugBG(`找不到键为 "${key}" 的背景`);
         return false;
     }
 
@@ -740,7 +780,7 @@ function pauseBackgroundVideo() {
 function playBackgroundVideo() {
     if (currentVideoElement) {
         currentVideoElement.play().catch(e => {
-            console.warn('背景视频播放失败:', e);
+            debugBG('背景视频播放失败:', e);
         });
     }
 }
@@ -757,7 +797,7 @@ function setFadeDuration(duration) {
         nextVideoElement.style.transition = `opacity ${duration}ms ease-in-out`;
     }
 
-    console.log(`淡入淡出时长已设置为: ${duration}ms`);
+    debugBG(`淡入淡出时长已设置为: ${duration}ms`);
 }
 
 // 添加键盘快捷键支持
@@ -776,12 +816,12 @@ function setupKeyboardShortcuts() {
         // R键 - 切换随机模式
         else if (event.key === 'r' || event.key === 'R') {
             toggleBackgroundMode('random');
-            console.log('已切换到随机模式 (按S键切换回顺序模式)');
+            debugBG('已切换到随机模式 (按S键切换回顺序模式)');
         }
         // S键 - 切换顺序模式
         else if (event.key === 's' || event.key === 'S') {
             toggleBackgroundMode('sequential');
-            console.log('已切换到顺序模式 (按R键切换回随机模式)');
+            debugBG('已切换到顺序模式 (按R键切换回随机模式)');
         }
         // 数字键1-9 - 直接切换到对应索引的背景
         else if (event.key >= '1' && event.key <= '9') {
@@ -794,7 +834,116 @@ function setupKeyboardShortcuts() {
 }
 /* ----------点击切换背景---------- */
 
+/* ----------获取用户IP及国家------------ */
+const ipServices = [
+    'https://api.ipify.org?format=json',
+    'https://api.ip.sb/ip',
+    'https://api.myip.com',
+    'https://ipinfo.io/json',
+    'https://ipapi.co/json/'
+];
+
+const geoApis = [
+    `https://ipapi.co/${ip}/json/`,
+    `https://ipwho.is/${ip}`,
+    `https://ipinfo.io/${ip}/json`
+];
+
+// 显示用户信息
+async function displayUserInfo() {
+    try {
+        const ip = await getUserIP();                                   // 获取IP
+        const country = ip ? await getCountryFromIP(ip) : null;         // 获取国家信息
+
+        const ipElement = document.getElementById('user-ip');           // 获取IP容器
+        const countryElement = document.getElementById('user-country'); // 获取国家容器
+
+        if (ipElement) ipElement.textContent = ip || '无法获取';
+        if (countryElement) countryElement.textContent = country || '未知';
+
+    } catch (error) {
+        debugUserInfo('获取用户信息失败:', error);
+    }
+}
+
+// 获取IP
+async function getUserIP() {
+    for (let service of ipServices) {
+        try {
+            const response = await fetch(service, {                     // 尝试获取IP
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (!response.ok) continue;
+
+            const data = await response.json();
+
+            let ip;
+            if (data.ip) ip = data.ip;
+            else if (data.ip_address) ip = data.ip_address;
+            else if (typeof data === 'string') ip = data.trim();
+
+            if (ip) return ip;
+        } catch (error) {
+            debugUserInfo(`服务 ${service} 失败，尝试下一个`);
+            continue;
+        }
+    }
+    return null;
+}
+
+// 获取国家
+async function getCountryFromIP(ip) {
+    if (!ip) return null;
+
+    for (let api of geoApis) {                                          // 尝试获取国家
+        try {
+            const response = await fetch(api);
+            if (!response.ok) continue;
+
+            const data = await response.json();
+
+            let country;
+            if (data.country_name) country = data.country_name;
+            else if (data.country) country = data.country;
+            else if (data.countryName) country = data.countryName;
+
+            if (country) return country;
+        } catch (error) {
+            continue;
+        }
+    }
+    return null;
+}
+/* ----------获取用户IP及国家------------ */
+
+/* ----------更新时间------------ */
+function updateCurrentTime() {
+    const now = new Date();
+    const timeString = now.toLocaleString('zh-CN', {
+        year: 'numeric',                                                // 设置显示完整年份
+        month: '2-digit',                                               // 设置显示两位数
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false                                                   // 禁用12小时制
+    });
+
+    const timeElement = document.getElementById('current-time');
+    if (timeElement) {
+        timeElement.textContent = timeString;
+    }
+}
+
+setInterval(updateCurrentTime, 1000);                                   // 设置每秒更新时间
+/* ----------更新时间------------ */
+
 /* ----------设置真实视窗高度---------- */
+
 function setRealViewportHeight() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
