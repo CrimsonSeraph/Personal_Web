@@ -23,9 +23,10 @@
     --botton-shadow: 2px 2px 4px rgba(22, 34, 42, 0.5);
     --botton-shadow-other: 2px 2px 4px rgba(255, 255, 0, 0.5);
     /* 图标属性 */
-    --icon-color: rgba(135, 206, 235, 1);
+    --icon-color: rgba(255, 255, 255， 1);
     --icon-color-other: rgba(0, 0, 139, 1);
     --icon-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    --icon-stroke: rgb(255, 233, 116, 0.5);
     /* 确定栏属性 */
     --confirm-text-color: rgba(25, 25, 112, 1);
     --confirm-text-color-other: rgba(255, 0, 0, 1);
@@ -195,7 +196,7 @@ p, button {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(0.5rem, 1vw, 1rem);
+    gap: clamp(0.5rem, 0.5vw, 1rem);
     padding: clamp(0.5rem, 2.5vw, 1.5rem);
 }
 
@@ -463,7 +464,12 @@ p, button {
     justify-content: center;
 }
 
-    .mid_part_left p {
+    .mid_part_left .botton {
+        width: 4rem;
+        height: auto;
+    }
+
+    .mid_part_left svg {
         font-size: 4rem;
         color: var(--botton);
         text-shadow: var(--botton-shadow);
@@ -471,9 +477,14 @@ p, button {
         transition: var(--transform-transition), var(--text-shadow-transition);
     }
 
-        .mid_part_left p:hover {
+        .mid_part_left svg:hover {
             transform: scale(1.1);
             text-shadow: var(--botton-shadow-other);
+        }
+
+        .mid_part_left svg path {
+            stroke: var(--icon-stroke);
+            stroke-width: 10;
         }
 
 .mid_part_mid {
@@ -488,7 +499,12 @@ p, button {
     justify-content: center;
 }
 
-    .mid_part_right p {
+    .mid_part_right .botton {
+        width: 4rem;
+        height: auto;
+    }
+
+    .mid_part_right svg {
         font-size: 4rem;
         color: var(--botton);
         text-shadow: var(--botton-shadow);
@@ -496,9 +512,14 @@ p, button {
         transition: var(--transform-transition), var(--text-shadow-transition);
     }
 
-        .mid_part_right p:hover {
+        .mid_part_right svg:hover {
             transform: scale(1.1);
             text-shadow: var(--botton-shadow-other);
+        }
+
+        .mid_part_right svg path {
+            stroke: var(--icon-stroke);
+            stroke-width: 10;
         }
 /* -中间栏 容器- */
 

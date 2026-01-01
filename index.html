@@ -110,13 +110,17 @@
         <!-- 中间容器 -->
         <div class="mid_part">
             <div class="mid_part_left">
-                <p class="no-select" id="left_botton">◀</p>
+                <div class="button" id="left_botton">
+                    <i class="fa-solid fa-chevron-left no-select"></i>
+                </div>
             </div>
 
             <div class="mid_part_mid"></div>
 
             <div class="mid_part_right">
-                <p class="no-select" id="right_botton">▶</p>
+                <div class="button" id="right_botton">
+                    <i class="fa-solid fa-chevron-right no-select"></i>
+                </div>
             </div>
         </div>
         <!-- /中间容器 -->
@@ -150,13 +154,13 @@
     <!-- 页面内容容器 -->
     <!-- 跳转提示框 -->
     <div class="confirm-overlay" id="confirmOverlay">
-            <div class="confirm-content">
-                <p>是否跳转到<span id="confirmSiteName">...</span>？</p>
-            </div>
-            <div class="confirm-buttons">
-                <button id="confirmCancel" class="btn-cancel">取消</button>
-                <button id="confirmOk" class="btn-ok">确定</button>
-            </div>
+        <div class="confirm-content">
+            <p>是否跳转到<span id="confirmSiteName">...</span>？</p>
+        </div>
+        <div class="confirm-buttons">
+            <button id="confirmCancel" class="btn-cancel">取消</button>
+            <button id="confirmOk" class="btn-ok">确定</button>
+        </div>
     </div>
     <!-- /提示框 -->
     <!-- /图片显示容器 -->
