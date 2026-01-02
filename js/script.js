@@ -840,27 +840,25 @@ let ip = null;
 let country = null;
 
 const ipServices = [
-    'https://api.ipify.org?format=json',
-    'https://api.ip.sb/ip',
     'https://api.myip.com',
-    'https://ipinfo.io/json',
     'https://ipapi.co/json/'
 ];
 
 const geoApis = [
-    `https://ipapi.co/${ip}/json/`,
-    `https://ipwho.is/${ip}`,
-    `https://ipinfo.io/${ip}/json`
+    (ip) => `https://api.myip.com/${ip}/json/`,
+    (ip) => `https://ipwho.is/${ip}`,
+    (ip) => `https://ipinfo.io/${ip}/json`
 ];
 
 // 显示用户信息
 async function displayUserInfo() {
     try {
-        ip = await getUserIP();                                   // 获取IP
-        country = ip ? await getCountryFromIP(ip) : null;         // 获取国家信息
+        const result = await getUserIPAndCountry(); // 同时获取IP和国家
+        ip = result.ip;
+        country = result.country;
 
-        const ipElement = document.getElementById('user_ip');           // 获取IP容器
-        const countryElement = document.getElementById('user_country'); // 获取国家容器
+        const ipElement = document.getElementById('user_ip');
+        const countryElement = document.getElementById('user_country');
 
         if (ipElement) ipElement.textContent = ip || '无法获取';
         if (countryElement) countryElement.textContent = country || '未知';
@@ -870,11 +868,11 @@ async function displayUserInfo() {
     }
 }
 
-// 获取IP
-async function getUserIP() {
+// 同时获取IP和国家信息
+async function getUserIPAndCountry() {
     for (let service of ipServices) {
         try {
-            const response = await fetch(service, {                     // 尝试获取IP
+            const response = await fetch(service, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
@@ -885,27 +883,50 @@ async function getUserIP() {
 
             const data = await response.json();
 
-            let ip;
-            if (data.ip) ip = data.ip;
-            else if (data.ip_address) ip = data.ip_address;
-            else if (typeof data === 'string') ip = data.trim();
+            // 从响应数据中提取IP和国家
+            let ip, country;
 
-            if (ip) return ip;
+            if (service.includes('ipapi.co')) {
+                // ipapi.co 的响应格式
+                ip = data.ip;
+                country = data.country_name || data.country;
+            } else if (service.includes('myip.com')) {
+                // myip.com 的响应格式
+                ip = data.ip;
+                country = data.country;
+            } else {
+                // 通用格式
+                ip = data.ip || data.ip_address;
+                country = data.country_name || data.country || data.countryName;
+            }
+
+            if (ip) {
+                // 如果已经有国家信息，直接返回
+                if (country) {
+                    return { ip, country };
+                }
+                // 如果没有国家信息，尝试用IP获取国家
+                const countryInfo = await getCountryFromIP(ip);
+                return { ip, country: countryInfo };
+            }
         } catch (error) {
             debugUserInfo(`服务 ${service} 失败，尝试下一个`);
             continue;
         }
     }
-    return null;
+
+    // 所有服务都失败
+    return { ip: null, country: null };
 }
 
-// 获取国家
+// 用IP获取国家信息（当IP服务没有返回国家信息时使用）
 async function getCountryFromIP(ip) {
     if (!ip) return null;
 
-    for (let api of geoApis) {                                          // 尝试获取国家
+    for (let apiGenerator of geoApis) {
         try {
-            const response = await fetch(api);
+            const apiUrl = apiGenerator(ip);
+            const response = await fetch(apiUrl);
             if (!response.ok) continue;
 
             const data = await response.json();
