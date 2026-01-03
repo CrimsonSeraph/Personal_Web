@@ -767,19 +767,33 @@ function updateDisplayInfo() {
         modeIcon = "fa-arrows-rotate";
         modeNameDisplay = "随机模式";
     }
-
-    // 更新模式显示
-    document.getElementById("ModeName").textContent = modeNameDisplay;
+    
+    document.getElementById("ModeName").textContent = modeNameDisplay;  // 更新模式显示
 
     // 更新模式切换按钮的文本和图标
-    const modeTextElement = document.querySelector('.p_icon.normal_card p.no_select');
-    const modeIconElement = document.querySelector('.p_icon.normal_card i.fa-solid');
+    const modeToggleContainer = document.querySelector('.p_icon.normal_card');
+    if (modeToggleContainer) {
+        // 更新文本
+        const modeTextElement = modeToggleContainer.querySelector('p.no_select');
+        if (modeTextElement) {
+            modeTextElement.textContent = modeText;
+        }
 
-    if (modeTextElement) {
-        modeTextElement.textContent = modeText;
-    }
-    if (modeIconElement) {
-        modeIconElement.className = `fa-solid ${modeIcon} pointer`;     // 移除现有图标类，添加新图标类
+        // 找到现有的图标元素（可能是 i 或 svg）
+        const oldIcon = modeToggleContainer.querySelector('i.fa-solid, svg.svg-inline--fa');
+
+        // 创建新的 i 元素（让 Font Awesome 自动处理）
+        const newIcon = document.createElement('i');
+        newIcon.className = `fa-solid ${modeIcon} pointer`;
+
+        // 替换图标元素
+        if (oldIcon) {
+            oldIcon.replaceWith(newIcon);
+        } else {
+            // 如果没有找到图标元素，直接添加到容器中
+            const iconParent = modeTextElement ? modeTextElement.nextElementSibling ? modeToggleContainer : modeToggleContainer : modeToggleContainer;
+            iconParent.appendChild(newIcon);
+        }
     }
 
     debugBG(`显示信息已更新 - 背景: ${bgName}, 模式: ${modeNameDisplay}`);
