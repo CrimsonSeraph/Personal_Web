@@ -13,7 +13,7 @@
     --normal-card-bg-other: linear-gradient(60deg, rgba(255, 192, 203, 0.80) 10%, rgba(255, 255, 255, 0.80) 50%, rgba(135, 206, 235, 0.80) 80%);
     /* 文本颜色 */
     --text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.5);
-    --text-shadow-normal: 0 0 2px rgba(0, 0, 0, 1);
+    --text-shadow-normal: 0 0 2px rgba(0, 0, 0, 0.8);
     --text-normal: rgba(255, 255, 255, 1);
     --text-normal-other: rgba(0, 0, 139, 1);
     --text-emphasize: rgba(255, 215, 0, 1);
@@ -23,8 +23,8 @@
     --botton-shadow: 2px 2px 4px rgba(22, 34, 42, 0.5);
     --botton-shadow-other: 2px 2px 4px rgba(255, 255, 0, 0.5);
     /* 图标属性 */
-    --icon-color: rgba(255, 255, 255， 1);
-    --icon-color-other: rgba(0, 0, 139, 1);
+    --icon-color: rgba(0, 0, 139, 1);
+    --icon-color-other: rgba(99, 184, 255, 1);
     --icon-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     --icon-stroke: rgb(255, 233, 116, 0.5);
     /* 确定栏属性 */
@@ -113,6 +113,15 @@ p, button {
 .outline {
     text-shadow: var(--text-shadow-normal);
 }
+
+.amplify {
+    transition: var(--transform-transition);
+    transform: scale(1);
+}
+
+    .amplify:hover {
+        transform: scale(1.2);
+    }
 
 .normal_card {
     position: relative;
@@ -235,14 +244,39 @@ p, button {
 }
 
     .icon_bar svg {
+        font-size: clamp(1.2rem, 3vw, 2rem);
         color: var(--icon-color);
         text-shadow: var(--icon-shadow);
         transition: var(--icon-transition);
         flex-shrink: 0;
     }
 
-        .icon_bar svg:hover {
-            color: var(--icon-color-other);
+    .icon_bar svg:hover{
+        color: var(--icon-color-other);
+    }
+
+    .icon_bar .pink {
+        color: rgba(238, 162, 173, 1);
+    }
+
+        .icon_bar .pink:hover {
+            color: rgba(255, 192, 203, 1);
+        }
+
+    .icon_bar .gold {
+        color: rgba(238, 201, 0, 1);
+    }
+
+        .icon_bar .gold:hover {
+            color: rgba(255, 225, 0, 1);
+        }
+
+    .icon_bar .black {
+        color: rgba(0, 0, 0, 1);
+    }
+
+        .icon_bar .black:hover {
+            color: rgba(40, 40, 40, 1);
         }
 
 .top_right_top_part .icon_bar {
@@ -255,12 +289,8 @@ p, button {
         font-size: clamp(1.2rem, 3vw, 2rem);
     }
 
-        .top_right_top_part .icon_bar svg:hover {
-            transform: scale(1.2) translateX(-10%);
-        }
-
 .top_right_top_special_part .icon_bar {
-    gap: clamp(0.5rem, 0.5vw, 1rem);
+    gap: clamp(0.5rem, 1vw, 1rem);
     padding: clamp(0.5rem, 2.5vw, 1.5rem);
 }
 
@@ -275,7 +305,7 @@ p, button {
 
     .top_right_top_special_part .icon_bar .separate {
         position: relative;
-        width: 10%;
+        width: 5%;
         height: 140%;
         transform: translateY(-10%);
     }
