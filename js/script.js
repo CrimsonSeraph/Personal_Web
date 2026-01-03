@@ -2,7 +2,7 @@
 // 创建不同模块的调试函数
 const debugBG = createDebug('BG', false);                               // 背景相关调试
 const debugPageChange = createDebug('PageChange', false);               // 页面切换相关调试
-const debugUserInfo = createDebug('UserInfo', true);                   // 用户信息相关调试
+const debugUserInfo = createDebug('UserInfo', false);                   // 用户信息相关调试
 
 // 创建Debug信息
 function createDebug(namespace = 'default', enabled = false) {
