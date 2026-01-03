@@ -106,6 +106,12 @@ const BGPath = {
     video_BG_1: "./assets/video/video_BG_1.mp4",
     video_BG_2: "./assets/video/video_BG_2.mp4",
 };
+
+const BGName = {
+    //Video: "name",
+    video_BG_1: "初音_赏月",
+    video_BG_2: "初音_夜莺",
+}
 /* ----------资源路径---------- */
 
 /* ----------监听事件---------- */
@@ -152,6 +158,19 @@ function addAllListener() {
     right_botton.addEventListener('click', function () {
         changeBackground('next')
     });
+
+    // 模式切换
+    let modeToggleBtn = document.querySelector('.p_icon.normal_card');
+    if (modeToggleBtn) {
+        modeToggleBtn.addEventListener('click', function () {
+            // 切换模式
+            if (currentMode === 'sequential') {
+                toggleBackgroundMode('random');
+            } else {
+                toggleBackgroundMode('sequential');
+            }
+        });
+    }
 }
 /* ----------监听事件---------- */
 
@@ -336,6 +355,7 @@ function initConfirmDialog() {
 /* ----------点击切换背景---------- */
 function initBGChangeSystem() {
     initBackgroundSystem();                                             // 初始化背景系统
+    updateDisplayInfo();                                                // 初始化背景与模式信息
     //setupKeyboardShortcuts();                                         // 添加按键控制
 }
 
@@ -362,6 +382,8 @@ function toggleBackgroundMode(mode) {
         if (mode === 'random') {
             generateRandomList();                                       // 生成随机列表
         }
+
+        updateDisplayInfo();                                            // 更新信息
 
         return true;
     } else {
@@ -505,6 +527,8 @@ async function changeBackground(direction = 'next') {
         currentBackgroundIndex = nextIndex;                             // 更新当前索引
 
         debugBG(`背景已切换到: ${nextKey}`);
+
+        updateDisplayInfo();                                            // 更新信息
 
         return {
             success: true,
@@ -714,6 +738,7 @@ function initBackgroundSystem() {
         ensureVideoElements();                                          // 确保两个视频元素存在
         initVideoElements();                                            // 初始化视频元素状态
         generateRandomList();                                           // 初始化随机列表
+        updateDisplayInfo();                                            // 初始化显示信息
 
         debugBG('背景系统初始化完成');
         debugBG(`总共有 ${backgroundKeys.length} 个背景`);
@@ -724,7 +749,42 @@ function initBackgroundSystem() {
     }
 }
 
-//辅助函数
+// 更新背景信息
+function updateDisplayInfo() {
+    // 更新背景名称
+    const bgKey = backgroundKeys[currentBackgroundIndex];
+    const bgName = BGName[bgKey] || bgKey;
+    document.getElementById("BGName").textContent = bgName;
+
+    // 更新模式名称
+    let modeText, modeIcon, modeNameDisplay;
+    if (currentMode === 'sequential') {
+        modeText = "随机";
+        modeIcon = "fa-shuffle";
+        modeNameDisplay = "顺序模式";
+    } else {
+        modeText = "顺序";
+        modeIcon = "fa-arrows-rotate";
+        modeNameDisplay = "随机模式";
+    }
+
+    // 更新模式显示
+    document.getElementById("ModeName").textContent = modeNameDisplay;
+
+    // 更新模式切换按钮的文本和图标
+    const modeTextElement = document.querySelector('.p_icon.normal_card p.no_select');
+    const modeIconElement = document.querySelector('.p_icon.normal_card i.fa-solid');
+
+    if (modeTextElement) {
+        modeTextElement.textContent = modeText;
+    }
+    if (modeIconElement) {
+        modeIconElement.className = `fa-solid ${modeIcon} pointer`;     // 移除现有图标类，添加新图标类
+    }
+
+    debugBG(`显示信息已更新 - 背景: ${bgName}, 模式: ${modeNameDisplay}`);
+}
+
 // 直接切换到指定索引的背景
 async function changeToBackgroundIndex(index) {
     if (index < 0 || index >= backgroundKeys.length) {

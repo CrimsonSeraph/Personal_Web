@@ -11,6 +11,8 @@
     --top-left-bg-other: linear-gradient(45deg, rgba(22, 34, 42, 1) 0%, rgba(58, 96, 115, 1) 50%, rgba(92, 151, 191, 1) 100%);
     --normal-card-bg: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 30%, rgba(135, 206, 235, 0.70) 60%);
     --normal-card-bg-other: linear-gradient(60deg, rgba(255, 192, 203, 0.80) 10%, rgba(255, 255, 255, 0.80) 50%, rgba(135, 206, 235, 0.80) 80%);
+    --special-card-bg: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 30%, rgba(135, 206, 235, 0.70) 60%);
+    --special-card-bg-other: linear-gradient(60deg, rgba(255, 192, 203, 0.80) 10%, rgba(255, 255, 255, 0.80) 50%, rgba(135, 206, 235, 0.80) 80%);
     /* 文本颜色 */
     --text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.5);
     --text-shadow-normal: 0 0 2px rgba(0, 0, 0, 0.8);
@@ -81,16 +83,26 @@ div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
-.top_right_top_part .p_bar {
-    margin: 1rem;
-    transform: translateX(-10%);
-    width: 50%;
+.p_bar_row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 60%;
 }
+
+    .p_bar_row p {
+        padding: 0 0.5rem;
+    }
 
 p, button {
-    flex: 1;
+    width: fit-content;
+    display: inline-block;
+    max-width: 100%;
     margin: 0;
     padding: 0;
     white-space: nowrap;
@@ -116,6 +128,10 @@ p, button {
     text-shadow: var(--text-shadow-normal);
 }
 
+.no_outline {
+    text-shadow: none;
+}
+
 .amplify {
     transition: var(--transform-transition);
     transform: scale(1);
@@ -124,6 +140,24 @@ p, button {
     .amplify:hover {
         transform: scale(1.2);
     }
+
+.p_icon_bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    width: 100%;
+}
+
+.p_icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+}
 
 .normal_card {
     position: relative;
@@ -150,6 +184,23 @@ p, button {
         background: var(--normal-card-bg-other);
         transform: skew(-20deg)scale(1.01);
         box-shadow: var(--box-shadow-other);
+    }
+
+.special_card {
+    position: relative;
+}
+
+    .special_card::before {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: skew(-20deg)scale(1);
+        border-radius: 10px;
+        background: var(--special-card-bg);
+        background-size: 200% 200%;
+        box-shadow: var(--box-shadow);
     }
 
 .no_select {
@@ -281,50 +332,6 @@ p, button {
             color: rgba(40, 40, 40, 1);
         }
 
-.top_right_top_part .icon_bar {
-    height: 100%;
-    flex: 0 0 30%;
-    transform: translateX(20%);
-}
-
-    .top_right_top_part .icon_bar svg {
-        font-size: clamp(1.2rem, 3vw, 2rem);
-    }
-
-.top_right_top_special_part .icon_bar {
-    gap: clamp(0.5rem, 1vw, 1rem);
-    padding: clamp(0.5rem, 2.5vw, 1.5rem);
-}
-
-    .top_right_top_special_part .icon_bar svg {
-        font-size: clamp(1.2rem, 3vw, 2rem);
-        transform: translateX(-20%);
-    }
-
-        .top_right_top_special_part .icon_bar svg:hover {
-            transform: scale(1.2) translateX(-20%);
-        }
-
-    .top_right_top_special_part .icon_bar .separate {
-        position: relative;
-        width: 5%;
-        height: 140%;
-        transform: translateY(-10%);
-    }
-
-        .top_right_top_special_part .icon_bar .separate::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 25%;
-            height: 100%;
-            transform: skew(-20deg)scale(1);
-            border-radius: 2px;
-            background: var(--text-normal);
-            background-size: 200% 200%;
-            box-shadow: var(--text-shadow);
-        }
 /* -图标- */
 
 /* 页面内容容器 */
@@ -521,15 +528,94 @@ p, button {
         align-items: center;
     }
 
+    .top_right_top_part .p_bar {
+        margin: 1rem;
+        transform: translateX(-10%);
+        width: 50%;
+    }
+
+    .top_right_top_part .icon_bar {
+        height: 100%;
+        flex: 0 0 30%;
+        transform: translateX(20%);
+    }
+
+        .top_right_top_part .icon_bar svg {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+        }
+
 .top_right_top_special_part {
     flex: 0 0 30%
 }
 
+    .top_right_top_special_part .icon_bar {
+        gap: clamp(0.5rem, 1vw, 1rem);
+        padding: clamp(0.5rem, 2.5vw, 1.5rem);
+    }
+
+        .top_right_top_special_part .icon_bar svg {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            transform: translateX(-20%);
+        }
+
+            .top_right_top_special_part .icon_bar svg:hover {
+                transform: scale(1.2) translateX(-20%);
+            }
+
+        .top_right_top_special_part .icon_bar .separate {
+            position: relative;
+            width: 5%;
+            height: 140%;
+            transform: translateY(-10%);
+        }
+
+            .top_right_top_special_part .icon_bar .separate::before {
+                content: '';
+                position: absolute;
+                top: 10%;
+                left: 10%;
+                width: 25%;
+                height: 100%;
+                transform: skew(-20deg)scale(1);
+                border-radius: 2px;
+                background: var(--text-normal);
+                background-size: 200% 200%;
+                box-shadow: var(--text-shadow);
+            }
+
 .top_right_bottom {
     flex: 1;
+    display: flex;
 }
-/* -顶栏 容器- */
 
+.top_right_bottom_left {
+    flex: 0 0 75%;
+}
+
+.top_right_bottom_right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-15%);
+}
+
+    .top_right_bottom_right .p_bar_row p {
+        flex: 1;
+        color: var(--text-normal);
+    }
+
+    .top_right_bottom_right .p_icon_bar p {
+        flex: 1;
+        color: var(--text-normal-other);
+    }
+
+    .top_right_bottom_right .icon_bar {
+        flex: 1;
+    }
+/* -顶栏 容器- */
 /* 中顶栏 容器 */
 .mid_top_left {
     position: relative;
