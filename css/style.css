@@ -77,12 +77,14 @@ div {
 }
 
 .p_bar {
-    margin: 1rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .top_right_top_part .p_bar {
+    margin: 1rem;
     transform: translateX(-10%);
     width: 50%;
 }
@@ -251,9 +253,9 @@ p, button {
         flex-shrink: 0;
     }
 
-    .icon_bar svg:hover{
-        color: var(--icon-color-other);
-    }
+        .icon_bar svg:hover {
+            color: var(--icon-color-other);
+        }
 
     .icon_bar .pink {
         color: rgba(238, 162, 173, 1);
@@ -637,17 +639,23 @@ p, button {
 .bottom_right {
     position: relative;
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-    .bottom_right .user_info {
-        transform: translateY(175%) translateX(25%);
-    }
+.bottom_right_top {
+    flex: 0 0 57%;
+}
 
-        .bottom_right .user_info p {
-            width: 40%;
-            font-size: 0.8rem;
-            color: var(--text-emphasize);
-        }
+.bottom_right_bottom {
+    flex: 1;
+}
+
+    .bottom_right_bottom p {
+        width: 40%;
+        font-size: 0.8rem;
+        color: var(--text-emphasize);
+    }
 
 .bottom_bg {
     position: absolute;
