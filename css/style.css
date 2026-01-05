@@ -549,13 +549,13 @@ p, button {
 }
 
     .top_right_top_special_part .icon_bar {
-        gap: clamp(0.5rem, 1vw, 1rem);
+        gap: clamp(0.1rem, 0.5vw, 1rem);
         padding: clamp(0.5rem, 2.5vw, 1.5rem);
     }
 
         .top_right_top_special_part .icon_bar svg {
             font-size: clamp(1.2rem, 3vw, 2rem);
-            transform: translateX(-20%);
+            transform: translateX(-10%);
         }
 
             .top_right_top_special_part .icon_bar svg:hover {

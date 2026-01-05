@@ -1,7 +1,7 @@
 /* ----------调试信息---------- */
 // 创建不同模块的调试函数
 const debugBG = createDebug('BG', false);                               // 背景相关调试
-const debugPageChange = createDebug('PageChange', false);               // 页面切换相关调试
+const debugPageChange = createDebug('PageChange', true);               // 页面切换相关调试
 const debugUserInfo = createDebug('UserInfo', false);                   // 用户信息相关调试
 
 // 创建Debug信息
@@ -119,7 +119,7 @@ function addAllListener() {
     window.addEventListener('resize', setRealViewportHeight);           // 视窗尺寸变化时，重新设置真实视窗高度
 
     let top_left_area = document.getElementById("top_left");            // 获取页面跳转区域的父级元素
-    let iconBar = document.querySelector('.icon_bar');                  // 获取图标栏元素
+    let pageIconBar = document.getElementById('pages_icon_bar');        // 获取图标栏元素
 
     // 页面跳转点击事件监听
     if (top_left_area) {                                                // 个人主页跳转(快速跳转)
@@ -127,8 +127,8 @@ function addAllListener() {
             quickNavigateToPage("personal_page");
         })
     }
-    if (iconBar) {
-        iconBar.addEventListener('click', function (event) {
+    if (pageIconBar) {
+        pageIconBar.addEventListener('click', function (event) {
             // 找到被点击的元素
             let target = event.target;
 
