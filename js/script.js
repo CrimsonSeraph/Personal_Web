@@ -93,7 +93,7 @@ const PagePath = {
 
 // 网站名称
 const SiteName = {
-    //Site: "网站名称",
+    //Site: "name",
     personal_page: "个人主页",
     bilibili: "Bilibili（哔哩哔哩）",
     github: "GitHub",
@@ -118,52 +118,112 @@ const BGName = {
 function addAllListener() {
     window.addEventListener('resize', setRealViewportHeight);           // 视窗尺寸变化时，重新设置真实视窗高度
 
-    let top_left_area = document.getElementById("top_left");            // 获取页面跳转区域的父级元素
-    let pageIconBar = document.getElementById('pages_icon_bar');        // 获取图标栏元素
+    const wrapper = document.querySelector('.wrapper');                 // 获取wrapper容器
 
-    // 页面跳转点击事件监听
-    if (top_left_area) {                                                // 个人主页跳转(快速跳转)
+    if (wrapper) {
+        wrapper.addEventListener('click', function (event) {            // 如果wrapper存在，使用事件委托
+            handleWrapperClick(event);
+        });
+    } else {
+        setupIndividualListeners();                                     // 如果wrapper不存在，单独监听各个元素
+    }
+}
+
+// 处理wrapper内的所有点击事件
+function handleWrapperClick(event) {
+    const target = event.target;
+    handleIconClick(target);                                            // 图标点击
+
+    // 个人主页跳转
+    if (target.closest('#top_left')) {
+        quickNavigateToPage("personal_page");
+        return;
+    }
+
+    // 背景切换
+    if (target.closest('#left_botton')) {
+        changeBackground('prev');
+        return;
+    }
+    if (target.closest('#right_botton')) {
+        changeBackground('next');
+        return;
+    }
+
+    // 模式切换
+    if (target.closest('#mode_change')) {
+        if (currentMode === 'sequential') {
+            toggleBackgroundMode('random');
+        } else {
+            toggleBackgroundMode('sequential');
+        }
+        return;
+    }
+}
+
+// 处理图标点击的专用函数
+function handleIconClick(target) {
+    let iconElement = target;                                           // 查找实际点击的图标元素
+    if (iconElement.tagName === 'path') {                               // 如果是path，找到父级svg
+        iconElement = iconElement.closest('svg');
+    }
+
+    // 检查是否点击了图标栏中的图标（包括嵌套情况）
+    if (iconElement && iconElement.closest('#pages_icon_bar, .icon_bar')) {
+        // 使用data-platform属性来识别图标
+        if (iconElement.hasAttribute('data-platform')) {
+            const platform = iconElement.getAttribute('data-platform');
+            navigateToPage(platform);
+        }
+    }
+}
+
+// 如果wrapper不存在，单独监听各个元素
+function setupIndividualListeners() {
+    let top_left_area = document.getElementById("top_left");
+    let pageIconBar = document.getElementById('pages_icon_bar');
+    let left_botton = document.getElementById("left_botton");
+    let right_botton = document.getElementById("right_botton");
+    let modeToggleBtn = document.getElementById('mode_change');
+
+    // 个人主页跳转
+    if (top_left_area) {
         top_left_area.addEventListener("click", function () {
             quickNavigateToPage("personal_page");
-        })
+        });
     }
+
+    // 图标栏点击
     if (pageIconBar) {
         pageIconBar.addEventListener('click', function (event) {
-            // 找到被点击的元素
             let target = event.target;
 
-            // 如果是path，找到父级svg
             if (target.tagName === 'path') {
                 target = target.closest('svg');
             }
 
-            // 检查id并跳转
-            if (target && target.id === 'bilibili_icon') {              // 哔哩哔哩跳转
-                navigateToPage('bilibili');
-            } else if (target && target.id === 'github_icon') {         // GitHub跳转
-                navigateToPage('github');
-            } else if (target && target.id === 'twitter_icon') {        // Twitter跳转
-                navigateToPage('twitter');
+            if (target && target.hasAttribute('data-platform')) {
+                const platform = target.getAttribute('data-platform');
+                navigateToPage(platform);
             }
         });
     }
 
-    let left_botton = document.getElementById("left_botton");           // 获取左侧切换按键
-    let right_botton = document.getElementById("right_botton");         // 获取右侧切换按键
-
     // 背景切换
-    left_botton.addEventListener('click', function () {
-        changeBackground('prev')
-    });
-    right_botton.addEventListener('click', function () {
-        changeBackground('next')
-    });
+    if (left_botton) {
+        left_botton.addEventListener('click', function () {
+            changeBackground('prev');
+        });
+    }
+    if (right_botton) {
+        right_botton.addEventListener('click', function () {
+            changeBackground('next');
+        });
+    }
 
     // 模式切换
-    let modeToggleBtn = document.querySelector('.p_icon.normal_card');
     if (modeToggleBtn) {
         modeToggleBtn.addEventListener('click', function () {
-            // 切换模式
             if (currentMode === 'sequential') {
                 toggleBackgroundMode('random');
             } else {
