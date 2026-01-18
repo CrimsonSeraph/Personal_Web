@@ -159,6 +159,13 @@ function handleWrapperClick(event) {
         }
         return;
     }
+
+    // 信息刷新
+    if (target.closest('#reflash_info')) {
+        clearCache();
+        initUserInfo();
+        return;
+    }
 }
 
 // 处理图标点击的专用函数
@@ -941,12 +948,12 @@ function setupKeyboardShortcuts() {
         // 左箭头键 - 上一个
         if (event.key === 'ArrowLeft') {
             changeBackground('prev');
-            event.preventDefault(); // 防止页面滚动
+            event.preventDefault();                                     // 防止页面滚动
         }
         // 右箭头键 - 下一个
         else if (event.key === 'ArrowRight') {
             changeBackground('next');
-            event.preventDefault(); // 防止页面滚动
+            event.preventDefault();                                     // 防止页面滚动
         }
         // R键 - 切换随机模式
         else if (event.key === 'r' || event.key === 'R') {
@@ -973,74 +980,196 @@ function setupKeyboardShortcuts() {
 let ip = null;
 let country = null;
 
+// 缓存键名和超时时间
+const IP_CACHE_KEY = 'user_ip_cache';
+const CACHE_DURATION = 3600000;                                         // 1小时
+const TIMEOUT = 2000;                                                   // 2秒超时
+
+// API服务列表
 const ipApiServices = [
+    {
+        name: 'cloudflare-function',
+        url: '/ipinfo',                                                 // Cloudflare Function路径
+        parser: (data) => ({
+            ip: data.ip || 'unknown',
+            country: data.country || '未知',
+            source: 'cloudflare'
+        }),
+        priority: 1
+    },
     {
         name: 'ipapi.co',
         url: 'https://ipapi.co/json/',
         parser: (data) => ({
             ip: data.ip,
-            country: data.country_name
-        })
+            country: data.country_name || data.country || '未知',
+            source: 'ipapi.co'
+        }),
+        priority: 2
     },
     {
         name: 'ipinfo.io',
         url: 'https://ipinfo.io/json',
         parser: (data) => ({
             ip: data.ip,
-            country: data.country
-        })
+            country: data.country || '未知',
+            source: 'ipinfo.io'
+        }),
+        priority: 3
     },
     {
         name: 'ip-api.com',
-        url: 'http://ip-api.com/json/',
+        url: 'https://ip-api.com/json/',
         parser: (data) => ({
             ip: data.query,
-            country: data.country
-        })
+            country: data.country || data.countryName || '未知',
+            source: 'ip-api.com'
+        }),
+        priority: 4
     }
 ];
+ipApiServices.sort((a, b) => a.priority - b.priority);                  // 按优先级排序
 
-// 同时获取IP和国家信息
+// 获取缓存信息
+function getCachedInfo() {
+    try {
+        const cached = localStorage.getItem(IP_CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+
+        // 检查缓存是否过期
+        if (Date.now() - timestamp > CACHE_DURATION) {
+            return null;
+        }
+
+        return data;
+    } catch (error) {
+        return null;
+    }
+}
+
+// 保存缓存信息
+function cacheInfo(info) {
+    try {
+        const cacheData = {
+            data: info,
+            timestamp: Date.now()
+        };
+        localStorage.setItem(IP_CACHE_KEY, JSON.stringify(cacheData));
+    } catch (error) {
+        // 本地存储可能被禁用
+    }
+}
+
+// 通用fetch函数
+async function fetchWithTimeout(url, options = {}) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), options.timeout || TIMEOUT);
+
+    try {
+        const response = await fetch(url, {
+            ...options,
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        clearTimeout(timeoutId);
+        throw error;
+    }
+}
+
+// 尝试单个API服务
+async function tryApiService(service) {
+    try {
+        const data = await fetchWithTimeout(service.url, {
+            headers: {
+                'Accept': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (compatible; CrimsonSeraph/1.0)'
+            },
+            timeout: TIMEOUT
+        });
+
+        const result = service.parser(data);
+
+        // 验证结果
+        if (!result.ip || result.ip === 'unknown') {
+            throw new Error('无效的IP地址');
+        }
+
+        debugUserInfo(`${service.name} 获取成功`);
+        return result;
+    } catch (error) {
+        debugUserInfo(`${service.name} 失败:`, error.message);
+        return null;
+    }
+}
+
+// 获取本地信息
+function getLocalInfo() {
+    const lang = navigator.language || navigator.userLanguage;
+    let country = '未知';
+
+    if (lang.includes('zh')) country = '中国';
+    else if (lang.includes('en')) country = '美国';
+    else if (lang.includes('ja')) country = '日本';
+    else if (lang.includes('ko')) country = '韩国';
+    else if (lang.includes('fr')) country = '法国';
+    else if (lang.includes('de')) country = '德国';
+    else if (lang.includes('es')) country = '西班牙';
+
+    return {
+        ip: '本地访问',
+        country: country,
+        source: 'local'
+    };
+}
+
+// 获取用户信息
 async function getUserInfo() {
-    const timeout = 3000;                                               // 3秒超时
+    // 检查缓存
+    const cached = getCachedInfo();
+    if (cached) {
+        debugUserInfo('使用缓存数据');
+        return cached;
+    }
+    await new Promise(resolve => setTimeout(resolve, 1000));            // 延迟1秒
 
+    // 按优先级尝试所有API
     for (const service of ipApiServices) {
-        try {
-            // 使用Promise.race实现超时
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), timeout);
-
-            const response = await fetch(service.url, {
-                signal: controller.signal,
-                headers: {
-                    'Accept': 'application/json',
-                    'User-Agent': 'Mozilla/5.0'                         // 一些API需要User-Agent
-                }
-            });
-
-            clearTimeout(timeoutId);
-
-            if (!response.ok) continue;
-
-            const data = await response.json();
-            const result = service.parser(data);
-
-            if (result.ip && result.country) {
-                return result;
-            }
-        } catch (error) {
-            console.log(`服务 ${service.name} 失败:`, error.message);
-            continue;
+        const result = await tryApiService(service);
+        if (result) {
+            // 缓存成功的结果
+            cacheInfo(result);
+            return result;
         }
     }
 
-    // 所有服务都失败时返回默认值
-    return { ip: '未知', country: '未知' };
+    // 所有API都失败，返回本地信息
+    debugUserInfo('所有API失败，使用本地信息');
+    const localInfo = getLocalInfo();
+    cacheInfo(localInfo);
+    return localInfo;
 }
 
-// 生成信息
+// 初始化用户信息
 async function initUserInfo() {
-    // 等待页面主要内容加载完成
+    const delayTime = 2000;                                             // 页面加载后延迟2秒
+
+    const ipElement = document.getElementById('user_ip');
+    const countryElement = document.getElementById('user_country');
+
+    if (ipElement) ipElement.textContent = '获取中...';
+    if (countryElement) countryElement.textContent = '获取中...';
+
+    // 等待页面完全加载
     if (document.readyState !== 'complete') {
         await new Promise(resolve => {
             if (document.readyState === 'complete') {
@@ -1050,18 +1179,62 @@ async function initUserInfo() {
             }
         });
     }
-    await new Promise(resolve => setTimeout(resolve, 1000));            // 额外延迟1秒
 
-    const result = await getUserInfo();
+    // 额外延迟
+    await new Promise(resolve => setTimeout(resolve, delayTime));
 
-    const ipElement = document.getElementById('user_ip');
-    const countryElement = document.getElementById('user_country');
+    try {
+        const result = await getUserInfo();
 
-    if (ipElement) ipElement.textContent = result.ip;
-    if (countryElement) countryElement.textContent = result.country;
+        if (ipElement) ipElement.textContent = result.ip;
+        if (countryElement) countryElement.textContent = result.country;
 
-    return result;
+        debugUserInfo(`IP信息来自: ${result.source}`);                    // 在控制台显示来源
+
+        return result;
+    } catch (error) {
+        debugUserInfo('获取用户信息失败:', error);
+
+        // 设置默认值
+        if (ipElement) ipElement.textContent = '获取失败';
+        if (countryElement) countryElement.textContent = '未知';
+
+        return { ip: '获取失败', country: '未知', source: 'error' };
+    }
 }
+
+// 清除本地缓存
+function clearCache() {
+    try {
+        localStorage.removeItem(IP_CACHE_KEY);
+
+        ip = null;
+        country = null;
+
+        const ipElement = document.getElementById('user_ip');
+        const countryElement = document.getElementById('user_country');
+
+        if (ipElement) ipElement.textContent = '正在刷新...';
+        if (countryElement) countryElement.textContent = '正在刷新...';
+
+        debugUserInfo('IP信息缓存已清除');
+
+        return {
+            success: true,
+            message: '缓存已清除',
+            timestamp: new Date().toISOString()
+        };
+
+    } catch (error) {
+        debugUserInfo('清除缓存失败:', error);
+        return {
+            success: false,
+            message: '清除缓存失败',
+            error: error.message
+        };
+    }
+}
+
 /* ----------获取用户IP及国家------------ */
 
 /* ----------更新时间------------ */

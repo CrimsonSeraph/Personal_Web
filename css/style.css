@@ -740,17 +740,38 @@ p, button {
 }
 
 .bottom_right_top {
-    flex: 0 0 57%;
+    flex: 0 0 50%;
 }
 
 .bottom_right_bottom {
     flex: 1;
+    display: flex;
 }
+
+    .bottom_right_bottom .p_icon {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        width: 50%;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+        .bottom_right_bottom .p_icon p {
+            width: 100%;
+            font-size: 1.5rem;
+        }
 
     .bottom_right_bottom p {
         width: 40%;
         font-size: 0.8rem;
         color: var(--text-emphasize);
+    }
+
+    .bottom_right_bottom .p_bar {
+        align-items: start;
+        flex: 0 0 80%;
     }
 
 .bottom_bg {
@@ -856,10 +877,10 @@ p, button {
 /* -跳转确定栏- */
 
 /* 列表容器 */
-.list{
+.list {
     width: 100%;
     height: auto;
-    max-height:350%; 
+    max-height: 350%;
     transform: translateX(-5%) translateY(65%);
     display: flex;
     justify-content: center;
