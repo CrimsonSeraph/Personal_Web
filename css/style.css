@@ -214,6 +214,16 @@ p, button {
 .pointer {
     cursor: pointer;
 }
+
+.hidden-content {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
 /* -页面布局相关设置- */
 
 /* 图片模态框 */
@@ -719,7 +729,7 @@ p, button {
 /* 底栏 容器 */
 .bottom_left {
     position: relative;
-    flex: 0 0 75%;
+    flex: 0 0 65%;
 }
 
 .bottom_right {
@@ -844,3 +854,32 @@ p, button {
         outline-offset: 2px;
     }
 /* -跳转确定栏- */
+
+/* 列表容器 */
+.list{
+    width: 100%;
+    height: auto;
+    max-height:350%; 
+    transform: translateX(-5%) translateY(65%);
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    overflow: hidden;
+    position: absolute;
+    background: rgba(255, 0, 0, 0.5);
+}
+/* -列表容器- */
+
+/* 屏幕阅读器 */
+.screen-reader-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    border: 0 !important;
+    white-space: nowrap !important;
+}
+/* -屏幕阅读器- */

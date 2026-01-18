@@ -3,30 +3,80 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CrimsonSeraph</title>
+    <title>CrimsonSeraph - 个人网站 | 开发初学者 | 数字作品</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CrimsonSeraph的个人网站，展示大一新生生活、个人简介、开发创作、数字作品、编程项目。包含游戏、建模、视频作品的博客。">
+    <meta name="keywords" content="CrimsonSeraph, 个人网站, 开发者, 编程, 数字艺术, 生活, 创意设计, 游戏制作, 建模">
+
+    <!-- Open Graph 社交媒体分享优化 -->
+    <meta property="og:title" content="CrimsonSeraph - 创意个人空间">
+    <meta property="og:description" content="探索游戏化界面设计、数字艺术与编程项目">
+    <meta property="og:image" content="https://personal-web.crimsonseraph.dpdns.org/assets/img/og-image.jpg">
+    <meta property="og:url" content="https://personal-web.crimsonseraph.dpdns.org/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter卡片 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CrimsonSeraph | 创意开发者">
+    <meta name="twitter:description" content="游戏化个人网站展示数字艺术与编程作品">
+    <meta name="twitter:image" content="https://personal-web.crimsonseraph.dpdns.org/assets/img/twitter-card.jpg">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png">
     <link rel="manifest" href="/assets/img/favicon/site.webmanifest">
-    <!-- /Favicon -->
+
     <!-- 图标 -->
     <script src="https://kit.fontawesome.com/900ca0a9f9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- /图标 -->
+
     <!-- 字体 -->
     <link href="https://fonts.googleapis.com/css?family=Saira:300,400,500,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300i,400,400i,600,600i,700&display=swap" rel="stylesheet">
-    <!-- /字体 -->
+
     <!-- 样式 -->
     <link rel="stylesheet" href="/css/style.css">
-    <!-- /样式 -->
 
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "CrimsonSeraph",
+          "url": "https://personal-web.crimsonseraph.dpdns.org",
+          "description": "创意开发者与数字艺术爱好者",
+          "sameAs": [
+            "https://space.bilibili.com/1741002917?spm_id_from=333.1007.0.0",
+            "https://github.com/CrimsonSeraph",
+            "https://x.com/CrimSeraph_QwQ"
+          ]
+        }
+    </script>
 </head>
 
 <body>
+    <!-- 屏幕阅读器专用内容 -->
+    <div class="screen-reader-only">
+        <h1>CrimsonSeraph个人作品集</h1>
+        <p>游戏化个人主页，展示开发者描述、状态、项目、作品等。</p>
+        <p>包含社交链接：Bilibili、GitHub、Twitter等。</p>
+    </div>
+    <!-- /屏幕阅读器专用内容 -->
+    <!-- 禁用JavaScript -->
+    <noscript>
+        <div style="background: #000; color: #fff; text-align: center; padding: 20px;">
+            <h2>⚠️ JavaScript已禁用</h2>
+            <p>本网站需要JavaScript才能正常显示。</p>
+            <p>请启用JavaScript或访问以下链接：</p>
+            <ul>
+                <li><a href="https://space.bilibili.com/1741002917?spm_id_from=333.1007.0.0">B站</a></li>
+                <li><a href="https://github.com/CrimsonSeraph">GitHub</a></li>
+                <li><a href="https://x.com/CrimSeraph_QwQ">Twitter</a></li>
+            </ul>
+        </div>
+    </noscript>
+    <!-- /禁用JavaScript -->
     <!-- 视频背景 -->
     <div class="video">
         <video id="bg_video" autoplay="autoplay" muted loop preload="auto">
@@ -102,33 +152,36 @@
                             <div class="separate"></div>
                             <i class="fa-brands fa-github pointer black" data-platform="github"></i>
                             <div class="separate"></div>
-                            <i class="fa-brands fa-square-x-twitter pointer black" data-platform="twitter"></i>
+                            <i class="fa-brands fa-x-twitter pointer black" data-platform="twitter"></i>
                         </div>
                     </div>
                 </div>
                 <div class="top_right_bottom">
                     <div class="top_right_bottom_left"></div>
                     <div class="top_right_bottom_right special_card">
-                            <div class="p_bar">
-                                <div class="p_bar_row">
-                                    <p class="no_select outline">当前模式:</p>
-                                    <p id="ModeName" class="brilliant_text no_select amplify no_outline">未知</p>
-                                </div>
-                                <div class="p_bar_row">
-                                    <p class="no_select outline">当前背景:</p>
-                                    <p id="BGName" class="brilliant_text no_select amplify no_outline">未知</p>
-                                </div>
+                        <div class="p_bar">
+                            <div class="p_bar_row">
+                                <p class="no_select outline">当前模式:</p>
+                                <p id="ModeName" class="brilliant_text no_select amplify no_outline">未知</p>
                             </div>
-                            <div class="p_icon_bar">
-                                <div id="mode_change" class="p_icon normal_card pointer">
-                                    <p class="no_select">顺序</p>
-                                    <i class="fa-solid fa-arrows-rotate pointer"></i>
-                                </div>
-                                <div class="p_icon normal_card pointer">
-                                    <p class="no_select">列表</p>
-                                    <i class="fa-solid fa-align-justify pointer"></i>
-                                </div>
+                            <div class="p_bar_row">
+                                <p class="no_select outline">当前背景:</p>
+                                <p id="BGName" class="brilliant_text no_select amplify no_outline">未知</p>
                             </div>
+                        </div>
+                        <div class="p_icon_bar">
+                            <div id="mode_change" class="p_icon normal_card pointer">
+                                <p class="no_select">顺序</p>
+                                <i class="fa-solid fa-arrows-rotate pointer"></i>
+                            </div>
+                            <div class="p_icon normal_card pointer">
+                                <p class="no_select">列表</p>
+                                <i class="fa-solid fa-align-justify pointer"></i>
+                            </div>
+                        </div>
+                        <!-- 列表容器 -->
+                        <div class="list" id="list"></div>
+                        <!-- /列表容器 -->
                     </div>
                 </div>
             </div>
@@ -212,12 +265,27 @@
         </div>
     </div>
     <!-- /提示框 -->
-    <!-- /图片显示容器 -->
+    <!-- 图片显示容器 -->
     <div id="imgModal">
         <button id="closeImgModal">X</button>
         <img id="modalImg" src="" alt="">
     </div>
     <!-- /图片显示容器 -->
+    <!-- 社交图标链接-->
+    <div style="display: none;">
+        <a href="https://space.bilibili.com/1741002917?spm_id_from=333.1007.0.0" rel="noopener noreferrer">B站</a>
+        <a href="https://github.com/CrimsonSeraph" rel="noopener noreferrer">GitHub</a>
+        <a href="https://x.com/CrimSeraph_QwQ" rel="noopener noreferrer">Twitter</a>
+    </div>
+    <!-- /社交图标链接-->
+    <!-- 隐藏内容 -->
+    <div class="hidden-content">
+        <h2>关于CrimsonSeraph</h2>
+        <p>大一学生，努力学习编程开发、建模、剪辑等进行创作</p>
+        <h3>学习方向</h3>
+        <p>HTML5, CSS3, JavaScript, C, C++, Java, Blender, AE, PR, PS等</p>
+    </div>
+    <!-- /隐藏内容 -->
     <!-- 脚本 -->
     <script src="./js/script.js"></script>
     <!-- /脚本 -->

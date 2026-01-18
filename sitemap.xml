@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<!-- 首页(格式) -->
+	<url>
+		<loc>https://personal-web.crimsonseraph.dpdns.org/</loc>
+		<changefreq>weekly</changefreq>
+		<!-- 更新频率：daily/weekly/monthly -->
+		<priority>1.0</priority>
+		<!-- 重要性：0.0-1.0 -->
+	</url>
+</urlset>

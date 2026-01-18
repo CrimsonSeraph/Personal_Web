@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /repository/
+Sitemap: https://personal-web.crimsonseraph.dpdns.org/sitemap.xml
