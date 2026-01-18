@@ -1,33 +1,33 @@
-// ½«¹ú¼Ò´úÂë×ªÎª¹ú¼ÒÃû
+// å°†å›½å®¶ä»£ç è½¬ä¸ºå›½å®¶å
 function getCountryName(code) {
     const countries = {
-        'CN': 'ÖĞ¹ú', 'US': 'ÃÀ¹ú', 'JP': 'ÈÕ±¾', 'KR': 'º«¹ú',
-        'GB': 'Ó¢¹ú', 'DE': 'µÂ¹ú', 'FR': '·¨¹ú', 'CA': '¼ÓÄÃ´ó',
-        'AU': '°Ä´óÀûÑÇ', 'RU': '¶íÂŞË¹', 'IN': 'Ó¡¶È', 'BR': '°ÍÎ÷',
-        'MX': 'Ä«Î÷¸ç', 'ES': 'Î÷°àÑÀ', 'IT': 'Òâ´óÀû', 'NL': 'ºÉÀ¼',
-        'CH': 'ÈğÊ¿', 'SE': 'Èğµä', 'NO': 'Å²Íş', 'DK': 'µ¤Âó',
-        'FI': '·ÒÀ¼', 'PL': '²¨À¼', 'TR': 'ÍÁ¶úÆä', 'SA': 'É³ÌØ°¢À­²®',
-        'AE': '°¢ÁªÇõ', 'SG': 'ĞÂ¼ÓÆÂ', 'MY': 'ÂíÀ´Î÷ÑÇ', 'TH': 'Ì©¹ú',
-        'VN': 'Ô½ÄÏ', 'PH': '·ÆÂÉ±ö', 'ID': 'Ó¡¶ÈÄáÎ÷ÑÇ', 'TW': 'Ì¨Íå',
-        'HK': 'Ïã¸Û', 'MO': '°ÄÃÅ', 'unknown': 'Î´Öª'
+        'CN': 'ä¸­å›½', 'US': 'ç¾å›½', 'JP': 'æ—¥æœ¬', 'KR': 'éŸ©å›½',
+        'GB': 'è‹±å›½', 'DE': 'å¾·å›½', 'FR': 'æ³•å›½', 'CA': 'åŠ æ‹¿å¤§',
+        'AU': 'æ¾³å¤§åˆ©äºš', 'RU': 'ä¿„ç½—æ–¯', 'IN': 'å°åº¦', 'BR': 'å·´è¥¿',
+        'MX': 'å¢¨è¥¿å“¥', 'ES': 'è¥¿ç­ç‰™', 'IT': 'æ„å¤§åˆ©', 'NL': 'è·å…°',
+        'CH': 'ç‘å£«', 'SE': 'ç‘å…¸', 'NO': 'æŒªå¨', 'DK': 'ä¸¹éº¦',
+        'FI': 'èŠ¬å…°', 'PL': 'æ³¢å…°', 'TR': 'åœŸè€³å…¶', 'SA': 'æ²™ç‰¹é˜¿æ‹‰ä¼¯',
+        'AE': 'é˜¿è”é…‹', 'SG': 'æ–°åŠ å¡', 'MY': 'é©¬æ¥è¥¿äºš', 'TH': 'æ³°å›½',
+        'VN': 'è¶Šå—', 'PH': 'è²å¾‹å®¾', 'ID': 'å°åº¦å°¼è¥¿äºš', 'TW': 'å°æ¹¾',
+        'HK': 'é¦™æ¸¯', 'MO': 'æ¾³é—¨', 'unknown': 'æœªçŸ¥'
     };
-    return countries[code] || code || 'Î´Öª';
+    return countries[code] || code || 'æœªçŸ¥';
 }
 
-// Cloudflare Pages Functions µ¼³ö¸ñÊ½
+// Cloudflare Pages Functions å¯¼å‡ºæ ¼å¼
 export async function onRequest(context) {
     const { request } = context;
 
-    // ´ÓÇëÇóÍ·»ñÈ¡¿Í»§¶ËIP£¨Cloudflare×Ô¶¯Ìí¼Ó£©
+    // ä»è¯·æ±‚å¤´è·å–å®¢æˆ·ç«¯IPï¼ˆCloudflareè‡ªåŠ¨æ·»åŠ ï¼‰
     const clientIP = request.headers.get('cf-connecting-ip') ||
         request.headers.get('x-forwarded-for') ||
         request.headers.get('x-real-ip') ||
         'unknown';
 
-    // Ê¹ÓÃCloudflareµÄIPµØÀí¶¨Î»
+    // ä½¿ç”¨Cloudflareçš„IPåœ°ç†å®šä½
     const countryCode = request.headers.get('cf-ipcountry') || 'unknown';
 
-    // ·µ»ØJSONÏìÓ¦
+    // è¿”å›JSONå“åº”
     return new Response(JSON.stringify({
         ip: clientIP,
         country: getCountryName(countryCode),
@@ -46,7 +46,7 @@ export async function onRequest(context) {
     });
 }
 
-// ´¦ÀíOPTIONSÔ¤¼ìÇëÇó£¨CORS£©
+// å¤„ç†OPTIONSé¢„æ£€è¯·æ±‚ï¼ˆCORSï¼‰
 export async function onRequestOptions(context) {
     return new Response(null, {
         headers: {
