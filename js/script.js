@@ -162,8 +162,11 @@ function handleWrapperClick(event) {
 
     // 信息刷新
     if (target.closest('#reflash_info')) {
-        clearCache();
-        initUserInfo();
+        if (!is_running) {
+            is_running = true;
+            clearCache();
+            initUserInfo();
+        }
         return;
     }
 }
@@ -834,7 +837,7 @@ function updateDisplayInfo() {
         modeIcon = "fa-arrows-rotate";
         modeNameDisplay = "随机模式";
     }
-    
+
     document.getElementById("ModeName").textContent = modeNameDisplay;  // 更新模式显示
 
     // 更新模式切换按钮的文本和图标
@@ -984,6 +987,11 @@ let country = null;
 const IP_CACHE_KEY = 'user_ip_cache';
 const CACHE_DURATION = 3600000;                                         // 1小时
 const TIMEOUT = 2000;                                                   // 2秒超时
+let is_running = false;                                                 // 是否正在获取
+const SPINNER_TIME = 2000;                                              // 动画单词播放时间
+const refreshBtn = document.getElementById('reflash_info');             // 获取刷新按键
+let spinnerTimeout = null;                                              // 存储旋转动画的timeout
+let startTime = null;                                                   // 开始获取信息的时间
 
 // API服务列表
 const ipApiServices = [
@@ -1161,6 +1169,7 @@ async function getUserInfo() {
 
 // 初始化用户信息
 async function initUserInfo() {
+    spinnerIcon()                                                       // 开始旋转按键
     const delayTime = 2000;                                             // 页面加载后延迟2秒
 
     const ipElement = document.getElementById('user_ip');
@@ -1168,6 +1177,7 @@ async function initUserInfo() {
 
     if (ipElement) ipElement.textContent = '获取中...';
     if (countryElement) countryElement.textContent = '获取中...';
+    startTime = Date.now();
 
     // 等待页面完全加载
     if (document.readyState !== 'complete') {
@@ -1191,6 +1201,8 @@ async function initUserInfo() {
 
         debugUserInfo(`IP信息来自: ${result.source}`);                    // 在控制台显示来源
 
+        ensureSpinnerCompletion();
+
         return result;
     } catch (error) {
         debugUserInfo('获取用户信息失败:', error);
@@ -1199,7 +1211,11 @@ async function initUserInfo() {
         if (ipElement) ipElement.textContent = '获取失败';
         if (countryElement) countryElement.textContent = '未知';
 
+        ensureSpinnerCompletion();
+
         return { ip: '获取失败', country: '未知', source: 'error' };
+    } finally {
+        is_running = false;
     }
 }
 
@@ -1235,6 +1251,41 @@ function clearCache() {
     }
 }
 
+async function spinnerIcon() {
+    // 清除之前的动画timeout
+    if (spinnerTimeout) {
+        clearTimeout(spinnerTimeout);
+    }
+    let refreshIcon = refreshBtn.querySelector('svg');                      // 获取刷新按键图标
+    // 添加旋转动画
+    refreshIcon.classList.remove('spinner');
+    void refreshIcon.offsetWidth;                                           // 强制重绘，确保动画可以重新开始
+    refreshIcon.classList.add('spinner');
+
+    // 设置一个基础的旋转时间，但会在initUserInfo完成后调整
+    spinnerTimeout = setTimeout(() => {
+        refreshIcon.classList.remove('spinner');
+    }, SPINNER_TIME);
+}
+
+function ensureSpinnerCompletion() {
+    let refreshIcon = refreshBtn.querySelector('svg');                      // 获取刷新按键图标
+    // 清除之前设置的timeout
+    if (spinnerTimeout) {
+        clearTimeout(spinnerTimeout);
+    }
+
+    const nowTime = Date.now();
+    const elapsedTime = nowTime - startTime;
+
+    // 计算剩余时间，确保完成当前旋转周期
+    const remainingTime = SPINNER_TIME - (elapsedTime % SPINNER_TIME);
+
+    // 等待剩余时间后停止旋转
+    spinnerTimeout = setTimeout(() => {
+        refreshIcon.classList.remove('spinner');
+    }, remainingTime);
+}
 /* ----------获取用户IP及国家------------ */
 
 /* ----------更新时间------------ */

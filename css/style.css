@@ -908,3 +908,19 @@ p, button {
     white-space: nowrap !important;
 }
 /* -屏幕阅读器- */
+
+/* 动画效果 */
+.spinner {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* -动画效果- */
