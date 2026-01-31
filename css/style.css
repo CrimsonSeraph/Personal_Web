@@ -13,6 +13,12 @@
     --normal-card-bg-other: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 50%, rgba(135, 206, 235, 0.70) 80%);
     --special-card-bg: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 30%, rgba(135, 206, 235, 0.70) 60%);
     --special-card-bg-other: linear-gradient(60deg, rgba(255, 192, 203, 0.80) 10%, rgba(255, 255, 255, 0.80) 50%, rgba(135, 206, 235, 0.80) 80%);
+    --list-bg: rgba(255, 255, 255, 0.5);
+    --list-card: linear-gradient(60deg, rgba(255, 192, 203, 0.60) 10%, rgba(255, 255, 255, 0.60) 30%, rgba(135, 206, 235, 0.60) 60%);
+    --list-card-other: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 50%, rgba(135, 206, 235, 0.70) 80%);
+    --scrollbar-bg: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb: rgba(255, 215, 0, 1);
+    --scrollbar-thumb-other: rgba(255, 255, 0, 1);
     /* 文本颜色 */
     --text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.5);
     --text-shadow-normal: 0 0 2px rgba(0, 0, 0, 0.8);
@@ -50,7 +56,8 @@
     --text-shadow-transition: text-shadow 0.5s ease;
     --confirm-transition: all 0.3s ease;
     --icon-transition: all 0.3s ease;
-    --content_transition: opacity 0.3s ease;
+    --content-transition: opacity 0.3s ease;
+    --list-transtion: all 0.3s ease;
     /* 进度条属性 */
     --progress-bar-color: rgba(255, 255, 255, 1);
 }
@@ -828,17 +835,80 @@ button {
 
 /* 列表容器 */
 .list {
-    width: 100%;
-    height: auto;
-    max-height: 350%;
-    transform: translateX(-5%) translateY(65%);
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    overflow: hidden;
+    grid-column: 30/33;
+    grid-row: 4/9;
+    width: 90%;
+    max-height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
     position: absolute;
-    background: rgba(255, 0, 0, 0.5);
+    background: var(--list-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px 8px;
+    box-shadow: var(--box-shadow);
+    z-index: 100;
+    opacity: 0;
+    transition: var(--list-transtion);
+    pointer-events: auto;
 }
+
+.list-item {
+    width: 100%;
+    padding: 12px 16px;
+    margin: 4px 0;
+    background: var(--list-card);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-normal);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: var(--list-transtion);
+    border: 2px solid transparent;
+    box-sizing: border-box;
+}
+
+    .list-item:hover {
+        background: var(--list-card-other);
+        box-shadow: var(--box-shadow-other);
+    }
+
+    .list .current {
+        border-color: var(--text-emphasize);
+        color: var(--text-emphasize);
+        font-weight: bold;
+        box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
+    }
+
+        .list .current:hover {
+            transform: scale(1.05);
+        }
+
+
+.list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+    border-radius: 10px;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-other);
+    border-radius: 10px;
+}
+
+    .list::-webkit-scrollbar-thumb:hover {
+        background: var(--scrollbar-thumb-other);
+    }
 /* -列表容器- */
 
 /* 屏幕阅读器 */
@@ -881,7 +951,7 @@ button {
     align-items: center;
     z-index: 9999;
     pointer-events: auto;
-    transition: var(--content_transition);
+    transition: var(--content-transition);
     opacity: 0;
 }
 

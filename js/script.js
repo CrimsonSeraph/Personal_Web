@@ -174,6 +174,11 @@ function handleWrapperClick(event) {
     if (target.closest('#toggle_about')) {
         toggleAboutSection();
     }
+
+    // 背景列表
+    if (target.closest('#list')) {
+        toggleBackgroundList();
+    }
 }
 
 // 处理图标点击跳转的专用函数
@@ -202,6 +207,7 @@ function setupIndividualListeners() {
     let modeToggleBtn = document.getElementById('mode_change');
     let reflash_info = document.getElementById('reflash_info');
     let toggle_button = document.getElementById('toggle_button');
+    let bg_list = document.getElementById('list');
 
     // 个人主页跳转
     if (top_left_area) {
@@ -264,6 +270,13 @@ function setupIndividualListeners() {
     if (toggle_button) {
         toggle_button.addEventListener('click', function () {
             toggleAboutSection();
+        })
+    }
+
+    // 背景列表
+    if (bg_list) {
+        bg_list.addEventListener('click', function () {
+            toggleBackgroundList();
         })
     }
 }
@@ -483,7 +496,10 @@ function toggleAboutSection() {
 function initBGChangeSystem() {
     initBackgroundSystem();                                             // 初始化背景系统
     updateDisplayInfo();                                                // 初始化背景与模式信息
-    //setupKeyboardShortcuts();                                         // 添加按键控制
+    initListFunctionality();                                            // 初始化列表功能
+    setupListCloseOnClickOutside();                                     // 设置点击外部关闭列表
+    setupListKeyboardShortcuts();                                       // 设置键盘快捷键
+    setupKeyboardShortcuts();                                         // 添加按键控制
 }
 
 let currentBackgroundIndex = 0;                                         // 当前背景索引
@@ -511,6 +527,7 @@ function toggleBackgroundMode(mode) {
         }
 
         updateDisplayInfo();                                            // 更新信息
+        updateListAfterBackgroundChange();                              // 更新列表
 
         return true;
     } else {
@@ -656,6 +673,7 @@ async function changeBackground(direction = 'next') {
         debugBG(`背景已切换到: ${nextKey}`);
 
         updateDisplayInfo();                                            // 更新信息
+        updateListAfterBackgroundChange();                              // 更新列表
 
         return {
             success: true,
@@ -954,6 +972,7 @@ async function changeToBackgroundIndex(index) {
     if (!result.success) {                                              // 如果失败，恢复原索引
         currentBackgroundIndex = originalIndex;
     }
+    updateListAfterBackgroundChange();                                  // 更新列表状态
 
     return result;
 }
@@ -1035,6 +1054,196 @@ function setupKeyboardShortcuts() {
         }
     });
 }
+
+let isListVisible = false;                                              // 列表是否可见
+
+// 初始化列表功能
+function initListFunctionality() {
+    const listButton = document.getElementById('list_button');
+    const listContainer = document.getElementById('list');
+
+    if (listButton && listContainer) {
+        // 点击列表按钮切换列表显示
+        listButton.addEventListener('click', toggleBackgroundList);
+
+        // 生成列表内容
+        generateBackgroundList();
+
+        debugBG('背景列表功能已初始化');
+    }
+}
+
+// 切换背景列表显示/隐藏
+function toggleBackgroundList() {
+    const listContainer = document.getElementById('list');
+    if (!listContainer) return;
+
+    // 如果列表内容为空，先生成列表
+    if (listContainer.children.length === 0) {
+        generateBackgroundList();
+    }
+
+    if (!isListVisible) {
+        // 显示列表
+        listContainer.style.display = 'flex';
+        listContainer.style.opacity = '0';
+        listContainer.style.transform = 'translateY(10px)';
+
+        // 触发重绘，然后添加动画
+        void listContainer.offsetWidth;
+
+        listContainer.style.opacity = '1';
+        listContainer.style.transform = 'translateY(0)';
+
+        // 更新当前选中项
+        highlightCurrentBackground();
+
+        debugBG('背景列表已显示');
+    } else {
+        // 隐藏列表
+        listContainer.style.opacity = '0';
+        listContainer.style.transform = 'translateY(10px)';
+
+        setTimeout(() => {
+            listContainer.style.display = 'none';
+        }, 300);
+
+        debugBG('背景列表已隐藏');
+    }
+
+    isListVisible = !isListVisible;
+}
+
+// 生成背景列表
+function generateBackgroundList() {
+    const listContainer = document.getElementById('list');
+    if (!listContainer) return;
+
+    // 清空现有内容
+    listContainer.innerHTML = '';
+
+    // 创建列表项
+    backgroundKeys.forEach((key, index) => {
+        const listItem = document.createElement('div');
+        listItem.className = 'list-item';
+        listItem.setAttribute('data-bg-key', key);
+        listItem.setAttribute('data-bg-index', index);
+
+        // 如果是当前背景，添加选中类
+        if (index === currentBackgroundIndex) {
+            listItem.classList.add('current');
+        }
+
+        // 背景名称
+        const bgName = BGName[key] || key;
+        listItem.textContent = `${index + 1}. ${bgName}`;
+
+        // 点击事件
+        listItem.addEventListener('click', () => {
+            if (!isChanging) {
+                selectBackgroundFromList(key, index);
+            }
+        });
+
+        listContainer.appendChild(listItem);
+    });
+
+    debugBG(`背景列表已生成，共 ${backgroundKeys.length} 项`);
+}
+
+// 从列表中选择背景
+async function selectBackgroundFromList(key, index) {
+    if (isChanging || isFading) {
+        debugBG('正在切换背景，请稍候...');
+        return false;
+    }
+
+    // 如果已经是当前背景，则隐藏列表
+    if (index === currentBackgroundIndex) {
+        debugBG('已经是当前背景');
+        return false;
+    }
+
+    try {
+        isChanging = true;
+        debugBG(`从列表选择背景: ${key}, 索引: ${index}`);
+
+        // 切换到指定背景
+        const result = await changeToBackgroundKey(key);
+
+        if (result.success) {
+            // 更新列表中的选中状态
+            highlightCurrentBackground();
+
+            // 隐藏列表
+            if (isListVisible) {
+                toggleBackgroundList();
+            }
+
+            debugBG(`已切换到列表中的背景: ${key}`);
+        }
+
+        return result;
+    } catch (error) {
+        debugBG('从列表切换背景失败:', error.message);
+        return { success: false, error: error.message };
+    } finally {
+        isChanging = false;
+    }
+}
+
+// 高亮当前选中的背景
+function highlightCurrentBackground() {
+    const listItems = document.querySelectorAll('.list-item');
+    const currentKey = backgroundKeys[currentBackgroundIndex];
+
+    listItems.forEach(item => {
+        const itemKey = item.getAttribute('data-bg-key');
+
+        // 移除所有选中状态
+        item.classList.remove('current');
+
+        // 添加当前背景的选中状态
+        if (itemKey === currentKey) {
+            item.classList.add('current');
+        }
+    });
+}
+
+// 点击列表外部关闭列表
+function setupListCloseOnClickOutside() {
+    document.addEventListener('click', (event) => {
+        const listContainer = document.getElementById('list');
+        const listButton = document.getElementById('list_button');
+
+        if (!listContainer || !listButton) return;
+
+        // 如果列表可见，且点击的不是列表区域也不是列表按钮，则关闭列表
+        if (isListVisible &&
+            !listContainer.contains(event.target) &&
+            !listButton.contains(event.target)) {
+            toggleBackgroundList();
+        }
+    });
+}
+
+// 监听键盘ESC键关闭列表
+function setupListKeyboardShortcuts() {
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && isListVisible) {
+            toggleBackgroundList();
+            event.preventDefault();
+        }
+    });
+}
+
+// 更新背景后刷新列表
+function updateListAfterBackgroundChange() {
+    if (isListVisible) {
+        highlightCurrentBackground();
+    }
+}
+
 /* ----------点击切换背景---------- */
 
 /* ----------获取用户IP及国家------------ */
