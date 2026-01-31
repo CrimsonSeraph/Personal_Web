@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="CrimsonSeraph的个人网站，展示大一新生生活、个人简介、开发创作、数字作品、编程项目。包含游戏、建模、视频作品的博客。">
     <meta name="keywords" content="CrimsonSeraph, 个人网站, 开发者, 编程, 数字艺术, 生活, 创意设计, 游戏制作, 建模">
+    <link rel="canonical" href="https://personal-web.crimsonseraph.dpdns.org/" />
 
     <!-- Open Graph 社交媒体分享优化 -->
     <meta property="og:title" content="CrimsonSeraph - 创意个人空间">
@@ -34,7 +35,6 @@
     <!-- 字体 -->
     <!--<link href="https://fonts.googleapis.com/css?family=Saira:300,400,500,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300i,400,400i,600,600i,700&display=swap" rel="stylesheet">-->
-
     <!-- 样式 -->
     <link rel="stylesheet" href="/css/style.css">
 
@@ -91,168 +91,120 @@
     <!-- 页面内容容器 -->
     <div class="wrapper">
 
-        <!-- 顶部容器 -->
-        <div class="top_navigation">
-            <div class="top_left pointer" id="top_left">
-                <div class="top_left_left">
-                    <div class="top_left_left_top">
-                        <p class="no_select">Lv.</p>
-                    </div>
-                    <div class="top_left_left_bottom">
-                        <p class="no_select">18</p>
-                    </div>
+        <!-- 顶部 -->
+        <div class="profile_header pointer" id="top_left">
+            <div class="left">
+                <div class="left_top">
+                    <p class="no_select">Lv.</p>
                 </div>
-                <div class="top_left_right">
-                    <div class="top_left_right_top">
-                        <p class="no_select">CrimsonSeraph</p>
-                    </div>
-                    <div class="top_left_right_mid">
-
-                    </div>
-                    <div class="top_left_right_bottom special_text">
-                        <p class="no_select brilliant_text">大一上学期</p>
-                    </div>
+                <div class="left_bottom">
+                    <p class="no_select">18</p>
                 </div>
             </div>
-
-            <div class="top_mid"></div>
-
-            <div class="top_right">
-                <div class="top_right_top">
-                    <div class="top_right_top_part normal_card">
-                        <div class="icon_bar">
-                            <i class="fa-solid fa-brain pink"></i>
-                        </div>
-                        <div class="p_bar">
-                            <p class="no_select">智商状态:</p>
-                            <p class="brilliant_text no_select amplify">四十二号混凝土</p>
-                        </div>
-                    </div>
-                    <div class="top_right_top_part normal_card">
-                        <div class="icon_bar">
-                            <i class="fa-solid fa-bolt gold"></i>
-                        </div>
-                        <div class="p_bar">
-                            <p class="no_select">能量状态:</p>
-                            <p class="brilliant_text no_select amplify">还能熬几天几夜</p>
-                        </div>
-                    </div>
-                    <div class="top_right_top_part normal_card">
-                        <div class="icon_bar">
-                            <i class="fa-solid fa-coins gold"></i>
-                        </div>
-                        <div class="p_bar">
-                            <p class="no_select">经济状况:</p>
-                            <p class="brilliant_text no_select amplify">什么鸡蛋500一个？</p>
-                        </div>
-                    </div>
-                    <div class="top_right_top_special_part normal_card">
-                        <div class="icon_bar">
-                            <i class="fa-brands fa-bilibili pointer pink" data-platform="bilibili"></i>
-                            <div class="separate"></div>
-                            <i class="fa-brands fa-github pointer black" data-platform="github"></i>
-                            <div class="separate"></div>
-                            <i class="fa-brands fa-x-twitter pointer black" data-platform="twitter"></i>
-                        </div>
-                    </div>
+            <div class="right">
+                <div class="right_top">
+                    <p class="no_select">CrimsonSeraph</p>
                 </div>
-                <div class="top_right_bottom">
-                    <div class="top_right_bottom_left"></div>
-                    <div class="top_right_bottom_right special_card">
-                        <div class="p_bar">
-                            <div class="p_bar_row">
-                                <p class="no_select outline">当前模式:</p>
-                                <p id="ModeName" class="brilliant_text no_select amplify no_outline">未知</p>
-                            </div>
-                            <div class="p_bar_row">
-                                <p class="no_select outline">当前背景:</p>
-                                <p id="BGName" class="brilliant_text no_select amplify no_outline">未知</p>
-                            </div>
-                        </div>
-                        <div class="p_icon_bar">
-                            <div id="mode_change" class="p_icon normal_card pointer">
-                                <p class="no_select">顺序</p>
-                                <i class="fa-solid fa-arrows-rotate pointer"></i>
-                            </div>
-                            <div class="p_icon normal_card pointer">
-                                <p class="no_select">列表</p>
-                                <i class="fa-solid fa-align-justify pointer"></i>
-                            </div>
-                        </div>
-                        <!-- 列表容器 -->
-                        <div class="list" id="list"></div>
-                        <!-- /列表容器 -->
-                    </div>
+                <div class="progress"></div>
+                <div class="right_bottom special_text">
+                    <p class="no_select brilliant_text">大一上学期</p>
                 </div>
             </div>
         </div>
-        <!-- /顶部容器 -->
-        <!-- 中上容器 -->
-        <div class="mid_top_navigation">
-            <div class="mid_top_left">
 
-            </div>
-
-            <div class="mid_top_mid"></div>
-
-            <div class="mid_top_right">
-
-            </div>
-        </div>
-        <!-- /中上容器 -->
-        <!-- 中间容器 -->
-        <div class="mid_part">
-            <div class="mid_part_left">
-                <div class="button" id="left_botton">
-                    <i class="fa-solid fa-chevron-left pointer"></i>
+        <div class="status_section">
+            <div class="status_section_part normal_card">
+                <div class="icon_bar">
+                    <i class="fa-solid fa-brain pink"></i>
+                </div>
+                <div class="p_bar">
+                    <p class="no_select">智商状态:</p>
+                    <p class="brilliant_text no_select amplify">四十二号混凝土</p>
                 </div>
             </div>
-
-            <div class="mid_part_mid"></div>
-
-            <div class="mid_part_right">
-                <div class="button" id="right_botton">
-                    <i class="fa-solid fa-chevron-right pointer"></i>
+            <div class="status_section_part normal_card">
+                <div class="icon_bar">
+                    <i class="fa-solid fa-bolt gold"></i>
+                </div>
+                <div class="p_bar">
+                    <p class="no_select">能量状态:</p>
+                    <p class="brilliant_text no_select amplify">还能熬几天几夜</p>
+                </div>
+            </div>
+            <div class="status_section_part normal_card">
+                <div class="icon_bar">
+                    <i class="fa-solid fa-coins gold"></i>
+                </div>
+                <div class="p_bar">
+                    <p class="no_select">经济状况:</p>
+                    <p class="brilliant_text no_select amplify">什么鸡蛋500一个？</p>
                 </div>
             </div>
         </div>
-        <!-- /中间容器 -->
-        <!-- 中下容器 -->
-        <div class="mid_bottom_navigation">
-            <div class="mid_bottom_left">
 
-            </div>
-
-            <div class="mid_bottom_mid"></div>
-
-            <div class="mid_bottom_right">
-
+        <div class="social_links special_card">
+            <div class="icon_bar">
+                <i class="fa-brands fa-bilibili pointer pink" data-platform="bilibili"></i>
+                <div class="separate"></div>
+                <i class="fa-brands fa-github pointer black" data-platform="github"></i>
+                <div class="separate"></div>
+                <i class="fa-brands fa-x-twitter pointer black" data-platform="twitter"></i>
             </div>
         </div>
-        <!-- /中下容器 -->
-        <!-- 底部容器 -->
-        <div class="bottom_navigation">
-            <div class="bottom_left"></div>
 
-            <div class="bottom_right">
-                <div class="bottom_right_top"></div>
-                <div class="bottom_right_bottom">
-                    <div id="reflash_info" class="p_icon pointer">
-                        <i class="fa-solid fa-arrow-rotate-right glod"></i>
-                    </div>
-                    <div class="p_bar" id="user_info">
-                        <p class="no_select outline">国家/地区: <span id="user_country">加载中...</span></p>
-                        <p class="no_select outline">IP地址: <span id="user_ip">加载中...</span></p>
-                        <p class="no_select outline">当前时间: <span id="current_time">加载中...</span></p>
-                    </div>
+        <div class="background_info special_card">
+            <div class="p_bar">
+                <div class="p_bar_row">
+                    <p class="no_select outline">当前模式:</p>
+                    <p id="ModeName" class="brilliant_text no_select amplify no_outline">未知</p>
+                </div>
+                <div class="p_bar_row">
+                    <p class="no_select outline">当前背景:</p>
+                    <p id="BGName" class="brilliant_text no_select amplify no_outline">未知</p>
                 </div>
             </div>
+            <div class="p_icon_bar">
+                <div id="mode_change" class="p_icon special_card pointer">
+                    <p class="no_select">顺序</p>
+                    <i class="fa-solid fa-arrows-rotate pointer"></i>
+                </div>
+                <div class="p_icon special_card pointer">
+                    <p class="no_select">列表</p>
+                    <i class="fa-solid fa-align-justify pointer"></i>
+                </div>
+            </div>
+            <!-- 列表容器 -->
+            <div class="list" id="list"></div>
+            <!-- /列表容器 -->
+        </div>
+        <!-- /顶部 -->
+        <!-- 中间 -->
+        <div class="left_buttom button" id="left_botton">
+            <i class="fa-solid fa-chevron-left pointer"></i>
+        </div>
 
-            <div class="bottom_bg normal_card">
+        <div class="right_buttm button" id="right_botton">
+            <i class="fa-solid fa-chevron-right pointer"></i>
+        </div>
+        <!-- /中间 -->
+        <!-- 底部 -->
+        <div class="secondary_navigation">
 
+        </div>
+
+        <div class="visitor_info">
+            <div id="reflash_info" class="p_icon pointer">
+                <i class="fa-solid fa-arrow-rotate-right glod"></i>
+            </div>
+            <div class="p_bar" id="user_info">
+                <p class="no_select outline">国家/地区: <span id="user_country">加载中...</span></p>
+                <p class="no_select outline">IP地址: <span id="user_ip">加载中...</span></p>
+                <p class="no_select outline">当前时间: <span id="current_time">加载中...</span></p>
             </div>
         </div>
-        <!-- /底部容器 -->
+
+        <div class="bottom_bg normal_card"></div>
+        <!-- /底部 -->
     </div>
     <!-- 页面内容容器 -->
     <!-- 跳转提示框 -->

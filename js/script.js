@@ -250,7 +250,9 @@ function setupImageModal() {
     let modalImg = document.getElementById("modalImg");                 // 获取模态框中的图片元素
     let buttonClose = document.getElementById("closeImgModal");         // 获取关闭按钮元素
 
+    // 为页面上所有非模态图片注册打开模态的点击（跳过模态本身）
     document.querySelectorAll("img[src]").forEach(img => {
+        if (!img || img.id === 'modalImg' || img.closest('#imgModal')) return; // 跳过模态内部图片
         img.addEventListener("click", () => {
             imgModal.style.display = "flex";                            // 显示模态框
             document.body.style.overflow = "hidden";                    // 禁止背景滚动
@@ -268,13 +270,15 @@ function setupImageModal() {
         });
     });
 
-    buttonClose.addEventListener("click", () => {
-        imgModal.style.display = "none";                                // 隐藏模态框
-        document.body.style.overflow = "auto";                          // 恢复背景滚动
-        modalImg.src = "";                                              // 清空模态框图片的源
-        modalImg.style.opacity = "0";                                   // 重置透明度
-        modalImg.alt = "";                                              // 清空模态框图片的替代文本
-    })
+    if (buttonClose) {
+        buttonClose.addEventListener("click", () => {
+            imgModal.style.display = "none";                                // 隐藏模态框
+            document.body.style.overflow = "auto";                          // 恢复背景滚动
+            modalImg.src = "";                                              // 清空模态框图片的源
+            modalImg.style.opacity = "0";                                   // 重置透明度
+            modalImg.alt = "";                                              // 清空模态框图片的替代文本
+        })
+    }
 }
 /* ----------点击弹出大图---------- */
 
@@ -438,7 +442,7 @@ const LOAD_TIMEOUT = 10000;                                             // 加�
 let currentVideoElement = document.getElementById('bg_video');          // 当前显示的视频
 let nextVideoElement = document.getElementById('bg_video_other');       // 用于淡入的视频
 let isFading = false;                                                   // 是否正在淡入淡出
-const FADE_DURATION = 1000;                                             // 淡入淡出动画时间
+let FADE_DURATION = 1000;                                               // 淡入淡出动画时间
 
 // 模式切换
 function toggleBackgroundMode(mode) {
@@ -703,8 +707,8 @@ function swapVideoElements() {
 // 重置视频元素状态
 function resetVideoElements() {
     // 恢复到初始状态
-    currentVideoElement.style.opacity = '1';
-    nextVideoElement.style.opacity = '0';
+    if (currentVideoElement) currentVideoElement.style.opacity = '1';
+    if (nextVideoElement) nextVideoElement.style.opacity = '0';
     isFading = false;
 
     debugBG('视频元素状态已重置');
@@ -824,7 +828,8 @@ function updateDisplayInfo() {
     // 更新背景名称
     const bgKey = backgroundKeys[currentBackgroundIndex];
     const bgName = BGName[bgKey] || bgKey;
-    document.getElementById("BGName").textContent = bgName;
+    const bgNameEl = document.getElementById("BGName");
+    if (bgNameEl) bgNameEl.textContent = bgName;
 
     // 更新模式名称
     let modeText, modeIcon, modeNameDisplay;
@@ -838,10 +843,11 @@ function updateDisplayInfo() {
         modeNameDisplay = "随机模式";
     }
 
-    document.getElementById("ModeName").textContent = modeNameDisplay;  // 更新模式显示
+    const modeNameEl = document.getElementById("ModeName");
+    if (modeNameEl) modeNameEl.textContent = modeNameDisplay;           // 更新模式显示
 
-    // 更新模式切换按钮的文本和图标
-    const modeToggleContainer = document.querySelector('.p_icon.normal_card');
+    // 优先通过 id 找到模式切换容器（兼容不同 class 命名）
+    const modeToggleContainer = document.getElementById('mode_change') || document.querySelector('.p_icon');
     if (modeToggleContainer) {
         // 更新文本
         const modeTextElement = modeToggleContainer.querySelector('p.no_select');
@@ -861,8 +867,7 @@ function updateDisplayInfo() {
             oldIcon.replaceWith(newIcon);
         } else {
             // 如果没有找到图标元素，直接添加到容器中
-            const iconParent = modeTextElement ? modeTextElement.nextElementSibling ? modeToggleContainer : modeToggleContainer : modeToggleContainer;
-            iconParent.appendChild(newIcon);
+            modeToggleContainer.appendChild(newIcon);
         }
     }
 
@@ -1256,7 +1261,11 @@ async function spinnerIcon() {
     if (spinnerTimeout) {
         clearTimeout(spinnerTimeout);
     }
-    let refreshIcon = refreshBtn.querySelector('svg');                      // 获取刷新按键图标
+    if (!refreshBtn) return; // 防御性检查
+    // 尝试匹配 svg 或 i（FontAwesome 使用 i）
+    let refreshIcon = refreshBtn.querySelector('svg, i');
+    if (!refreshIcon) return; // 不能找到图标则不做动画，避免抛错
+
     // 添加旋转动画
     refreshIcon.classList.remove('spinner');
     void refreshIcon.offsetWidth;                                           // 强制重绘，确保动画可以重新开始
@@ -1269,7 +1278,11 @@ async function spinnerIcon() {
 }
 
 function ensureSpinnerCompletion() {
-    let refreshIcon = refreshBtn.querySelector('svg');                      // 获取刷新按键图标
+    if (!refreshBtn) return;
+    // 尝试匹配 svg 或 i
+    let refreshIcon = refreshBtn.querySelector('svg, i');
+    if (!refreshIcon) return;
+
     // 清除之前设置的timeout
     if (spinnerTimeout) {
         clearTimeout(spinnerTimeout);
