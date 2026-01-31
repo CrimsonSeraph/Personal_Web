@@ -457,25 +457,23 @@ function toggleAboutSection() {
 
     let expanded = toggle_about_button.getAttribute('aria-expanded') === 'true';
     const contentId = toggle_about_button.getAttribute('aria-controls');
-    const content = document.getElementById(contentId);
-
-    if (!content) return;
-
-    if (!expanded) {
-        toggle_about_button.setAttribute('aria-expanded', 'true');
-        content.hidden = 'true';
-        content.style.opacity = '1';
-        content.style.display = 'flex';
-    }
 
     let overlay = document.getElementById('about_section');
+    if (!expanded) {
+        toggle_about_button.setAttribute('aria-expanded', 'true');
+        overlay.hidden = 'true';
+        overlay.style.opacity = '1';
+        overlay.style.display = 'flex';
+    }
     // 点击遮罩层关闭
     overlay.addEventListener('click', function (event) {
         if (event.target === overlay) {
             toggle_about_button.setAttribute('aria-expanded', 'false');
-            content.hidden = 'hiiden';
-            content.style.opacity = '0';
-            content.style.display = 'none';
+            overlay.hidden = 'hiiden';
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
         }
     });
 }
