@@ -33,8 +33,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- 字体 -->
-    <!--<link href="https://fonts.googleapis.com/css?family=Saira:300,400,500,600,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300i,400,400i,600,600i,700&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css?family=Saira:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300i,400,400i,600,600i,700&display=swap" rel="stylesheet">
     <!-- 样式 -->
     <link rel="stylesheet" href="/css/style.css">
 
@@ -58,16 +58,16 @@
 <body>
     <!-- 屏幕阅读器专用内容 -->
     <div class="screen-reader-only">
-        <h1>CrimsonSeraph个人作品集</h1>
-        <p>游戏化个人主页，展示开发者描述、状态、项目、作品等。</p>
-        <p>包含社交链接：Bilibili、GitHub、Twitter等。</p>
+        <h1>CrimsonSeraph个人网站</h1>
+        <p>游戏化个人主页，展示开发者描述、状态、项目、作品等</p>
+        <p>包含社交链接：Bilibili、GitHub、Twitter等</p>
     </div>
     <!-- /屏幕阅读器专用内容 -->
     <!-- 禁用JavaScript -->
     <noscript>
         <div style="background: #000; color: #fff; text-align: center; padding: 20px;">
             <h2>⚠️ JavaScript已禁用</h2>
-            <p>本网站需要JavaScript才能正常显示。</p>
+            <p>本网站需要JavaScript才能正常显示</p>
             <p>请启用JavaScript或访问以下链接：</p>
             <ul>
                 <li><a href="https://space.bilibili.com/1741002917?spm_id_from=333.1007.0.0">B站</a></li>
@@ -112,6 +112,10 @@
             </div>
         </div>
 
+        <button id="toggle_about" aria-expanded="false" aria-controls="about_section" class="toggle_about special_card">
+            <p>关于本站</p>
+        </button>
+
         <div class="status_section">
             <div class="status_section_part normal_card">
                 <div class="icon_bar">
@@ -144,11 +148,17 @@
 
         <div class="social_links special_card">
             <div class="icon_bar">
-                <i class="fa-brands fa-bilibili pointer pink" data-platform="bilibili"></i>
+                <button>
+                    <i class="fa-brands fa-bilibili pink" data-platform="bilibili"></i>
+                </button>
                 <div class="separate"></div>
-                <i class="fa-brands fa-github pointer black" data-platform="github"></i>
+                <button>
+                    <i class="fa-brands fa-github black" data-platform="github"></i>
+                </button>
                 <div class="separate"></div>
-                <i class="fa-brands fa-x-twitter pointer black" data-platform="twitter"></i>
+                <button>
+                    <i class="fa-brands fa-x-twitter black" data-platform="twitter"></i>
+                </button>
             </div>
         </div>
 
@@ -164,14 +174,14 @@
                 </div>
             </div>
             <div class="p_icon_bar">
-                <div id="mode_change" class="p_icon special_card pointer">
+                <button id="mode_change" class="p_icon special_card pointer black">
                     <p class="no_select">顺序</p>
-                    <i class="fa-solid fa-arrows-rotate pointer"></i>
-                </div>
-                <div class="p_icon special_card pointer">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+                <button id="list_button" class="p_icon special_card pointer black">
                     <p class="no_select">列表</p>
-                    <i class="fa-solid fa-align-justify pointer"></i>
-                </div>
+                    <i class="fa-solid fa-align-justify"></i>
+                </button>
             </div>
             <!-- 列表容器 -->
             <div class="list" id="list"></div>
@@ -179,13 +189,13 @@
         </div>
         <!-- /顶部 -->
         <!-- 中间 -->
-        <div class="left_buttom button" id="left_botton">
+        <button class="left_button" id="left_button">
             <i class="fa-solid fa-chevron-left pointer"></i>
-        </div>
+        </button>
 
-        <div class="right_buttm button" id="right_botton">
+        <button class="right_button" id="right_button">
             <i class="fa-solid fa-chevron-right pointer"></i>
-        </div>
+        </button>
         <!-- /中间 -->
         <!-- 底部 -->
         <div class="secondary_navigation">
@@ -231,14 +241,48 @@
         <a href="https://x.com/CrimSeraph_QwQ" rel="noopener noreferrer">Twitter</a>
     </div>
     <!-- /社交图标链接-->
-    <!-- 隐藏内容 -->
-    <div class="hidden-content">
-        <h2>关于CrimsonSeraph</h2>
-        <p>大一学生，努力学习编程开发、建模、剪辑等进行创作</p>
-        <h3>学习方向</h3>
-        <p>HTML5, CSS3, JavaScript, C, C++, Java, Blender, AE, PR, PS等</p>
-    </div>
-    <!-- /隐藏内容 -->
+    <!-- 网站简介内容 -->
+    <section id="about_section" class="about_section" hidden>
+        <div class="content no_select">
+            <h2 class="brilliant_text">CrimsonSeraph 的个人网站</h2>
+            <p>
+                这是 CrimsonSeraph 的个人主页与作品展示网站，记录一名软件工程专业学生在学习、
+                创作与自我探索过程中的点滴内容。本站以简约、游戏化界面为核心，
+                通过不同页面展示编程项目、数字作品与阶段性成长记录。
+            </p>
+
+            <h3>关于我</h3>
+            <p>
+                我是一名软件工程专业在读学生，对编程开发、游戏制作与数字艺术保持长期兴趣。
+                目前主要精力放在基础能力的构建，包括前端开发、通用编程语言学习，
+                以及三维建模与动画相关工具的实践。
+            </p>
+
+            <h3>学习与技术方向</h3>
+            <p>
+                在技术方面，正在系统学习 HTML5、CSS3、JavaScript 等 Web 基础技术，
+                同时接触 C、C++、Java 等编程语言，用于理解计算机原理与工程化开发流程。
+                在数字内容创作方面，使用 Blender 进行三维建模与动画练习，
+                并结合 After Effects、Premiere Pro、Photoshop 等工具完成视觉表达。
+            </p>
+
+            <h3>创作内容与计划</h3>
+            <p>
+                网站未来将逐步更新个人项目记录，包括程序实验、小游戏原型、
+                三维模型展示以及学习过程中的经验总结。
+                所有内容均基于真实学习与实践过程，而非商业展示，
+                目的是长期积累与自我回顾。
+            </p>
+
+            <h3>网站结构说明</h3>
+            <p>
+                当前首页采用极简设计，仅呈现关键信息与交互入口。
+                具体内容将通过页面跳转或模块展开的方式呈现，
+                包括项目页面、作品列表与个人记录页面。
+            </p>
+        </div>
+    </section>
+    <!-- /网站简介内容 -->
     <!-- 脚本 -->
     <script src="./js/script.js" defer></script>
     <!-- /脚本 -->

@@ -7,8 +7,8 @@
     /* 背景颜色 */
     --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     --box-shadow-other: 0 4px 15px rgba(255, 255, 0, 0.2);
-    --top-left-bg: linear-gradient(45deg, rgba(22, 34, 42, 0.90) 0%, rgba(58, 96, 115, 0.90) 50%, rgba(92, 151, 191, 0.90) 100%);
-    --top-left-bg-other: linear-gradient(45deg, rgba(22, 34, 42, 1) 0%, rgba(58, 96, 115, 1) 50%, rgba(92, 151, 191, 1) 100%);
+    --profile-header-bg: linear-gradient(45deg, rgba(22, 34, 42, 0.90) 0%, rgba(58, 96, 115, 0.90) 50%, rgba(92, 151, 191, 0.90) 100%);
+    --profile-header-bg-other: linear-gradient(45deg, rgba(22, 34, 42, 1) 0%, rgba(58, 96, 115, 1) 50%, rgba(92, 151, 191, 1) 100%);
     --normal-card-bg: linear-gradient(60deg, rgba(255, 192, 203, 0.60) 10%, rgba(255, 255, 255, 0.60) 30%, rgba(135, 206, 235, 0.60) 60%);
     --normal-card-bg-other: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 50%, rgba(135, 206, 235, 0.70) 80%);
     --special-card-bg: linear-gradient(60deg, rgba(255, 192, 203, 0.70) 10%, rgba(255, 255, 255, 0.70) 30%, rgba(135, 206, 235, 0.70) 60%);
@@ -21,9 +21,9 @@
     --text-emphasize: rgba(255, 215, 0, 1);
     --text-special: linear-gradient(150deg, rgba(255, 255, 0, 1) 0, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 0, 1) 100%);
     /* 按键属性 */
-    --botton: rgba(92, 151, 191, 0.8);
-    --botton-shadow: 2px 2px 4px rgba(22, 34, 42, 0.5);
-    --botton-shadow-other: 2px 2px 4px rgba(255, 255, 0, 0.5);
+    --button: rgba(92, 151, 191, 0.8);
+    --button-shadow: 2px 2px 4px rgba(22, 34, 42, 0.5);
+    --button-shadow-other: 2px 2px 4px rgba(255, 255, 0, 0.5);
     /* 图标属性 */
     --icon-color: rgba(0, 0, 139, 1);
     --icon-color-other: rgba(99, 184, 255, 1);
@@ -100,7 +100,7 @@ div {
         padding: 0 0.5rem;
     }
 
-p, button {
+p {
     width: fit-content;
     display: inline-block;
     max-width: 100%;
@@ -109,6 +109,13 @@ p, button {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: var(--text-normal);
+}
+
+button {
+    all: unset;
+    display: inline-block;
+    cursor: pointer;
     color: var(--text-normal);
 }
 
@@ -199,16 +206,6 @@ p, button {
 .pointer {
     cursor: pointer;
 }
-
-.hidden-content {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-}
 /* -页面布局相关设置- */
 
 /* 图片模态框 */
@@ -222,7 +219,7 @@ p, button {
     background: var(--img-modal-bg);
     justify-content: center;
     align-items: center;
-    z-index: 9998;
+    z-index: 9999;
 }
 
 #modalImg {
@@ -291,6 +288,7 @@ p, button {
     align-items: center;
 }
 
+    .icon_bar i,
     .icon_bar svg {
         font-size: clamp(1.2rem, 3vw, 2rem);
         color: var(--icon-color);
@@ -299,30 +297,37 @@ p, button {
         flex-shrink: 0;
     }
 
+        .icon_bar i:hover,
         .icon_bar svg:hover {
             color: var(--icon-color-other);
         }
 
+    .p_icon_bar .pink,
     .icon_bar .pink {
         color: rgba(238, 162, 173, 1);
     }
 
+        .p_icon_bar .pink:hover,
         .icon_bar .pink:hover {
             color: rgba(255, 192, 203, 1);
         }
 
+    .p_icon_bar .gold,
     .icon_bar .gold {
         color: rgba(238, 201, 0, 1);
     }
 
+        .p_icon_bar .gold:hover,
         .icon_bar .gold:hover {
             color: rgba(255, 225, 0, 1);
         }
 
+    .p_icon_bar .black,
     .icon_bar .black {
         color: rgba(0, 0, 0, 1);
     }
 
+        .p_icon_bar .black:hover,
         .icon_bar .black:hover {
             color: rgba(40, 40, 40, 1);
         }
@@ -386,12 +391,12 @@ p, button {
     grid-row: 2/4;
 }
 
-.left_buttom {
+.left_button {
     grid-column: 1/3;
     grid-row: 9/11;
 }
 
-.right_buttm {
+.right_button {
     grid-column: 31/33;
     grid-row: 9/11;
 }
@@ -412,7 +417,7 @@ p, button {
 }
 /* -页面布局- */
 
-/* 顶栏 容器 */
+/* 顶栏 */
 .profile_header {
     padding: 1% 0 0 0;
     position: relative;
@@ -430,7 +435,7 @@ p, button {
         height: 80%;
         transform: skew(-20deg)scale(1);
         border-radius: 10px;
-        background: var(--top-left-bg);
+        background: var(--profile-header-bg);
         background-size: 200% 200%;
         box-shadow: var(--box-shadow);
         transition: var(--bg-transition), var(--transform-transition), var(--shadow-transition);
@@ -438,7 +443,7 @@ p, button {
 
     .profile_header:hover::before {
         background: transparent;
-        background: var(--top-left-bg-other);
+        background: var(--profile-header-bg-other);
         transform: skew(-20deg)scale(1.01);
         box-shadow: var(--box-shadow-other);
     }
@@ -626,71 +631,71 @@ p, button {
     .background_info .icon_bar {
         flex: 1;
     }
-/* -顶栏 容器- */
+/* -顶栏- */
 
-/* 中间栏 容器 */
-.left_buttom {
+/* 中间栏 */
+.left_button {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-    .left_buttom .botton {
+    .left_button .button {
         width: 4rem;
         height: auto;
     }
 
-    .left_buttom svg {
+    .left_button svg {
         font-size: 4rem;
-        color: var(--botton);
-        text-shadow: var(--botton-shadow);
+        color: var(--button);
+        text-shadow: var(--button-shadow);
         transform: scale(1);
         transition: var(--transform-transition), var(--text-shadow-transition);
     }
 
-        .left_buttom svg:hover {
+        .left_button svg:hover {
             transform: scale(1.1);
-            text-shadow: var(--botton-shadow-other);
+            text-shadow: var(--button-shadow-other);
         }
 
-        .left_buttom svg path {
+        .left_button svg path {
             stroke: var(--icon-stroke);
             stroke-width: 10;
         }
 
-.right_buttm {
+.right_button {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-    .right_buttm .botton {
+    .right_button .button {
         width: 4rem;
         height: auto;
     }
 
-    .right_buttm svg {
+    .right_button svg {
         font-size: 4rem;
-        color: var(--botton);
-        text-shadow: var(--botton-shadow);
+        color: var(--button);
+        text-shadow: var(--button-shadow);
         transform: scale(1);
         transition: var(--transform-transition), var(--text-shadow-transition);
     }
 
-        .right_buttm svg:hover {
+        .right_button svg:hover {
             transform: scale(1.1);
-            text-shadow: var(--botton-shadow-other);
+            text-shadow: var(--button-shadow-other);
         }
 
-        .right_buttm svg path {
+        .right_button svg path {
             stroke: var(--icon-stroke);
             stroke-width: 10;
         }
-/* -中间栏 容器- */
+/* -中间栏- */
 
-/* 底栏 容器 */
+/* 底栏 */
 .visitor_info {
     display: flex;
 }
@@ -724,7 +729,7 @@ p, button {
     height: 50%;
     transform: translateY(100%) translateX(-5%);
 }
-/* -底栏 容器- */
+/* -底栏- */
 
 /* 跳转确定栏 */
 .confirm_overlay {
@@ -770,7 +775,8 @@ p, button {
     margin-top: 1rem;
 }
 
-.btn_cancel, .btn_ok {
+.btn_cancel,
+.btn_ok {
     padding: 0.8rem 1.8rem;
     border: none;
     border-radius: 8px;
@@ -847,6 +853,96 @@ p, button {
     white-space: nowrap !important;
 }
 /* -屏幕阅读器- */
+
+/* 页面详细信息 */
+.toggle_about {
+    grid-column: 1/3;
+    grid-row: 3/4;
+    display: flex;
+    justify-content: center;
+}
+
+    .toggle_about p {
+        align-content: center;
+    }
+
+/* 关于区域 - 全屏覆盖 */
+.about_section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    pointer-events: auto;
+    opacity: 0;
+}
+
+.content {
+    max-width: 800px;
+    width: 80%;
+    overflow-y: auto;
+    padding: 2.5rem;
+    background: var(--profile-header-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color, #646cff) transparent;
+}
+
+    .content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .content::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .content::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+    }
+
+    .content p {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin: 1em 0;
+        padding: 0;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        color: var(--normal-card-bg);
+        line-height: 1.6;
+        text-align: left;
+    }
+
+    .content h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+
+    .content h3 {
+        margin-top: clamp(1.2rem, 3vh, 2rem);
+        margin-bottom: 0.8rem;
+        color: var(--text-normal-other);
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        border-bottom: 1px solid rgba(100, 108, 255, 0.2);
+        padding-bottom: 0.4rem;
+    }
+
+    .content h2 + p {
+        margin-top: -0.5rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+/* -页面详细信息- */
 
 /* 动画效果 */
 .spinner {

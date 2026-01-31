@@ -141,11 +141,11 @@ function handleWrapperClick(event) {
     }
 
     // 背景切换
-    if (target.closest('#left_botton')) {
+    if (target.closest('#left_button')) {
         changeBackground('prev');
         return;
     }
-    if (target.closest('#right_botton')) {
+    if (target.closest('#right_button')) {
         changeBackground('next');
         return;
     }
@@ -169,9 +169,14 @@ function handleWrapperClick(event) {
         }
         return;
     }
+
+    // 网页信息栏
+    if (target.closest('#toggle_about')) {
+        toggleAboutSection();
+    }
 }
 
-// 处理图标点击的专用函数
+// 处理图标点击跳转的专用函数
 function handleIconClick(target) {
     let iconElement = target;                                           // 查找实际点击的图标元素
     if (iconElement.tagName === 'path') {                               // 如果是path，找到父级svg
@@ -192,15 +197,17 @@ function handleIconClick(target) {
 function setupIndividualListeners() {
     let top_left_area = document.getElementById("top_left");
     let pageIconBar = document.getElementById('pages_icon_bar');
-    let left_botton = document.getElementById("left_botton");
-    let right_botton = document.getElementById("right_botton");
+    let left_button = document.getElementById("left_button");
+    let right_button = document.getElementById("right_button");
     let modeToggleBtn = document.getElementById('mode_change');
+    let reflash_info = document.getElementById('reflash_info');
+    let toggle_button = document.getElementById('toggle_button');
 
     // 个人主页跳转
     if (top_left_area) {
         top_left_area.addEventListener("click", function () {
             quickNavigateToPage("personal_page");
-        });
+        })
     }
 
     // 图标栏点击
@@ -216,19 +223,19 @@ function setupIndividualListeners() {
                 const platform = target.getAttribute('data-platform');
                 navigateToPage(platform);
             }
-        });
+        })
     }
 
     // 背景切换
-    if (left_botton) {
-        left_botton.addEventListener('click', function () {
+    if (left_button) {
+        left_button.addEventListener('click', function () {
             changeBackground('prev');
-        });
+        })
     }
-    if (right_botton) {
-        right_botton.addEventListener('click', function () {
+    if (right_button) {
+        right_button.addEventListener('click', function () {
             changeBackground('next');
-        });
+        })
     }
 
     // 模式切换
@@ -239,7 +246,25 @@ function setupIndividualListeners() {
             } else {
                 toggleBackgroundMode('sequential');
             }
-        });
+        })
+    }
+
+    // 信息刷新
+    if (reflash_info) {
+        reflash_info.addEventListener('click', function () {
+            if (!is_running) {
+                is_running = true;
+                clearCache();
+                initUserInfo();
+            }
+        })
+    }
+
+    // 网页信息栏
+    if (toggle_button) {
+        toggle_button.addEventListener('click', function () {
+            toggleAboutSection();
+        })
     }
 }
 /* ----------监听事件---------- */
@@ -425,6 +450,36 @@ function initConfirmDialog() {
     debugPageChange("确认对话框初始化完成");
 }
 /* ----------点击跳转页面---------- */
+
+/* ----------点击显示网站信息---------- */
+function toggleAboutSection() {
+    let toggle_about_button = document.getElementById('toggle_about');
+
+    let expanded = toggle_about_button.getAttribute('aria-expanded') === 'true';
+    const contentId = toggle_about_button.getAttribute('aria-controls');
+    const content = document.getElementById(contentId);
+
+    if (!content) return;
+
+    if (!expanded) {
+        toggle_about_button.setAttribute('aria-expanded', 'true');
+        content.hidden = 'true';
+        content.style.opacity = '1';
+        content.style.display = 'flex';
+    }
+
+    let overlay = document.getElementById('about_section');
+    // 点击遮罩层关闭
+    overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) {
+            toggle_about_button.setAttribute('aria-expanded', 'false');
+            content.hidden = 'hiiden';
+            content.style.opacity = '0';
+            content.style.display = 'none';
+        }
+    });
+}
+/* ----------点击显示网站信息---------- */
 
 /* ----------点击切换背景---------- */
 function initBGChangeSystem() {
