@@ -1,6 +1,7 @@
 /* 全局设置 */
 :root {
     --real-vh: 1vh;
+    --base-font: clamp(0.5rem, 1vw, 1rem);
     /* 图片模态框 */
     --img-modal-bg: rgba(0,0,0,0.8);
     --img-modal-close-button: rgba(0,0,0,0.5);
@@ -60,6 +61,37 @@
     --list-transtion: all 0.3s ease;
     /* 进度条属性 */
     --progress-bar-color: rgba(255, 255, 255, 1);
+    /* 大小属性 */
+    --p1-font-size: calc(var(--base-font) * 3);
+    --p1-font-size-mp:;
+    --p2-font-size: calc(var(--base-font) * 2);
+    --p2-font-size-mp:;
+    --p3-font-size: calc(var(--base-font) * 1.5);
+    --p3-font-size-mp:;
+    --p4-font-size: calc(var(--base-font) * 1.2);
+    --p4-font-size-mp:;
+    --p5-font-size: calc(var(--base-font) * 1);
+    --p5-font-size-mp:;
+    --p6-font-size: calc(var(--base-font) * 0.8);
+    --p6-font-size-mp:;
+    --g1-gap-size: calc(1 * var(--base-font));
+    --g1-gap-size-mp:;
+    --g2-gap-size: calc(2 * var(--base-font));
+    --g2-gap-size-mp:;
+    --content-padding-size: calc(2 * var(--base-font));
+    --content-padding-size-mp:;
+    --icon-padding-size: calc(1 * var(--base-font));
+    --iocn-padding-size-mp:;
+    --picon-padding-size: calc(0.5 * var(--base-font));
+    --picon-padding-size-mp:;
+    --list-padding-size: 12px 16px;
+    --list-padding-size-mp:;
+    --i1-icon-size: calc(4 * var(--base-font));
+    --i1-icon-size-mp:;
+    --i2-icon-size: calc(2 * var(--base-font));
+    --i2-icon-size-mp:;
+    --i3-icon-size: calc(0.8 * var(--base-font));
+    --i3-icon-size-mp:;
 }
 
 * {
@@ -88,25 +120,13 @@ div {
 }
 
 .p_bar {
+    font-size: var(--p5-font-size);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
 }
-
-.p_bar_row {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 60%;
-}
-
-    .p_bar_row p {
-        padding: 0 0.5rem;
-    }
 
 p {
     width: fit-content;
@@ -245,7 +265,7 @@ button {
     border: none;
     width: 4vh;
     height: auto;
-    font-size: 2rem;
+    font-size: var(--i2-icon-size);
     cursor: pointer;
     z-index: 9998;
 }
@@ -298,7 +318,7 @@ button {
 
     .icon_bar i,
     .icon_bar svg {
-        font-size: clamp(1.2rem, 3vw, 2rem);
+        font-size: var(--i2-icon-size);
         color: var(--icon-color);
         text-shadow: var(--icon-shadow);
         transition: var(--icon-transition);
@@ -354,8 +374,8 @@ button {
     align-items: center;
     flex: 1;
     min-width: 0;
-    padding: 0.5rem;
-    font-size: 0.8rem;
+    padding: var(--picon-padding-size);
+    font-size: var(--i3-icon-size);
 }
 
     .p_icon .glod {
@@ -471,7 +491,7 @@ button {
         }
 
             .profile_header .left .left_top p {
-                font-size: 2rem;
+                font-size: var(--p2-font-size);
                 color: var(--text-emphasize);
                 transform: scale(1);
                 transition: var(--transform-transition);
@@ -488,7 +508,7 @@ button {
         }
 
             .profile_header .left .left_bottom p {
-                font-size: 3rem;
+                font-size: var(--p1-font-size);
                 color: var(--text-normal);
                 transform: scale(1);
                 transition: var(--transform-transition);
@@ -511,7 +531,7 @@ button {
             .profile_header .right .right_top p {
                 display: inline-block;
                 max-width: 100%;
-                font-size: 1.5rem;
+                font-size: var(--p3-font-size);
                 color: var(--text-normal);
                 transform: scale(1);
                 transition: var(--transform-transition);
@@ -536,7 +556,7 @@ button {
         .profile_header .right .right_bottom p {
             display: inline-block;
             max-width: 100%;
-            font-size: 1.2rem;
+            font-size: var(--p4-font-size);
             transform: scale(1);
             transition: var(--transform-transition);
         }
@@ -571,7 +591,7 @@ button {
     }
 
         .status_section_part .icon_bar svg {
-            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-size: var(--i2-icon-size);
         }
 
 .social_links {
@@ -579,12 +599,12 @@ button {
 }
 
     .social_links .icon_bar {
-        gap: clamp(0.1rem, 0.5vw, 1rem);
-        padding: clamp(0.5rem, 2.5vw, 1.5rem);
+        gap: var(--g1-gap-size);
+        padding: var(--icon-padding-size);
     }
 
         .social_links .icon_bar svg {
-            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-size: var(--i2-icon-size);
             transform: translateX(-10%);
         }
 
@@ -655,7 +675,7 @@ button {
     }
 
     .left_button svg {
-        font-size: 4rem;
+        font-size: var(--i1-icon-size);
         color: var(--button);
         text-shadow: var(--button-shadow);
         transform: scale(1);
@@ -685,7 +705,7 @@ button {
     }
 
     .right_button svg {
-        font-size: 4rem;
+        font-size: var(--i1-icon-size);
         color: var(--button);
         text-shadow: var(--button-shadow);
         transform: scale(1);
@@ -715,13 +735,13 @@ button {
         align-items: center;
         height: 80%;
         transform: translateY(10%);
-        font-size: 2rem;
+        font-size: var(--i2-icon-size);
         text-align: center;
     }
 
     .visitor_info p {
         width: 40%;
-        font-size: 0.8rem;
+        font-size: var(--p6-font-size);
         color: var(--text-emphasize);
     }
 
@@ -759,13 +779,13 @@ button {
 .confirm_content {
     background: var(--confirm-bg);
     border-radius: 15px;
-    padding: 2rem;
+    padding: var(--content-padding-size);
     box-shadow: var(--confirm-shadow);
     text-align: center;
 }
 
     .confirm_content p {
-        font-size: 1.2rem;
+        font-size: var(--p4-font-size);
         color: var(--confirm-text-color);
         margin-bottom: 1.5rem;
         line-height: 1.5;
@@ -779,16 +799,16 @@ button {
 .confirm_buttons {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: var(--g2-gap-size);
     margin-top: 1rem;
 }
 
 .btn_cancel,
 .btn_ok {
-    padding: 0.8rem 1.8rem;
+    padding: var(--list-padding-size);
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: var(--p5-font-size);
     font-weight: 500;
     cursor: pointer;
     transition: var(--confirm-transition);
@@ -849,7 +869,7 @@ button {
     background: var(--list-bg);
     backdrop-filter: blur(10px);
     border-radius: 12px;
-    padding: 12px 8px;
+    padding: var(--list-padding-size);
     box-shadow: var(--box-shadow);
     z-index: 100;
     opacity: 0;
@@ -859,12 +879,12 @@ button {
 
 .list-item {
     width: 100%;
-    padding: 12px 16px;
+    padding: var(--list-padding-size);
     margin: 4px 0;
     background: var(--list-card);
     border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: var(--p6-font-size);
     color: var(--text-normal);
     text-align: center;
     white-space: nowrap;
@@ -880,16 +900,16 @@ button {
         box-shadow: var(--box-shadow-other);
     }
 
-    .list .current {
-        border-color: var(--text-emphasize);
-        color: var(--text-emphasize);
-        font-weight: bold;
-        box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
-    }
+.list .current {
+    border-color: var(--text-emphasize);
+    color: var(--text-emphasize);
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.3);
+}
 
-        .list .current:hover {
-            transform: scale(1.05);
-        }
+    .list .current:hover {
+        transform: scale(1.05);
+    }
 
 
 .list::-webkit-scrollbar {
@@ -997,14 +1017,14 @@ button {
         margin-top: 0;
         margin-bottom: 1.5rem;
         text-align: center;
-        font-size: clamp(1.2rem, 3vw, 2rem);
+        font-size: var(--p2-font-size);
     }
 
     .content h3 {
         margin-top: clamp(1.2rem, 3vh, 2rem);
         margin-bottom: 0.8rem;
         color: var(--text-normal-other);
-        font-size: clamp(1.2rem, 3vw, 2rem);
+        font-size: var(--p2-font-size);
         border-bottom: 1px solid rgba(100, 108, 255, 0.2);
         padding-bottom: 0.4rem;
     }
