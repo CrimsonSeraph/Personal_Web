@@ -469,9 +469,9 @@ function toggleAboutSection() {
     let toggle_about_button = document.getElementById('toggle_about');
 
     let expanded = toggle_about_button.getAttribute('aria-expanded') === 'true';
-    const contentId = toggle_about_button.getAttribute('aria-controls');
 
     let overlay = document.getElementById('about_section');
+    let close_button = document.getElementById('closeContent');
     if (!expanded) {
         toggle_about_button.setAttribute('aria-expanded', 'true');
         overlay.hidden = 'true';
@@ -481,6 +481,17 @@ function toggleAboutSection() {
     // 点击遮罩层关闭
     overlay.addEventListener('click', function (event) {
         if (event.target === overlay) {
+            toggle_about_button.setAttribute('aria-expanded', 'false');
+            overlay.hidden = 'hiiden';
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+        }
+    });
+    // 点击按键关闭
+    close_button.addEventListener('click', function (event) {
+        if (event.target === close_button) {
             toggle_about_button.setAttribute('aria-expanded', 'false');
             overlay.hidden = 'hiiden';
             overlay.style.opacity = '0';

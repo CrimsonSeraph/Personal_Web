@@ -274,6 +274,9 @@ button {
     font-size: var(--i2-icon-size);
     cursor: pointer;
     z-index: 9998;
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
 /* -图片模态框- */
 
@@ -1039,6 +1042,24 @@ button {
         margin-bottom: 2rem;
         opacity: 0.9;
     }
+
+#closeContent {
+    position: absolute;
+    top: 5vh;
+    right: 5vw;
+    background: var(--img-modal-close-button);
+    color: white;
+    border: none;
+    width: 4vh;
+    height: auto;
+    font-size: var(--i2-icon-size);
+    cursor: pointer;
+    z-index: 9998;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 5px;
+}
 /* -页面详细信息- */
 
 /* 动画效果 */
