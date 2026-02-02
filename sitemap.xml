@@ -7,7 +7,7 @@
 	<!-- 首页(格式) -->
 	<url>
 		<loc>https://personal-web.crimsonseraph.dpdns.org/</loc>
-		<lastmod>2026-01-31T23:23:25+00:00</lastmod>
+		<lastmod>2026-02-01T23:14:37+00:00</lastmod>
 		<changefreq>weekly</changefreq>
 		<!-- 更新频率：daily/weekly/monthly -->
 		<priority>1.0</priority>

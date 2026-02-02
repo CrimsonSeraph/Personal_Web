@@ -63,35 +63,20 @@
     --progress-bar-color: rgba(255, 255, 255, 1);
     /* 大小属性 */
     --p1-font-size: calc(var(--base-font) * 3);
-    --p1-font-size-mp:;
     --p2-font-size: calc(var(--base-font) * 2);
-    --p2-font-size-mp:;
     --p3-font-size: calc(var(--base-font) * 1.5);
-    --p3-font-size-mp:;
     --p4-font-size: calc(var(--base-font) * 1.2);
-    --p4-font-size-mp:;
     --p5-font-size: calc(var(--base-font) * 1);
-    --p5-font-size-mp:;
     --p6-font-size: calc(var(--base-font) * 0.8);
-    --p6-font-size-mp:;
     --g1-gap-size: calc(1 * var(--base-font));
-    --g1-gap-size-mp:;
     --g2-gap-size: calc(2 * var(--base-font));
-    --g2-gap-size-mp:;
     --content-padding-size: calc(2 * var(--base-font));
-    --content-padding-size-mp:;
     --icon-padding-size: calc(1 * var(--base-font));
-    --iocn-padding-size-mp:;
     --picon-padding-size: calc(0.5 * var(--base-font));
-    --picon-padding-size-mp:;
     --list-padding-size: 12px 16px;
-    --list-padding-size-mp:;
     --i1-icon-size: calc(4 * var(--base-font));
-    --i1-icon-size-mp:;
     --i2-icon-size: calc(2 * var(--base-font));
-    --i2-icon-size-mp:;
     --i3-icon-size: calc(0.8 * var(--base-font));
-    --i3-icon-size-mp:;
     /* 伪元素 */
     --befor: skew(-20deg)scale(1);
     --befor-mp: skew(-6deg)scale(1);
@@ -1127,13 +1112,21 @@ button {
         grid-row: 2/3;
     }
 
+    .social_links .icon_bar{
+        gap: var(--g2-gap-size);
+    }
+
+        .social_links .icon_bar svg{
+           font-size: calc(var(--i2-icon-size) * 1.5);
+        }
+
     .secondary_navigation {
         grid-column: 1/8;
         grid-row: auto;
     }
 
     .visitor_info {
-        grid-column: 6/-1;
+        grid-column: 5/-1;
         grid-row: 16/-1;
     }
 
@@ -1142,7 +1135,7 @@ button {
     }
 
     .bottom_bg {
-        grid-column: 6/-1;
+        grid-column: 5/-1;
         grid-row: 5/-1;
     }
 
