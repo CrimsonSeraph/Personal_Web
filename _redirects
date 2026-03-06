@@ -1,6 +1,5 @@
-# Ç¿ÖÆHTTPS
+# å¼ºåˆ¶HTTPS
 http://* https://:splat 301!
 
-# »º´æ²ßÂÔ
-/assets/video/*.mp4 200! Cache-Control: public, max-age=31536000
+# ç¼“å­˜ç­–ç•¥
 /assets/img/*.jpg 200! Cache-Control: public, max-age=31536000

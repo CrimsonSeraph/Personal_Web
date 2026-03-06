@@ -1,0 +1,4 @@
+/static/resources/* binary
+
+# 所有文本文件自动规范化行尾
+* text=auto
