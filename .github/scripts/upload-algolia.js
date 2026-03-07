@@ -1,4 +1,4 @@
-const algoliasearch = require('algoliasearch');
+const { algoliasearch } = require('algoliasearch');
 const records = require('../../public/algolia.json');
 
 const client = algoliasearch(
