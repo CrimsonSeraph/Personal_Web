@@ -616,7 +616,7 @@ injector:
         color: #ffffff;
       }
     </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   body_begin: # Inject code snippet right after <body>
   body_end: # Inject code snippet right before </body>
   sidebar_begin: # Inject code snippet right after <aside>
