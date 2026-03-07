@@ -7,16 +7,16 @@
 menu:
   - name: home
     url: ""
-    icon: # default use taichi icon, you can use a hexadecimal representation of fontawesome or icon_font, like 'f0c1'
+    icon: f015 # default use taichi icon, you can use a hexadecimal representation of fontawesome or icon_font, like 'f0c1'
   - name: archives
     url: "archives"
-    icon:
+    icon: f187
   - name: about
     url: "about"
-    icon:
+    icon: f007
   - name: friend
     url: "friend"
-    icon:
+    icon: f0c0
 
 mainSections: ["post"]
 # 年，月，日及时间的格式化样式
@@ -26,9 +26,9 @@ monthFormat: "2006-01"
 dateFormat: "2006-01-02"
 timeFormat: "2006-01-02 15:04:05"
 
-author: D-Sketon
-email: xxx@example.com
-description: "少女祈祷中..."
+author: CrimsonSeraph
+email: LTYY.LeoYu@gmail.com
+description: "✟升天✟"
 # subtitle: "少女祈祷中..."
 subtitle:
   typing:
@@ -43,11 +43,11 @@ subtitle:
     backDelay: 2000             # 打完一句话后，等待时间
     startDelay: 300             # 页面加载后，等待时间
     loop: true                  # 是否循环播放
-    shuffle: true              # 是否随机输出句子
+    shuffle: true               # 是否随机输出句子
     showCursor: true            # 是否显示闪烁的字符
     cursorChar: "|"             # 字符
     smartBackspace: false       # 智能退格，只删除不同的部分
-  text: "少女祈祷中..."        # 当 typing.enable = false 时使用
+  text: "✟升天✟"                # 当 typing.enable = false 时使用
 
 banner: "images/banner.webp"
 # You can also write it in the form of the following url
@@ -102,7 +102,7 @@ copyright:
 #   All website licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a></div>
 
 footer:
-  since: 2020 # 2020-current year
+  since: 2026 # 2020-current year
   powered: true
   count: true
   busuanzi: true
@@ -114,16 +114,16 @@ footer:
 # Sidebar
 # sidebar: right # deprecated, use sidebar.position instead
 sidebar:
-  position: right
+  position: left
   menu: true  # whether to show the sidebar menu button, ignored on mobile devices
   article:
     show_common: true # whether to show common sidebar, ignored on mobile devices
 
 social:
-  # email: mailto:xxx@gmail.com
-  # github: https://github.com/yourname
+  email: LTYY.LeoYu@gmail.com
+  github: https://github.com/CrimsonSeraph
   # google: https://plus.google.com/yourname
-  # twitter: https://twitter.com/yourname
+  twitter: https://x.com/CrimSeraph_QwQ
   # facebook: https://www.facebook.com/yourname
   # instagram: https://www.instagram.com/yourname
   # linkedin: https://www.linkedin.com/in/yourname
@@ -133,7 +133,7 @@ social:
   # flickr: https://www.flickr.com/photos/yourname
   # dribbble: https://dribbble.com/yourname
   # behance: https://www.behance.net/yourname
-  # bilibili: https://space.bilibili.com/yourname
+  bilibili: https://space.bilibili.com/1741002917?spm_id_from=333.1007.0.0
   # weibo: https://weibo.com/yourname
   # zhihu: https://www.zhihu.com/people/yourname
   # reddit: https://www.reddit.com/user/yourname
@@ -144,7 +144,7 @@ social:
   # keybase: https://keybase.io/yourname
   # telegram: https://t.me/yourname
   # discord: https://discordapp.com/users/yourname
-  # steam: https://steamcommunity.com/id/yourname
+  steam: https://steamcommunity.com/id/CrimsonSeraph/
 
 widgets:
   - category
@@ -173,7 +173,7 @@ summary:
 rss:
   limit: 10             # The number of recent articles to be output, write -1 to output all
   showFullContent: false # output full content or description
-  showCopyright: false   # If true, add copyright to the end of article.
+  showCopyright: true   # If true, add copyright to the end of article.
 
 # Sort order configuration
 # Available values: default, date, date-reverse, weight, weight-reverse
@@ -202,11 +202,11 @@ layout:
   max_width: 1350px # the max width of the main content area
 
 triangle_badge:
-  enable: false
+  enable: true
   icon: github # same as the icon in the social config
-  link: https://github.com/D-Sketon/hugo-theme-reimu
+  link: https://github.com/CrimsonSeraph
 
-anchor_icon: # default use '#' icon, you can use a hexadecimal representation of fontawesome or icon_font, like 'f0c1', you can also use false to hide anchor icon
+anchor_icon: f08b # default use '#' icon, you can use a hexadecimal representation of fontawesome or icon_font, like 'f0c1', you can also use false to hide anchor icon
 
 reimu_cursor:
   enable: true
@@ -215,7 +215,7 @@ reimu_cursor:
     pointer: ../images/cursor/reimu-cursor-pointer.png
     text: ../images/cursor/reimu-cursor-text.png
 
-icon_font: 4552607_4k4bc36ef96
+icon_font: false
 
 # Font loading strategy
 # Custom Font -> Google Fonts -> Local FallBack Font
@@ -273,7 +273,7 @@ clarity: false
 
 # mermaid url https://github.com/mermaid-js/mermaid
 mermaid:
-  zoom: false # whether to enable zoom for mermaid diagrams
+  zoom: true # whether to enable zoom for mermaid diagrams
 
 code_block:
   # whether to expand the code block by default
@@ -305,7 +305,7 @@ math:
   katex:
     enable: true
   mathjax:
-    enable: false
+    enable: true
     options: # see https://docs.mathjax.org/en/latest/web/configuration.html
     # we need to put the configuration in an array, because hugo will automatically convert the key to lowercase
       [
@@ -369,8 +369,8 @@ valine:
 
 # https://waline.js.org/
 waline:
-  enable: false
-  serverURL:
+  enable: true
+  serverURL: https://comment.crimsonseraph.top/
   # lang: zh-CN # deprecated, use html.lang instead
   locale: {} # https://waline.js.org/guide/features/i18n.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80
   emoji:
@@ -454,10 +454,10 @@ algolia_search:
 preloader:
   enable: true
   text: 
-    zh-CN: 少女祈祷中...
-    zh-TW: 少女祈禱中...
+    zh-CN: ————✟升天✟————
+    zh-TW: ————✟升天✟————
     en: Loading...
-    ja: 少女祈祷中...
+    ja: ————✟昇天✟————
     pt-BR: Carregando...
   icon: # default use inline svg for fast speed, you can use a image url, like '/images/taichi.png'
   rotate: true # whether to rotate the icon
@@ -534,7 +534,7 @@ article_copyright:
 # Back To Top
 top:
   enable: true
-  position: right # left or right
+  position: left # left or right
   icon:
     url: "../images/taichi.png" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
     rotate: true
@@ -607,9 +607,11 @@ home_categories:
 # Make sure your code snippet is safeHTML
 injector:
   head_begin: # Inject code snippet right after <head>
-  head_end: # Inject code snippet right before </head>
+  head_end: | # Inject code snippet right before </head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
   body_begin: # Inject code snippet right after <body>
-  body_end: # Inject code snippet right before </body>
+  body_end: | # Inject code snippet right before </body>
+    <script async src="http://你的服务器IP:8080/js"></script>
   sidebar_begin: # Inject code snippet right after <aside>
   sidebar_end: # Inject code snippet right before </aside>
 
@@ -661,8 +663,8 @@ player:
       audio: []
       fixed: true
       autoplay:
-      loop:
-      order:
+      loop: all
+      order: random
       preload:
       volume:
       mutex:
@@ -671,12 +673,12 @@ player:
   meting:
     # https://github.com/metowolf/MetingJS
     # if you want to use meting, please enable aplayer first
-    enable: false
+    enable: fasle
     meting_api: # custom api
     options:
-      id: 2265921590
-      server: netease
-      type: playlist
+      id:
+      server:
+      type:
       auto:
 
 ########################################
@@ -685,7 +687,7 @@ player:
 
 pangu:
   # more information: https://github.com/vinta/pangu.js 
-  enable: false  # enable pangu.js to add space between Chinese and English
+  enable: true  # enable pangu.js to add space between Chinese and English
 
 ########################################
 # Theme

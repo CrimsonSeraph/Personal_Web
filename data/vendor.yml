@@ -132,4 +132,4 @@ css:
     integrity: sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa
   aplayer:
     src: webcache|aplayer@1.10.1/dist/APlayer.min.css
-    integrity: sha384-tLMkTWh2pfXNWGFlUS0w1TFtRG5xZ9lPWFOooj+vDDLIL+xBGQU/voDBY5XE2lVh
+    integrity: sha384-tLMkTWh2pfXNWGFlUS0w1TFtRG5xZ9lPWFOo-j+vDDLIL+xBGQU/voDBY5XE2lVh
