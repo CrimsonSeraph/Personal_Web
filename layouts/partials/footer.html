@@ -102,21 +102,19 @@
       </div>
     {{- end -}}
     {{- if .Site.Params.footer.busuanzi -}}
-      <div>
-        <span class="icon-eye"></span>
-        <span id="busuanzi_container_site_pv"
-          >{{ i18n "busuanzi.pv" }}&nbsp;<span
-            id="busuanzi_site_pv"
-          ></span
-        ></span>
-        &nbsp;|&nbsp;
-        <span class="icon-user"></span>
-        <span id="busuanzi_container_site_uv"
-          >{{ i18n "busuanzi.uv" }}&nbsp;<span
-            id="busuanzi_site_uv"
-          ></span
-        ></span>
-      </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+      <span class="icon-eye" style="margin-right: 2px;"></span>
+      <span>总访问量:</span>
+      <img src="https://moe-counter-cf.ltyy-leoyu.workers.dev/count?theme=gelbooru&length=7"
+          alt="站点访问计数"
+          style="height: 4rem; vertical-align: middle;">
+      <span style="margin: 0 4px;">|</span>
+      <span class="icon-user" style="margin-right: 2px;"></span>
+      <span>访客数:</span>
+      <img src="https://moe-counter-cf.ltyy-leoyu.workers.dev/uv?theme=gelbooru&length=7" 
+          alt="站点访客计数"
+          style="height: 4rem; vertical-align: middle;">
+    </div>
     {{- end -}}
   </div>
 </footer>

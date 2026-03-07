@@ -303,7 +303,7 @@ clipboard:
 
 math:
   katex:
-    enable: true
+    enable: false
   mathjax:
     enable: true
     options: # see https://docs.mathjax.org/en/latest/web/configuration.html
@@ -608,16 +608,23 @@ home_categories:
 injector:
   head_begin: # Inject code snippet right after <head>
   head_end: | # Inject code snippet right before </head>
+    <style>
+      #loading {
+        background-color: #1a1a1a !important;
+      }
+      #loading .loading-word {
+        color: #ffffff;
+      }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
   body_begin: # Inject code snippet right after <body>
-  body_end: | # Inject code snippet right before </body>
-    <script async src="http://你的服务器IP:8080/js"></script>
+  body_end: # Inject code snippet right before </body>
   sidebar_begin: # Inject code snippet right after <aside>
   sidebar_end: # Inject code snippet right before </aside>
 
 # Experimental, may have a lot of bugs, open with caution!
 pjax:
-  enable: false
+  enable: true
 
 # Experimental
 # https://github.com/GoogleChromeLabs/quicklink
