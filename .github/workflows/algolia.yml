@@ -1,0 +1,35 @@
+name: Update Algolia Index
+
+on:
+  push:
+    branches:
+      - main          # 当推送到 main 分支时触发（根据你的默认分支调整）
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # 如果你使用了主题子模块，需要拉取
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true    # 如果你需要 Hugo 扩展版
+
+      - name: Build site
+        run: hugo --minify
+
+      - name: Upload to Algolia
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.APPLICATION_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.API_KEY }}
+          ALGOLIA_INDEX_NAME: personal-web   # 与 params.yml 中的 indexName 一致
+        run: |
+          # 使用 Node.js 脚本上传（推荐）
+          npm install algoliasearch
+          node .github/scripts/upload-algolia.js

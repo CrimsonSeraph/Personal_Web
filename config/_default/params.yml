@@ -440,10 +440,10 @@ utterances:
 ########################################
 
 algolia_search:
-  enable: false
-  appID:
-  apiKey:
-  indexName:
+  enable: true
+  appID: 1YYCGI2ZZ9
+  apiKey: 1bdccc7d61c2fe8d6e3a4b2c62fe15ad
+  indexName: personal-web
   hits:
     per_page: 10
 
