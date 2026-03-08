@@ -1,8 +1,8 @@
-- name: D-Sketon
-  url: https://d-sketon.github.io/
-  desc: Hexo 建站
-  image: https://d-sketon.github.io/avatar/avatar.webp
-- name: D-Sketon
-  url: https://d-sketon.github.io/astro-theme-reimu/
-  desc: Astro 建站
-  image: https://d-sketon.github.io/avatar/avatar.webp
+- name: kinguang3
+  url: https://github.com/kinguang3
+  desc: 团队成员
+  image: /avatar/kinguang3.webp
+- name: Angvannor
+  url: https://github.com/Angvannor
+  desc: 团队成员
+  image: /avatar/Angvannor.webp
