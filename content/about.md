@@ -12,7 +12,9 @@ lastmod: 2026-03-08T14:00:00+08:00
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
 [![Hugo Version](https://img.shields.io/badge/Hugo-v0.121.2+-blue)](https://gohugo.io/)
 
-这里是 [CrimsonSeraph](https://github.com/CrimsonSeraph) 的个人网站。本站基于 [Hugo](https://gohugo.io/) 静态站点生成器构建，使用主题 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 用于记录个人生活、学习与项目展示等内容。
+这里是 [CrimsonSeraph](https://github.com/CrimsonSeraph) 的个人网站。本站基于 [Hugo](https://gohugo.io/) 静态站点生成器构建，使用主题 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu)
+
+用于记录个人生活、学习与项目展示等内容。
 
 网站已通过 Cloudflare Pages 自动部署，可通过以下地址访问：
 🔗 **[https://personal-web.crimsonseraph.top/](https://personal-web.crimsonseraph.top/)**

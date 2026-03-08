@@ -12,7 +12,9 @@ lastmod: 2026-03-08T14:00:00+08:00
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
 [![Hugo Version](https://img.shields.io/badge/Hugo-v0.121.2+-blue)](https://gohugo.io/)
 
-This is the personal website repository of [CrimsonSeraph](https://github.com/CrimsonSeraph). Built with the [Hugo](https://gohugo.io/) static site generator and the [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) theme, it serves as a space to document personal life, learning notes, and project showcases.
+This is the personal website repository of [CrimsonSeraph](https://github.com/CrimsonSeraph). Built with the [Hugo](https://gohugo.io/) static site generator and the [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) theme.
+
+It serves as a space to document personal life, learning notes, and project showcases.
 
 The site is automatically deployed via Cloudflare Pages and can be accessed at:
 🔗 **[https://personal-web.crimsonseraph.top/](https://personal-web.crimsonseraph.top/)**
