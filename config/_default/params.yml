@@ -30,7 +30,7 @@ author: CrimsonSeraph
 email: LTYY.LeoYu@gmail.com
 description: "✟升天✟"
 # subtitle: "少女祈祷中..."
-subtitle:
+subtitle: 
   typing:
     enable: false
     strings:
@@ -93,7 +93,15 @@ excerpt_link: Read More
 # Footer copyright
 # Inject code snippet right in the footer copyright
 # Make sure your code snippet is safeHTML
-copyright:
+copyright: |-
+  <div style="display:flex; flex-direction:column; align-items:center;">
+    <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+      <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+    </a>
+    <span>This work is licensed under a 
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+    </span>
+  </div>
 # Need help choosing? Please see...
 # https://creativecommons.org/choose/
 # https://choosealicense.com/
