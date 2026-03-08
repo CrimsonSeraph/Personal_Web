@@ -1,11 +1,4 @@
----
-title: About
-description: About
-translationKey: "About"
-date: 2026-03-08T14:00:00+08:00
-lastmod: 2026-03-08T14:00:00+08:00
-
----
+# [中文](README.md) | English README
 
 # CrimsonSeraph's Personal Website
 
