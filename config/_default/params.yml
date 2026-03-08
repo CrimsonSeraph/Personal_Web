@@ -107,8 +107,8 @@ footer:
   count: true
   busuanzi: true
   icon:
-    url: "../images/taichi.png" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
-    rotate: true
+    url: "../favicon.ico" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    rotate: false
     mask: true # whether to use the images as a mask
 
 # Sidebar
@@ -459,7 +459,7 @@ preloader:
     en: Loading...
     ja: ✟昇天✟
     pt-BR: Carregando...
-  icon: # default use inline svg for fast speed, you can use a image url, like '/images/taichi.png'
+  icon:  "/images/arrows-rotate-solid-128x128.png" # default use inline svg for fast speed, you can use a image url, like '/images/taichi.png'
   rotate: true # whether to rotate the icon
 
 # see https://github.com/D-Sketon/aos.js
@@ -534,9 +534,9 @@ article_copyright:
 # Back To Top
 top:
   enable: true
-  position: left # left or right
+  position: right # left or right
   icon:
-    url: "../images/taichi.png" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    url: "../images/arrows-rotate-solid-full.svg" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
     rotate: true
     mask: true # whether to use the images as a mask
 
@@ -563,7 +563,7 @@ moe_icp:
 
 # Sponsor
 sponsor:
-  enable: false
+  enable: true
   tip: 
     zh-CN: 请作者喝杯咖啡吧
     zh-TW: 請作者喝杯咖啡吧
@@ -571,8 +571,8 @@ sponsor:
     ja: コーヒーを買ってください
     pt-BR: Compre-me um café
   icon:
-    url: "../images/taichi.png" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
-    rotate: true
+    url: "../images/money-bills-solid-full.svg" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    rotate: false
     mask: true # whether to use the images as a mask
   qr:
     # - name: 支付宝
