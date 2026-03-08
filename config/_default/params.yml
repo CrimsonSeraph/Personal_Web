@@ -454,10 +454,10 @@ algolia_search:
 preloader:
   enable: true
   text: 
-    zh-CN: ————✟升天✟————
-    zh-TW: ————✟升天✟————
+    zh-CN: ✟升天✟
+    zh-TW: ✟升天✟
     en: Loading...
-    ja: ————✟昇天✟————
+    ja: ✟昇天✟
     pt-BR: Carregando...
   icon: # default use inline svg for fast speed, you can use a image url, like '/images/taichi.png'
   rotate: true # whether to rotate the icon
