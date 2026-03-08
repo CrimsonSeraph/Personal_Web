@@ -13,7 +13,7 @@ menu:
     icon: f187
   - name: about
     url: "about"
-    icon: f007
+    icon: f2bb
   - name: friend
     url: "friend"
     icon: f0c0
@@ -544,7 +544,7 @@ top:
   enable: true
   position: right # left or right
   icon:
-    url: "../images/arrows-rotate-solid-full.svg" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    url: "../images/fediverse-brands-solid-full.svg" # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
     rotate: true
     mask: true # whether to use the images as a mask
 
