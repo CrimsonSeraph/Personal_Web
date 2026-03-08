@@ -22,7 +22,7 @@
                   aria-label="{{ i18n "tag" }}: {{ .Page.Title }}"
                   title="{{ .Page.Title }}"
                 >
-                  {{ .Page.Title }}
+                  {{ i18n .Page.Data.Term | default .Page.Title }}
                 </a>
               </li>
               {{- $counter = add $counter 1 -}}

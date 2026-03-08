@@ -5,7 +5,7 @@
       data-aos="{{ $.Site.Params.animation.options.archive.tag }}"
     >
       <a class="archives-tag-list-link" href="{{ .Page.RelPermalink }}"
-        >{{ .Page.Title }}</a
+        >{{ i18n .Page.Data.Term | default .Page.Title }}</a
       >
     </div>
   {{- end -}}
@@ -17,7 +17,7 @@
       data-aos="{{ $.Site.Params.animation.options.archive.category }}"
     >
       <a class="archives-category-list-link" href="{{ .Page.RelPermalink }}"
-        >{{ .Page.Title }}</a
+        >{{ i18n .Page.Data.Term | default .Page.Title }}</a
       >
     </div>
   {{- end -}}

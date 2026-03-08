@@ -18,7 +18,7 @@
               <li class="category-list-item">
                 <a class="category-list-link" href="{{ .Page.RelPermalink }}" 
                   title="{{ .Page.Title }}"
-                  >{{ .Page.Title }}</a
+                  >{{ i18n .Page.Data.Term | default .Page.Title }}</a>
                 >
               </li>
               {{- $counter = add $counter 1 -}}

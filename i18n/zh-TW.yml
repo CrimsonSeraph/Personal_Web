@@ -87,3 +87,6 @@ heat_map_card:
   no_articles: 沒有文章
   words: 字
   total_articles: 共 $1 篇文章，$2 字
+
+life: "生活"
+projects: "專案"

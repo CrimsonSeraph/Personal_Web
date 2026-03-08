@@ -16,7 +16,7 @@
       {{- range $k, $v := $ctx.Site.Params.home_categories.content -}}
         {{- if $v.categories -}}
           <div class="post-categories-wrap">
-            <a class="post-link" href="{{ (printf "%s%s" "categories/" (urlize $v.categories)) | relLangURL }}" aria-label="{{ $v.categories }}" title="{{ $v.categories }}"></a>
+            <a class="post-link" href="{{ (printf "%s%s" "categories/" (urlize $v.categories)) | relLangURL }}" aria-label="{{ i18n $v.categories | default $v.categories }}" title="{{ i18n $v.categories | default $v.categories }}"></a>
             <div class="post-categories-cover">
               {{- if $v.cover -}}
                 <img
@@ -43,7 +43,7 @@
                   />
                 {{- end -}}
               {{- end -}}
-              <h2>{{ $v.categories }}</h2>
+              <h2>{{ i18n $v.categories | default $v.categories }}</h2>
               <h3>{{ i18n "home_categories.count" (len (index $ctx.Site.Taxonomies.categories (lower $v.categories))) }}</h3>
             </div>
           </div>

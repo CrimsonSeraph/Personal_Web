@@ -600,12 +600,12 @@ share:
 
 # show categories card on home page
 home_categories:
-  enable: false
+  enable: true
   content:
-    - categories: # string (single-layer category) or array (multi-layer category)
-      cover: # empty means random cover
-    - categories:
-      cover:
+    - categories: "life" # string (single-layer category) or array (multi-layer category)
+      cover: "/images/covers/cover-1.jpg" # empty means random cover
+    - categories: "projects"
+      cover: "/images/covers/cover-2.jpg"
 
 ########################################
 # Experimental features

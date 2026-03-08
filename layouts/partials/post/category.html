@@ -5,7 +5,7 @@
       class="article-category-link"
       href="{{ "categories/" | relLangURL }}{{ . | urlize | lower }}"
       data-aos="zoom-in"
-      >{{- . -}}</a
+      >{{ i18n . | default . }}</a
     >
     </li>
   {{- end -}}
