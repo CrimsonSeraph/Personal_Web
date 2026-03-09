@@ -1,13 +1,13 @@
 ---
-title: 图片墙
+title: 照片墙
 categories: ["life"]
 tags: ["images"]
-cover: /images/covers/games_images/DevilMayCry5-1.jpg
+cover: /images/covers/post/photo-gallery/DevilMayCry5-1.jpg
 description: 用于存放各种图片
 sidebar: false
-banner: /images/covers/games_images/DevilMayCry5-1.jpg
-date: 2026-03-08T01:00:00-07:00
-lastmod: 2026-03-08T01:00:00-07:00
+banner: /images/covers/post/photo-gallery/DevilMayCry5-1.jpg
+date: 2026-03-08T01:00:00+08:00
+lastmod: 2026-03-08T01:00:00+08:00
 ---
 
 {{< gallery >}}

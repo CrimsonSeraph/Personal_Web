@@ -11,6 +11,9 @@ menu:
   - name: archives
     url: "archives"
     icon: f187
+  - name: projects
+    url: "projects"
+    icon: f07c  
   - name: about
     url: "about"
     icon: f2bb

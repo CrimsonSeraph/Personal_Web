@@ -6,8 +6,8 @@ cover: /images/covers/games_images/DevilMayCry5-1.jpg
 description: Used to store various pictures
 sidebar: false
 banner: /images/covers/games_images/DevilMayCry5-1.jpg
-date: 2026-03-08T01:00:00-07:00
-lastmod: 2026-03-08T01:00:00-07:00
+date: 2026-03-08T01:00:00+08:00
+lastmod: 2026-03-08T01:00:00+08:00
 ---
 
 {{< gallery >}}
