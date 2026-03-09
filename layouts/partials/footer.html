@@ -102,13 +102,40 @@
       </div>
     {{- end -}}
     {{- if .Site.Params.footer.busuanzi -}}
-    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
-      <span class="icon-eye" style="margin-right: 2px;"></span>
-      <span>总访问量:</span>
-      <img src="https://moe-counter-cf.crimsonseraph.top/count?theme=gelbooru&length=7"
-          alt="站点访问计数"
-          style="height: 6rem; vertical-align: middle;">
-    </div>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+        <span class="icon-eye" style="margin-right: 2px;"></span>
+        <span>总访问量:</span>
+        <span id="moe-counter-container" style="display: flex; gap: 2px; align-items: center; height: 6rem;">
+          <!-- 动态插入数字图片 -->
+        </span>
+      </div>
+
+      <script>
+        (async function() {
+          const DIGIT_IMAGES_PATH = '/theme/'; // 数字图片存放路径，需自行准备 0.gif ~ 9.gif
+          const COUNTER_API = 'https://moe-counter-cf.crimsonseraph.top/api/MyCounter?add=1'; // Worker 地址
+          const PAD_LENGTH = 7; // 补零位数
+
+          try {
+            const res = await fetch(COUNTER_API);
+            const text = await res.text();
+            const count = parseInt(text, 10) || 0;
+            const padded = count.toString().padStart(PAD_LENGTH, '0');
+            const container = document.getElementById('moe-counter-container');
+            container.innerHTML = '';
+
+            padded.split('').forEach(char => {
+              const img = document.createElement('img');
+              img.src = `${DIGIT_IMAGES_PATH}${char}.gif`;
+              img.alt = char;
+              img.style.height = '6rem';
+              container.appendChild(img);
+            });
+          } catch (err) {
+            console.error('Failed to load counter:', err);
+          }
+        })();
+      </script>
     {{- end -}}
   </div>
 </footer>
