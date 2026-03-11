@@ -1,12 +1,12 @@
 ---
 title: Personal-Web 是如何搭建的
 categories: ["projects"]
-tags: ["Projects","Web","Hugo","CloudFlare","Waline","Algolia","moe-counter-cf"]
+tags: ["Projects","Web","Hugo","CloudFlare","Waline","Algolia","MoeCounter"]
 cover: /images/covers/post/personal-web/personal-web.jpg
 description: 在开源项目基础上快速搭建自己的个人网站 
 banner: /images/covers/post/personal-web/personal-web-banner.png
 date: 2026-03-09T13:00:00+08:00
-lastmod: 2026-03-09T13:00:00+08:00
+lastmod: 2026-03-11T19:00:00+08:00
 ---
 
 # CrimsonSeraph 个人网站搭建教程
@@ -160,31 +160,58 @@ algolia_search:
 
 > 详细 Algolia 配置与上传教程：[Algolia 站内搜索配置指南](链接待补充)
 
-### 4.3 访问统计 – moe-counter-cf
+### 4.3 访问统计 – MoeCounter-Worker_D1
 
-我使用 [moe-counter-cf](https://github.com/SunDoge/moe-counter-cf) 在 Cloudflare Workers 上部署了可爱的计数器。部署后你会获得一个类似 `https://moe-counter-cf.你的用户名.workers.dev` 的地址。
+我使用 [MoeCounter-Worker_D1](https://github.com/CrimsonSeraph/MoeCounter-Worker_D1) 在 Cloudflare Workers 上部署了可爱的计数器。部署后你会获得一个类似 `https://moe-counter-cf.你的用户名.workers.dev` 的地址。
 
 在 `layouts/partials/footer.html` 中 `footer.busuanzi` 部分已经替换为自定义计数器图片：
 ```yaml
     {{- if .Site.Params.footer.busuanzi -}}
-    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
-      <span class="icon-eye" style="margin-right: 2px;"></span>
-      <span>总访问量:</span>
-      <img src="https://moe-counter-cf.crimsonseraph.top/count?theme=gelbooru&length=7"
-          alt="站点访问计数"
-          style="height: 6rem; vertical-align: middle;">
-    </div>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+        <span class="icon-eye" style="margin-right: 2px;"></span>
+        <span>总访问量:</span>
+        <span id="moe-counter-container" style="display: flex; gap: 2px; align-items: center; height: 6rem;">
+          <!-- 动态插入数字图片 -->
+        </span>
+      </div>
+
+      <script>
+        (async function() {
+          const DIGIT_IMAGES_PATH = '/theme/'; // 数字图片存放路径，需自行准备 0.gif ~ 9.gif
+          const COUNTER_API = 'https://moe-counter-cf.crimsonseraph.top/api/MyCounter?add=1'; // Worker 地址
+          const PAD_LENGTH = 7; // 补零位数
+
+          try {
+            const res = await fetch(COUNTER_API);
+            const text = await res.text();
+            const count = parseInt(text, 10) || 0;
+            const padded = count.toString().padStart(PAD_LENGTH, '0');
+            const container = document.getElementById('moe-counter-container');
+            container.innerHTML = '';
+
+            padded.split('').forEach(char => {
+              const img = document.createElement('img');
+              img.src = `${DIGIT_IMAGES_PATH}${char}.gif`;
+              img.alt = char;
+              img.style.height = '6rem';
+              container.appendChild(img);
+            });
+          } catch (err) {
+            console.error('Failed to load counter:', err);
+          }
+        })();
+      </script>
     {{- end -}}
 ```
 
-你需要将 `img` 标签的 `src` 改为你的计数器地址。由于我直接修改了 `layouts/partials/footer.html`，你只需要通过 `params.yml` 中的 `footer.busuanzi` 开关控制即可。
+由于我直接修改了 `layouts/partials/footer.html`，你只需要将 `COUNTER_API` 改为你的计数器地址,通过 `params.yml` 中的 `footer.busuanzi` 开关控制即可。
 
 ```yaml
 footer:
   busuanzi: true
 ```
 
-> 详细 moe-counter-cf 部署教程：[在 Cloudflare Workers 部署访问计数器](链接待补充)
+> 详细 MoeCounter-Worker_D1 部署教程：[MoeCounter-Worker_D1 是如何使用的](post/how-to-use-moe-counter)
 
 ---
 
