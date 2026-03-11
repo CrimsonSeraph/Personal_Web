@@ -22,18 +22,16 @@ lastmod: 2026-03-11T19:00:00+08:00
 
 在开始之前，请确保你已经准备好以下内容。如果某项暂时没有，可以跳过或参考后续的单独教程。
 
-- **Cloudflare 账号** – 用于域名托管、Pages 部署（可选）。
-  > 如果没有，可以参考 [如何注册 Cloudflare](链接待补充)。
+- **Cloudflare 账号** – 用于域名托管、Pages 部署（可选，你也可以部署在其他地方）。
 - **GitHub 账号** – 用于仓库管理、自动化部署。
-  > 如果没有，可以参考 [GitHub 注册与基本使用](链接待补充)。
 - **Hugo 程序** – 推荐使用 **Hugo 0.121.2 及以上版本**，且必须是 **Extended 版本**（主题使用 SCSS）。
-  > 如果没有，可以参考 [Hugo 安装指南](链接待补充)
+  > 下载地址：[Hugo](https://github.com/gohugoio/hugo)
 - **Git** – 用于版本管理和克隆仓库。
   > 下载地址：[Git](https://git-scm.com/)
-- **域名** – 如果你希望绑定自己的域名，需要提前准备好，且评论功能需要一个你自己的域名。
+- **域名** – 如果你希望绑定自己的域名或使用评论功能，需要提前准备好。
 
   **注：子域名不可用于开启评论功能，需要你自己的域名**
-  > 如果没有，可以使用 Cloudflare Pages 提供的默认域名 `xxx.pages.dev`。
+  > 如果没有，可以使用 Cloudflare Pages 提供的默认域名 `xxx.pages.dev` ，但请注意，此域名有一定问题，例如：某些地区可能很难访问。
 
 ---
 
@@ -73,6 +71,9 @@ hugo server
 Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 ```
 
+如图所示:
+ ![图片](/images/covers/post/personal-web/cmd.png)
+
 用浏览器访问 `http://localhost:1313` 即可预览网站。
 
 > 如果提示 `hugo` 不是内部或外部命令，请检查 Hugo 是否正确安装并添加到环境变量，或将 `hugo.exe` 复制到项目根目录。
@@ -108,9 +109,11 @@ Personal-Web/
 ├── static/                 # 静态资源
 │   ├── avatar/             # 头像
 │   ├── images/             # 网站用图（banner、封面等）
-│   └── favicon.ico         # 网站图标
+│   ├── favicon.ico         # 网站图标
+│   └── ...
 ├── hugo.toml               # Hugo 主配置文件
-└── README.md               # 本项目的说明文件
+├── README.md               # 本项目的说明文件
+└── ...
 ```
 
 > 详细的目录作用将在后续文章中展开，现在你只需知道大部分配置都在 `config/_default/params.yml` 中完成。
@@ -125,11 +128,13 @@ Personal-Web/
 
 我使用的是 [Waline](https://waline.js.org/) 评论系统，它需要部署在后端（LeanCloud 或 Vercel）。假设你已经部署好并绑定了域名，获得了 `serverURL`。
 
+> 注：你可以使用其他方式或者不使用 `评论功能` ，其他方式参见 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 的 `README.md`。
+
 在 `params.yml` 中找到 `waline` 部分：
 
 ```yaml
 waline:
-  enable: true
+  enable: true                         # 是否开启
   serverURL: https://你的评论域名.com   # 改为你的 serverURL
   # 其他配置保持默认即可
 ```
@@ -138,7 +143,11 @@ waline:
 
 ### 4.2 站内搜索 – Algolia
 
-网站搜索基于 [Algolia](https://www.algolia.com/)。你需要先注册账号，创建一个 Index，并获取以下信息：
+网站搜索基于 [Algolia](https://www.algolia.com/)。
+
+> 注：你可以使用其他方式或者不使用 `站内搜索` ，其他方式参见 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 的 `README.md`。
+
+你需要先注册账号，创建一个 Index，并获取以下信息：
 
 - `appID`
 - `apiKey`（**仅限 Search-Only Key**，切勿使用 Admin Key）
@@ -148,7 +157,7 @@ waline:
 
 ```yaml
 algolia_search:
-  enable: true
+  enable: true # 开关
   appID: "你的 App ID"
   apiKey: "你的 Search-Only Key"
   indexName: "你的 Index 名称"
@@ -156,13 +165,19 @@ algolia_search:
     per_page: 10
 ```
 
-同时，Hugo 主配置文件 `hugo.toml` 中已添加了 Algolia 输出格式，运行 `hugo` 会在 `public` 目录生成 `algolia.json`，你需要将其上传到 Algolia。可以使用 [atomic-algolia](https://github.com/chrisdmacrae/atomic-algolia) 等工具自动上传。
+同时，Hugo 主配置文件 `hugo.toml` 中已添加了 Algolia 输出格式，运行 `hugo` 会在 `public` 目录生成 `algolia.json`，你需要将其上传到 Algolia。
+
+可以使用 [atomic-algolia](https://github.com/chrisdmacrae/atomic-algolia) 等工具自动上传。或参考我项目下的 [github 工作流](https://github.com/CrimsonSeraph/Personal_Web/tree/main/.github)。
 
 > 详细 Algolia 配置与上传教程：[Algolia 站内搜索配置指南](链接待补充)
 
 ### 4.3 访问统计 – MoeCounter-Worker_D1
 
-我使用 [MoeCounter-Worker_D1](https://github.com/CrimsonSeraph/MoeCounter-Worker_D1) 在 Cloudflare Workers 上部署了可爱的计数器。部署后你会获得一个类似 `https://moe-counter-cf.你的用户名.workers.dev` 的地址。
+我使用 [MoeCounter-Worker_D1](https://github.com/CrimsonSeraph/MoeCounter-Worker_D1) 在 Cloudflare Workers 上部署了可爱的计数器。
+
+> 注：你可以使用其他方式或者不使用 `访问统计` ，其他方式参见 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 的 `README.md`。
+
+部署后你会获得一个类似 `https://moe-counter-cf.你的用户名.workers.dev` 的地址。
 
 在 `layouts/partials/footer.html` 中 `footer.busuanzi` 部分已经替换为自定义计数器图片：
 ```yaml
@@ -208,7 +223,7 @@ algolia_search:
 
 ```yaml
 footer:
-  busuanzi: true
+  busuanzi: true # 开关
 ```
 
 > 详细 MoeCounter-Worker_D1 部署教程：[MoeCounter-Worker_D1 是如何使用的](post/how-to-use-moe-counter)
@@ -240,7 +255,22 @@ menu:
     icon: f0c0
 ```
 
-添加新菜单项后，记得在 `i18n` 文件中加入对应的翻译键（例如 `projects: "项目"`）。
+添加新菜单项后，记得在 `i18n` 文件中加入对应的翻译键（例如 `projects: "项目"`）。也可以删除菜单项。
+
+或者你不想国际化，则可以关闭翻译相关，在 `根目录` 下的 `hugo.toml` 中例如：
+
+```yaml
+[languages]
+  [languages.zh-CN]
+    languageName = '简体中文'
+    weight = 1
+    hasCJKLanguage = true
+  [languages.en]
+    languageName = 'English'
+    weight = 2
+```
+
+去除 `英文` 则删除 `[languages.en]` 相关项。
 
 ### 5.2 社交链接
 
@@ -271,7 +301,10 @@ tagcloud_limits: 20         # 标签云显示的标签数量
 
 ### 5.4 首页分类卡片
 
-如果你想在首页展示分类卡片（类似我的网站），可以开启：
+如果你想在首页展示分类卡片，类似我的网站，如下：
+ ![图片](/images/covers/post/personal-web/home_categories.jpg)
+
+可以开启：
 
 ```yaml
 home_categories:
