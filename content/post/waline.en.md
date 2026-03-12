@@ -1,12 +1,12 @@
 ---
 title: How to deploy the Waline comment system
 categories: ["projects"]
-tags: ["Projects","Web","GitHub","Waline"]
+tags: ["Projects","Waline"]
 cover: /images/covers/post/personal-web/personal-web.jpg
 description: How to deploy the Waline comment system (refer to the official documentation)
 banner: /images/covers/post/personal-web/personal-web-banner.png
 date: 2026-03-09T13:00:00+08:00
-lastmod: 2026-03-11T19:00:00+08:00
+lastmod: 2026-03-12T19:00:00+08:00
 ---
 
 # How to Deploy the Waline Comment System

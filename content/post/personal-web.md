@@ -6,7 +6,7 @@ cover: /images/covers/post/personal-web/personal-web.jpg
 description: 在开源项目基础上快速搭建自己的个人网站 
 banner: /images/covers/post/personal-web/personal-web-banner.png
 date: 2026-03-09T13:00:00+08:00
-lastmod: 2026-03-11T19:00:00+08:00
+lastmod: 2026-03-12T19:00:00+08:00
 ---
 
 # CrimsonSeraph 个人网站搭建教程
@@ -170,7 +170,7 @@ algolia_search:
 
 可以使用 [atomic-algolia](https://github.com/chrisdmacrae/atomic-algolia) 等工具自动上传。或参考我项目下的 [github 工作流](https://github.com/CrimsonSeraph/Personal_Web/tree/main/.github)。
 
-> 详细 Algolia 配置与上传教程：[Algolia 站内搜索配置指南](链接待补充)
+> 详细 Algolia 配置与上传教程：[Algolia 站内搜索配置指南](post/algolia)
 
 ### 4.3 访问统计 – MoeCounter-Worker_D1
 

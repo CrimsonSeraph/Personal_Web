@@ -1,12 +1,12 @@
 ---
 title: 如何部署 Waline 评论系统
 categories: ["projects"]
-tags: ["Projects","Web","GitHub","Waline"]
+tags: ["Projects","Waline"]
 cover: /images/covers/post/waline/waline.png
 description: 如何部署 Waline 评论系统（参考官方文档）
 banner: /images/covers/post/waline/waline.png
 date: 2026-03-11T20:00:00+08:00
-lastmod: 2026-03-11T20:00:00+08:00
+lastmod: 2026-03-12T20:00:00+08:00
 ---
 
 # 如何部署 Waline 评论系统
