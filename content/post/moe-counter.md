@@ -2,9 +2,9 @@
 title: MoeCounter-Worker_D1 是如何使用的
 categories: ["projects"]
 tags: ["Projects","Web","CloudFlare","MoeCounter"]
-cover: /images/covers/post/how-to-use-moe-counter/cover-banner.png
+cover: /images/covers/post/moe-counter/cover-banner.png
 description: 将 MoeCounter-Worker_D1 部署在 Cloudflare 上
-banner: /images/covers/post/how-to-use-moe-counter/cover-banner.png
+banner: /images/covers/post/moe-counter/cover-banner.png
 date: 2026-03-11T19:00:00+08:00
 lastmod: 2026-03-11T19:00:00+08:00
 ---

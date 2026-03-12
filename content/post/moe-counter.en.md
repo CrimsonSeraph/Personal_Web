@@ -2,9 +2,9 @@
 title: How to use MoeCounter-Worker_D1
 categories: ["projects"]
 tags: ["Projects","Web","CloudFlare","MoeCounter"]
-cover: /images/covers/post/how-to-use-moe-counter/cover-banner.png
+cover: /images/covers/post/moe-counter/cover-banner.png
 description: M deployed MoeCounter-Worker_D1 on Cloudflare
-banner: /images/covers/post/how-to-use-moe-counter/cover-banner.png
+banner: /images/covers/post/moe-counter/cover-banner.png
 date: 2026-03-11T19:00:00+08:00
 lastmod: 2026-03-11T19:00:00+08:00
 ---

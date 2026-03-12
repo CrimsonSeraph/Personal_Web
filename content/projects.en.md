@@ -17,6 +17,6 @@ The code is open-sourced under the MIT License, while the original Logo (`/favic
 
 * **MoeCounter-Worker_D1**
 
-项目仓库: **[MoeCounter-Worker_D1](https://github.com/CrimsonSeraph/MoeCounter-Worker_D1)** | 项目文章: **[MoeCounter-Worker_D1 是如何使用的](post/how-to-use-moe-counter)**
+项目仓库: **[MoeCounter-Worker_D1](https://github.com/CrimsonSeraph/MoeCounter-Worker_D1)** | 项目文章: **[MoeCounter-Worker_D1 是如何使用的](post/moe-counter)**
 
 **MoeCounter-Worker_D1** is a lightweight counter service built on **Cloudflare Workers**, supporting counting retrieval via **SVG images** or **plain text API**. It uses **D1 database** to persistently store count data and caches generated SVG images with **KV storage** to reduce rendering overhead. The project includes multiple built-in themes (e.g., gelbooru), supports custom digit length, count increment control, and pixelated rendering, making it ideal for website visitor statistics, page view displays, and similar scenarios. Built on the **Hono framework**, it is easy to deploy and well-suited for serverless applications within the Cloudflare ecosystem.

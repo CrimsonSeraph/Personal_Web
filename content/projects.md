@@ -17,6 +17,6 @@ lastmod: 2026-03-09T12:00:00+08:00
 
 * **MoeCounter-Worker_D1**
 
-项目仓库: **[MoeCounter-Worker_D1](https://github.com/CrimsonSeraph/MoeCounter-Worker_D1)** | 项目文章: **[MoeCounter-Worker_D1 是如何使用的](post/how-to-use-moe-counter)**
+项目仓库: **[MoeCounter-Worker_D1](https://github.com/CrimsonSeraph/MoeCounter-Worker_D1)** | 项目文章: **[MoeCounter-Worker_D1 是如何使用的](post/moe-counter)**
 
 **MoeCounter-Worker_D1** 是一个基于 **Cloudflare Workers** 的轻量级计数器服务，支持通过 **SVG 图片**或**纯文本 API** 获取计数。它使用 **D1 数据库**持久化存储计数数据，并通过 **KV 缓存**生成的 SVG 图片以减少重复渲染开销。项目内置了多种主题风格（如 gelbooru），支持自定义数字位数、是否增加计数、像素风格渲染等，适合用于网站访客统计、页面浏览量展示等场景。整体基于 **Hono 框架**构建，部署简单，适合 Cloudflare 生态下的无服务器应用。

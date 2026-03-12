@@ -1,7 +1,7 @@
 ---
 title: Personal-Web 是如何搭建的
 categories: ["projects"]
-tags: ["Projects","Web","Hugo","CloudFlare","Waline","Algolia","MoeCounter"]
+tags: ["Projects","Web","Hugo","CloudFlare","GitHub","Waline","Algolia","MoeCounter"]
 cover: /images/covers/post/personal-web/personal-web.jpg
 description: 在开源项目基础上快速搭建自己的个人网站 
 banner: /images/covers/post/personal-web/personal-web-banner.png
@@ -13,10 +13,10 @@ lastmod: 2026-03-11T19:00:00+08:00
 
 本教程将引导你基于我的个人网站仓库 [CrimsonSeraph/Personal-Web](https://github.com/CrimsonSeraph/Personal-Web) 快速搭建一个功能完备的个人博客。我的网站基于 **Hugo** 静态站点生成器和 **Reimu** 主题构建，并集成了评论、搜索、访问统计等常用功能，且对部分模板进行了定制化修改。
 
-  > `注意`：本教程在我的个人网站仓库 [CrimsonSeraph/Personal-Web](https://github.com/CrimsonSeraph/Personal-Web) 基础上开展，你可以前往 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 查阅模板的教程。
-    本教程仅提供此网站搭建过程中涉及的内容，原模板提供了 `更多内容` ，例如 `音乐播放器` 、基于 `Valine` 的评论服务等。
-    由于我修改了部分 `layout` 中的生成文件，所以可能有些内容需要基于我的仓库，但基本可以使用 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 并参考其 `README.md`。
-    你可以使用模板仓库，并将我仓库的部分文件复制进你的仓库以实现修改。
+> `注意`：本教程在我的个人网站仓库 [CrimsonSeraph/Personal-Web](https://github.com/CrimsonSeraph/Personal-Web) 基础上开展，你可以前往 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 查阅模板的教程。
+  本教程仅提供此网站搭建过程中涉及的内容，原模板提供了 `更多内容` ，例如 `音乐播放器` 、基于 `Valine` 的评论服务等。
+  由于我修改了部分 `layout` 中的生成文件，所以可能有些内容需要基于我的仓库，但基本可以使用 [D-Sketon/hugo-theme-reimu](https://github.com/D-Sketon/hugo-theme-reimu) 并参考其 `README.md`。
+  你可以使用模板仓库，并将我仓库的部分文件复制进你的仓库以实现修改。
 
 ## 📝 前言
 
@@ -28,7 +28,7 @@ lastmod: 2026-03-11T19:00:00+08:00
   > 下载地址：[Hugo](https://github.com/gohugoio/hugo)
 - **Git** – 用于版本管理和克隆仓库。
   > 下载地址：[Git](https://git-scm.com/)
-- **域名** – 如果你希望绑定自己的域名或使用评论功能，需要提前准备好。
+- **域名** – 如果你希望绑定自己的域名，需要提前准备好。
 
   **注：子域名不可用于开启评论功能，需要你自己的域名**
   > 如果没有，可以使用 Cloudflare Pages 提供的默认域名 `xxx.pages.dev` ，但请注意，此域名有一定问题，例如：某些地区可能很难访问。
@@ -139,7 +139,8 @@ waline:
   # 其他配置保持默认即可
 ```
 
-> 详细 Waline 部署教程请参考：[如何部署 Waline 评论系统](链接待补充)
+> 详细 Waline 部署教程请参考：[如何部署 Waline 评论系统](post/waline)
+  或官方文档：[快速上手](https://waline.js.org/guide/get-started/)
 
 ### 4.2 站内搜索 – Algolia
 
@@ -226,7 +227,7 @@ footer:
   busuanzi: true # 开关
 ```
 
-> 详细 MoeCounter-Worker_D1 部署教程：[MoeCounter-Worker_D1 是如何使用的](post/how-to-use-moe-counter)
+> 详细 MoeCounter-Worker_D1 部署教程：[MoeCounter-Worker_D1 是如何使用的](post/moe-counter)
 
 ---
 
